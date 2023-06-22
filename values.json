@@ -1,0 +1,17 @@
+{
+  "Chord": 10,
+  "AngleOfAttack": 0.26,
+  "NonlinearCoefficient": 1.9056964116678532,
+  "RampAngle": 5.1119125042852565,
+  "Slope": 0.26,
+  "Span": 100,
+  "ChordwiseCoordinate": 0.25,
+  "ChordwiseSpringLocation": [
+    0.2,
+    0.7
+  ],
+  "SpringConstant": [
+    4000,
+    2000
+  ]
+}

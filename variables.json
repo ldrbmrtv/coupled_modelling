@@ -1,0 +1,14 @@
+[
+  "Chord",
+  "Span",
+  "Slope",
+  "NonlinearCoefficient",
+  "AngleOfAttack",
+  "ElasticSupportPitchAngle",
+  "Lift",
+  "ChordwiseCoordinate",
+  "SpringConstant",
+  "ChordwiseSpringLocation",
+  "DynamicPressure",
+  "RampAngle"
+]

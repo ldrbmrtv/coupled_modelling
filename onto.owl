@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://b4-1/ontologies/2023/1/onto"
+         xmlns="http://b4-1/ontologies/2023/1/onto#">
+
+<owl:Ontology rdf:about="http://b4-1/ontologies/2023/1/onto"/>
+
+<owl:ObjectProperty rdf:about="#hasVariable">
+  <rdfs:domain rdf:resource="#Model"/>
+  <rdfs:range rdf:resource="#Variable"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has variable</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasInput">
+  <rdfs:domain rdf:resource="#Model"/>
+  <rdfs:range rdf:resource="#Variable"/>
+  <rdfs:subPropertyOf rdf:resource="#hasVariable"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has input</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasOutput">
+  <rdfs:domain rdf:resource="#Model"/>
+  <rdfs:range rdf:resource="#Variable"/>
+  <rdfs:subPropertyOf rdf:resource="#hasVariable"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has output</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:Class rdf:about="#Model">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A mathematical model is a function that maps an input to an output.</rdfs:comment>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Model</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Variable">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Variable</rdfs:label>
+</owl:Class>
+
+
+</rdf:RDF>
