@@ -1,0 +1,38 @@
+{
+  "Chord": {
+    "label": "Chord"
+  },
+  "Span": {
+    "label": "Span"
+  },
+  "Slope": {
+    "label": "Slope"
+  },
+  "NonlinearCoefficient": {
+    "label": "Nonlinear coefficient"
+  },
+  "AngleOfAttack": {
+    "label": "Angle of attack"
+  },
+  "ElasticSupportPitchAngle": {
+    "label": "Elastic support pitch angle"
+  },
+  "Lift": {
+    "label": "Lift"
+  },
+  "ChordwiseCoordinate": {
+    "label": "Chordwise coordinate"
+  },
+  "SpringConstant": {
+    "label": "Spring constant"
+  },
+  "ChordwiseSpringLocation": {
+    "label": "Chordwise spring location"
+  },
+  "DynamicPressure": {
+    "label": "Dynamic pressure"
+  },
+  "RampAngle": {
+    "label": "Ramp angle"
+  }
+}

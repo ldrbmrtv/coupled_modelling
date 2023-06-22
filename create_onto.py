@@ -1,4 +1,5 @@
 from owlready2 import *
+from onto_sync import util_falcon
 
 
 def main():
@@ -11,9 +12,13 @@ def main():
         class Model(Thing):
             label = ["Model"]
             comment = ["A mathematical model is a function that maps an input to an output."]
+            syncs = str(util_falcon(label[0]))
+            if syncs:
+                isDefinedBy = syncs
 
         class Variable(Thing):
             label = ["Variable"]
+            isDefinedBy = str(util_falcon(label[0]))
             #comment = []
 
     # Object properties        

@@ -32,11 +32,13 @@
   <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
   <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A mathematical model is a function that maps an input to an output.</rdfs:comment>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Model</rdfs:label>
+  <rdfs:isDefinedBy rdf:datatype="http://www.w3.org/2001/XMLSchema#string">{'entities_wiki': ['http://www.wikidata.org/entity/Q486902'], 'entities_db': ['http://dbpedia.org/resource/Model']}</rdfs:isDefinedBy>
 </owl:Class>
 
 <owl:Class rdf:about="#Variable">
   <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Variable</rdfs:label>
+  <rdfs:isDefinedBy rdf:datatype="http://www.w3.org/2001/XMLSchema#string">{'entities_wiki': ['http://www.wikidata.org/entity/Q50701'], 'entities_db': ['http://dbpedia.org/resource/Variable']}</rdfs:isDefinedBy>
 </owl:Class>
 
 

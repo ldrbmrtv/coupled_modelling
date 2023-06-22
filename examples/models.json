@@ -1,0 +1,32 @@
+{
+  "AerodynamicModel": {
+    "input": [
+      "Chord",
+      "DynamicPressure",
+      "ElasticSupportPitchAngle",
+      "Span",
+      "Chord",
+      "RampAngle",
+      "Slope",
+      "NonlinearCoefficient",
+      "AngleOfAttack"
+    ],
+    "output": "Lift"
+  },
+  "StructuralModel": {
+    "input": [
+      "Lift",
+      "Chord",
+      "ChordwiseCoordinate",
+      {
+        "name": "SpringConstant",
+        "cardinality": 2
+      },
+      {
+        "name": "ChordwiseSpringLocation",
+        "cardinality": 2
+      }
+    ],
+    "output": "ElasticSupportPitchAngle"
+  }
+}
