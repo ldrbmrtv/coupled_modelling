@@ -17,20 +17,21 @@ def calc_angle(Chord, Lift):
 
 
 def main():
+    input_path = 'input'    
     onto = load_onto()
 
     # Creating variables
-    with open('variables.json', 'r') as f:
+    with open(os.path.join(input_path, 'variables.json'), 'r') as f:
         variables = json.load(f)
         create_variables(onto, variables)
 
     # Creating coupled system
-    with open('coupled.json', 'r') as f:
+    with open(os.path.join(input_path, 'coupled.json'), 'r') as f:
         coupled_models = json.load(f)
         create_coupled(onto, 'CoupledSystem', coupled_models)
 
     # Describing models
-    with open('models.json', 'r') as f:
+    with open(os.path.join(input_path, 'models.json'), 'r') as f:
         models = json.load(f)
         describe_models(onto, 'CoupledSystem', models)
 
@@ -38,7 +39,7 @@ def main():
     coupled_inst = initialize_coupled(onto, 'CoupledSystem')
 
     # Creating variable values
-    with open('values.json', 'r') as f:
+    with open(os.path.join(input_path, 'values.json'), 'r') as f:
         values = json.load(f)
         create_values(onto, values, coupled_inst)
 
