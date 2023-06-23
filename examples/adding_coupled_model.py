@@ -20,19 +20,16 @@ def main():
                      name = 'multidisciplinary_model.owl')
 
     # Adding model to coupled system
-    coupled_system = onto['CoupledSystem']
-    model = add_coupled_model(onto,
-                              'AirfoilModel',
-                              {'label': 'Airfoil model'},
-                              coupled_system)
+    coupled_system = onto['CoupledSystem1']
     model_data = {
-        "input": ["Lift", "ElasticSupportPitchAngle"],
-        "output": "ElasticSupportPitchAngle"}
-    describe_model(onto, coupled_system, model, model_data)
-
+        'label': 'Airfoil model',
+        'input': ['Lift', 'ElasticSupportPitchAngle'],
+        'output': 'ElasticSupportPitchAngle'}
+    create_model(onto, 'AirfoilModel', model_data, coupled_system)
+    
     # Running model
-    coupled_inst = onto['coupledsystem1']
-    create_model_run(onto, model, coupled_inst, foo)
+    coupled_inst = onto['coupledsystem11']
+    create_model_run(onto, onto['AirfoilModel'], coupled_inst, foo)
 
     # Saving
     save_onto(onto, 'multidisciplinary_model_airfoil.owl')

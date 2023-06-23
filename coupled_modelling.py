@@ -17,6 +17,17 @@ def load_onto(path=None, name='onto.owl'):
     return onto
 
 
+def sync_entity(entity):
+    if len(entity.label) != 1:
+        return
+    syncs = util_falcon(entity.label[0])
+    if syncs:
+        if syncs.get('entities_wiki'):
+            entity.wikidata = syncs['entities_wiki']
+        if syncs.get('entities_db'):
+            entity.wikidata = syncs['entities_db']
+
+
 def create_variable(onto, name, annos):
     with onto:
         
@@ -29,9 +40,7 @@ def create_variable(onto, name, annos):
         # Class
         cl = types.new_class(name, (onto.Variable,))
         cl.label = annos['label']
-        syncs = str(util_falcon(cl.label[0]))
-        if syncs:
-            cl.isDefinedBy = syncs
+        sync_entity(cl)
         cl.is_a.append(prop.some(float))
 
         return cl
@@ -52,28 +61,19 @@ def sync_coupled(model, coupled):
         coupled.hasVariable.append(prop)
 
 
-def create_coupled(onto, name, models):
-    coupled_system = types.new_class(name, (onto.Model,))
-    for model, annos in models.items():
-        cl = types.new_class(model, (coupled_system,))
-        cl.label = annos['label']
-        syncs = str(util_falcon(cl.label[0]))
-        if syncs:
-            cl.isDefinedBy = syncs
+def create_model(onto, model, data, coupled):
 
+    # Creating coupled system
+    if type(coupled) == str:
+        coupled = types.new_class(coupled, (onto.CoupledSystem,))
 
-def add_coupled_model(onto, model, annos, coupled):
-    cl = types.new_class(model, (coupled,))
-    cl.label = annos['label']
-    syncs = str(util_falcon(cl.label[0]))
-    if syncs:
-        cl.isDefinedBy = syncs
+    # Creating model
+    model = types.new_class(model, (onto.Model,))
+    model.label = data['label']
+    sync_entity(model)
+    model.is_a.append(onto.hasCoupledSystem.some(coupled))
+
     
-    return cl
-
-
-def describe_model(onto, coupled, model, data):
-
     # Inputs
     inputs = data['input']
     for inp in inputs:
@@ -88,15 +88,13 @@ def describe_model(onto, coupled, model, data):
 
     sync_coupled(model, coupled)
 
+    return coupled, model
 
-def describe_models(onto, coupled, models):
+
+def create_models(onto, models, coupled):
     for model, data in models.items():
-        describe_model(onto, onto[coupled], onto[model], data)
-
-
-def initialize_coupled(onto, coupled):
-    cl = onto[coupled]
-    return cl()
+        coupled, model = create_model(onto, model, data, coupled)
+    return coupled
 
 
 def create_value(onto, variable, value, coupled_inst):
@@ -157,6 +155,7 @@ def run_model(onto, model, foo):
 
 def create_model_run(onto, model, coupled_inst, foo):
     model_inst = model()
+    model_inst.hasCoupledSystem.append(coupled_inst)
     sync_inputs(onto, model_inst, coupled_inst)
     out_cl = model.hasOutput[0]
     prop = onto[f'has{out_cl.name}']

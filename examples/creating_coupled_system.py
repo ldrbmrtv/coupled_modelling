@@ -25,19 +25,14 @@ def main():
         variables = json.load(f)
         create_variables(onto, variables)
 
-    # Creating coupled system
-    with open(os.path.join(input_path, 'coupled.json'), 'r') as f:
-        coupled_models = json.load(f)
-        create_coupled(onto, 'CoupledSystem', coupled_models)
-
     # Describing models
     with open(os.path.join(input_path, 'models.json'), 'r') as f:
         models = json.load(f)
-        describe_models(onto, 'CoupledSystem', models)
+        coupled_system = create_models(onto, models, 'CoupledSystem1')
 
-    # Instanciating coupled system
-    coupled_inst = initialize_coupled(onto, 'CoupledSystem')
-
+    # Instantiating coupled system
+    coupled_inst = coupled_system()
+    
     # Creating variable values
     with open(os.path.join(input_path, 'values.json'), 'r') as f:
         values = json.load(f)
@@ -45,10 +40,12 @@ def main():
 
     # Running models
     for i in range(1, 3):
-        create_model_run(onto, onto['AerodynamicModel'],
+        create_model_run(onto,
+                         onto['AerodynamicModel'],
                          coupled_inst,
                          calc_lift)
-        create_model_run(onto, onto['StructuralModel'],
+        create_model_run(onto,
+                         onto['StructuralModel'],
                          coupled_inst,
                          calc_angle)
 

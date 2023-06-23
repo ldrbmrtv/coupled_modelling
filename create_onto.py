@@ -1,5 +1,5 @@
 from owlready2 import *
-from onto_sync import util_falcon
+from coupled_modelling import sync_entity
 
 
 def main():
@@ -12,13 +12,13 @@ def main():
         class Model(Thing):
             label = ["Model"]
             comment = ["A mathematical model is a function that maps an input to an output."]
-            syncs = str(util_falcon(label[0]))
-            if syncs:
-                isDefinedBy = syncs
-
+            
         class Variable(Thing):
             label = ["Variable"]
-            isDefinedBy = str(util_falcon(label[0]))
+            #comment = []
+
+        class CoupledSystem(Thing):
+            label = ["Coupled system"]
             #comment = []
 
     # Object properties        
@@ -37,6 +37,21 @@ def main():
             domain = [Model]
             range = [Variable]
 
+        class hasCoupledSystem(ObjectProperty):
+            label = ["has coupled system"]
+            domain = [Model]
+            range = [CoupledSystem]
+
+    # Annotation properties
+        class wikidata(AnnotationProperty):
+            pass
+
+        class dbpedia(AnnotationProperty):
+            pass
+
+    for cl in onto.classes():
+        sync_entity(cl)
+    
     onto.save('onto.owl')
 
 

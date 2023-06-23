@@ -1,5 +1,6 @@
 {
   "AerodynamicModel": {
+    "label": "Aerodynamic model",
     "input": [
       "Chord",
       "DynamicPressure",
@@ -14,6 +15,7 @@
     "output": "Lift"
   },
   "StructuralModel": {
+    "label": "Structural model",
     "input": [
       "Lift",
       "Chord",

@@ -19,16 +19,17 @@ with open('variables.json', 'w') as f:
     json.dump(variables, f, indent=2)
 
 
-coupled = {
-    'AerodynamicModel': {'label': 'Aerodynamic model'},
-    'StructuralModel': {'label': 'Aerodynamic model'}}
-
-with open('coupled.json', 'w') as f:
-    json.dump(coupled, f, indent=2)
+#coupled = {
+#    'AerodynamicModel': {'label': 'Aerodynamic model'},
+#    'StructuralModel': {'label': 'Structural model'}}
+#
+#with open('coupled.json', 'w') as f:
+#    json.dump(coupled, f, indent=2)
 
 
 models = {
     'AerodynamicModel': {
+        'label': 'Aerodynamic model',
         'input': [
             'Chord',
             'DynamicPressure',
@@ -41,6 +42,7 @@ models = {
             'AngleOfAttack'],
         'output' : 'Lift'},
     'StructuralModel': {
+        'label': 'Structural model',
         'input': [
             'Lift',
             'Chord',
