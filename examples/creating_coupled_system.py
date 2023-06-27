@@ -9,6 +9,7 @@ from coupled_modelling import *
 import json
 
 
+# Calculation functions
 def calc_lift(Slope, Span):
     return Slope + Span
 
@@ -25,21 +26,22 @@ def main():
         variables = json.load(f)
         create_variables(onto, variables)
 
-    # Describing models
+    # Creating models
     with open(os.path.join(input_path, 'models.json'), 'r') as f:
         models = json.load(f)
         coupled_system = create_models(onto, models, 'CoupledSystem1')
 
-    # Instantiating coupled system
-    coupled_inst = coupled_system()
-    
-    # Creating variable values
-    with open(os.path.join(input_path, 'values.json'), 'r') as f:
-        values = json.load(f)
-        create_values(onto, values, coupled_inst)
-
-    # Running models
     for i in range(1, 3):
+
+        # Instantiating coupled system
+        coupled_inst = coupled_system()
+        
+        # Creating variable values
+        with open(os.path.join(input_path, 'values.json'), 'r') as f:
+            values = json.load(f)
+            create_values(onto, values, coupled_inst)
+
+        # Running models
         create_model_run(onto,
                          onto['AerodynamicModel'],
                          coupled_inst,

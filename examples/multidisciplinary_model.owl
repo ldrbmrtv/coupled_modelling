@@ -126,13 +126,15 @@
   <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
   <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A mathematical model is a function that maps an input to an output.</rdfs:comment>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Model</rdfs:label>
-  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Model</wikidata>
+  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.wikidata.org/entity/Q486902</wikidata>
+  <dbpedia rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Model</dbpedia>
 </owl:Class>
 
 <owl:Class rdf:about="#Variable">
   <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Variable</rdfs:label>
-  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Variable</wikidata>
+  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.wikidata.org/entity/Q50701</wikidata>
+  <dbpedia rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Variable</dbpedia>
 </owl:Class>
 
 <owl:Class rdf:about="#CoupledSystem">
@@ -150,7 +152,8 @@
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Chord</rdfs:label>
-  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Chord</wikidata>
+  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.wikidata.org/entity/Q170439</wikidata>
+  <dbpedia rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Chord</dbpedia>
 </owl:Class>
 
 <owl:Class rdf:about="#Span">
@@ -162,7 +165,8 @@
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Span</rdfs:label>
-  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Span</wikidata>
+  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.wikidata.org/entity/Q185759</wikidata>
+  <dbpedia rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Span</dbpedia>
 </owl:Class>
 
 <owl:Class rdf:about="#Slope">
@@ -174,7 +178,8 @@
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Slope</rdfs:label>
-  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Slope</wikidata>
+  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.wikidata.org/entity/Q275447</wikidata>
+  <dbpedia rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Slope</dbpedia>
 </owl:Class>
 
 <owl:Class rdf:about="#NonlinearCoefficient">
@@ -186,7 +191,8 @@
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Nonlinear coefficient</rdfs:label>
-  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Significand</wikidata>
+  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.wikidata.org/entity/Q33620862</wikidata>
+  <dbpedia rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Significand</dbpedia>
 </owl:Class>
 
 <owl:Class rdf:about="#AngleOfAttack">
@@ -210,7 +216,8 @@
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Elastic support pitch angle</rdfs:label>
-  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Pitch_angle</wikidata>
+  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.wikidata.org/entity/Q4363928</wikidata>
+  <dbpedia rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Pitch_angle</dbpedia>
 </owl:Class>
 
 <owl:Class rdf:about="#Lift">
@@ -222,7 +229,8 @@
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Lift</rdfs:label>
-  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Lift</wikidata>
+  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.wikidata.org/entity/Q14908</wikidata>
+  <dbpedia rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Lift</dbpedia>
 </owl:Class>
 
 <owl:Class rdf:about="#ChordwiseCoordinate">
@@ -234,7 +242,8 @@
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Chordwise coordinate</rdfs:label>
-  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Wordwise</wikidata>
+  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.wikidata.org/entity/Q57284988</wikidata>
+  <dbpedia rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Wordwise</dbpedia>
 </owl:Class>
 
 <owl:Class rdf:about="#SpringConstant">
@@ -258,7 +267,8 @@
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Chordwise spring location</rdfs:label>
-  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Location,_Location,_Location</wikidata>
+  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.wikidata.org/entity/Q41174120</wikidata>
+  <dbpedia rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Location,_Location,_Location</dbpedia>
 </owl:Class>
 
 <owl:Class rdf:about="#DynamicPressure">
@@ -282,7 +292,8 @@
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ramp angle</rdfs:label>
-  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Airport_apron</wikidata>
+  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.wikidata.org/entity/Q661343</wikidata>
+  <dbpedia rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Airport_apron</dbpedia>
 </owl:Class>
 
 <owl:Class rdf:about="#CoupledSystem1">
@@ -296,31 +307,19 @@
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#hasVariable"/>
-      <owl:someValuesFrom rdf:resource="#AngleOfAttack"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#hasVariable"/>
       <owl:someValuesFrom rdf:resource="#DynamicPressure"/>
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#hasVariable"/>
-      <owl:someValuesFrom rdf:resource="#ElasticSupportPitchAngle"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#hasVariable"/>
-      <owl:someValuesFrom rdf:resource="#Slope"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#hasVariable"/>
       <owl:someValuesFrom rdf:resource="#Span"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasVariable"/>
+      <owl:someValuesFrom rdf:resource="#AngleOfAttack"/>
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:subClassOf>
@@ -338,13 +337,19 @@
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#hasVariable"/>
-      <owl:someValuesFrom rdf:resource="#Lift"/>
+      <owl:someValuesFrom rdf:resource="#ElasticSupportPitchAngle"/>
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#hasVariable"/>
-      <owl:someValuesFrom rdf:resource="#SpringConstant"/>
+      <owl:someValuesFrom rdf:resource="#Slope"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasVariable"/>
+      <owl:someValuesFrom rdf:resource="#Lift"/>
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:subClassOf>
@@ -357,6 +362,12 @@
     <owl:Restriction>
       <owl:onProperty rdf:resource="#hasVariable"/>
       <owl:someValuesFrom rdf:resource="#ChordwiseSpringLocation"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasVariable"/>
+      <owl:someValuesFrom rdf:resource="#SpringConstant"/>
     </owl:Restriction>
   </rdfs:subClassOf>
 </owl:Class>
@@ -490,8 +501,8 @@
   <hasVariable rdf:resource="#chordwisespringlocation2"/>
   <hasVariable rdf:resource="#springconstant1"/>
   <hasVariable rdf:resource="#springconstant2"/>
-  <hasVariable rdf:resource="#lift2"/>
-  <hasVariable rdf:resource="#elasticsupportpitchangle2"/>
+  <hasVariable rdf:resource="#lift1"/>
+  <hasVariable rdf:resource="#elasticsupportpitchangle1"/>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#chord1">
@@ -584,17 +595,88 @@
   <hasElasticSupportPitchAngle rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">110.26</hasElasticSupportPitchAngle>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#coupledsystem12">
+  <rdf:type rdf:resource="#CoupledSystem1"/>
+  <hasVariable rdf:resource="#chord2"/>
+  <hasVariable rdf:resource="#angleofattack2"/>
+  <hasVariable rdf:resource="#nonlinearcoefficient2"/>
+  <hasVariable rdf:resource="#rampangle2"/>
+  <hasVariable rdf:resource="#slope2"/>
+  <hasVariable rdf:resource="#span2"/>
+  <hasVariable rdf:resource="#chordwisecoordinate2"/>
+  <hasVariable rdf:resource="#chordwisespringlocation3"/>
+  <hasVariable rdf:resource="#chordwisespringlocation4"/>
+  <hasVariable rdf:resource="#springconstant3"/>
+  <hasVariable rdf:resource="#springconstant4"/>
+  <hasVariable rdf:resource="#lift2"/>
+  <hasVariable rdf:resource="#elasticsupportpitchangle2"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#chord2">
+  <rdf:type rdf:resource="#Chord"/>
+  <hasChord rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</hasChord>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#angleofattack2">
+  <rdf:type rdf:resource="#AngleOfAttack"/>
+  <hasAngleOfAttack rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.26</hasAngleOfAttack>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#nonlinearcoefficient2">
+  <rdf:type rdf:resource="#NonlinearCoefficient"/>
+  <hasNonlinearCoefficient rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.9056964116678532</hasNonlinearCoefficient>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#rampangle2">
+  <rdf:type rdf:resource="#RampAngle"/>
+  <hasRampAngle rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">5.1119125042852565</hasRampAngle>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#slope2">
+  <rdf:type rdf:resource="#Slope"/>
+  <hasSlope rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.26</hasSlope>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#span2">
+  <rdf:type rdf:resource="#Span"/>
+  <hasSpan rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">100</hasSpan>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#chordwisecoordinate2">
+  <rdf:type rdf:resource="#ChordwiseCoordinate"/>
+  <hasChordwiseCoordinate rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.25</hasChordwiseCoordinate>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#chordwisespringlocation3">
+  <rdf:type rdf:resource="#ChordwiseSpringLocation"/>
+  <hasChordwiseSpringLocation rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.2</hasChordwiseSpringLocation>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#chordwisespringlocation4">
+  <rdf:type rdf:resource="#ChordwiseSpringLocation"/>
+  <hasChordwiseSpringLocation rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.7</hasChordwiseSpringLocation>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#springconstant3">
+  <rdf:type rdf:resource="#SpringConstant"/>
+  <hasSpringConstant rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4000</hasSpringConstant>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#springconstant4">
+  <rdf:type rdf:resource="#SpringConstant"/>
+  <hasSpringConstant rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2000</hasSpringConstant>
+</owl:NamedIndividual>
+
 <owl:NamedIndividual rdf:about="#aerodynamicmodel2">
   <rdf:type rdf:resource="#AerodynamicModel"/>
-  <hasInput rdf:resource="#chord1"/>
-  <hasInput rdf:resource="#angleofattack1"/>
-  <hasInput rdf:resource="#nonlinearcoefficient1"/>
-  <hasInput rdf:resource="#rampangle1"/>
-  <hasInput rdf:resource="#slope1"/>
-  <hasInput rdf:resource="#span1"/>
-  <hasInput rdf:resource="#elasticsupportpitchangle1"/>
+  <hasInput rdf:resource="#chord2"/>
+  <hasInput rdf:resource="#angleofattack2"/>
+  <hasInput rdf:resource="#nonlinearcoefficient2"/>
+  <hasInput rdf:resource="#rampangle2"/>
+  <hasInput rdf:resource="#slope2"/>
+  <hasInput rdf:resource="#span2"/>
   <hasOutput rdf:resource="#lift2"/>
-  <hasCoupledSystem rdf:resource="#coupledsystem11"/>
+  <hasCoupledSystem rdf:resource="#coupledsystem12"/>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#lift2">
@@ -604,15 +686,15 @@
 
 <owl:NamedIndividual rdf:about="#structuralmodel2">
   <rdf:type rdf:resource="#StructuralModel"/>
-  <hasInput rdf:resource="#chord1"/>
-  <hasInput rdf:resource="#chordwisecoordinate1"/>
-  <hasInput rdf:resource="#chordwisespringlocation1"/>
-  <hasInput rdf:resource="#chordwisespringlocation2"/>
-  <hasInput rdf:resource="#springconstant1"/>
-  <hasInput rdf:resource="#springconstant2"/>
+  <hasInput rdf:resource="#chord2"/>
+  <hasInput rdf:resource="#chordwisecoordinate2"/>
+  <hasInput rdf:resource="#chordwisespringlocation3"/>
+  <hasInput rdf:resource="#chordwisespringlocation4"/>
+  <hasInput rdf:resource="#springconstant3"/>
+  <hasInput rdf:resource="#springconstant4"/>
   <hasInput rdf:resource="#lift2"/>
   <hasOutput rdf:resource="#elasticsupportpitchangle2"/>
-  <hasCoupledSystem rdf:resource="#coupledsystem11"/>
+  <hasCoupledSystem rdf:resource="#coupledsystem12"/>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#elasticsupportpitchangle2">

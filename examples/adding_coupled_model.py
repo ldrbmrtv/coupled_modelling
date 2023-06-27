@@ -27,9 +27,10 @@ def main():
         'output': 'ElasticSupportPitchAngle'}
     create_model(onto, 'AirfoilModel', model_data, coupled_system)
     
-    # Running model
+    # Running model incremetally
     coupled_inst = onto['coupledsystem11']
-    create_model_run(onto, onto['AirfoilModel'], coupled_inst, foo)
+    for i in range(2):
+        create_model_run(onto, onto['AirfoilModel'], coupled_inst, foo)
 
     # Saving
     save_onto(onto, 'multidisciplinary_model_airfoil.owl')

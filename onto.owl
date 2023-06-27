@@ -42,13 +42,15 @@
   <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
   <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A mathematical model is a function that maps an input to an output.</rdfs:comment>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Model</rdfs:label>
-  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Model</wikidata>
+  <dbpedia rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Model</dbpedia>
+  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.wikidata.org/entity/Q486902</wikidata>
 </owl:Class>
 
 <owl:Class rdf:about="#Variable">
   <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Variable</rdfs:label>
-  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Variable</wikidata>
+  <dbpedia rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Variable</dbpedia>
+  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.wikidata.org/entity/Q50701</wikidata>
 </owl:Class>
 
 <owl:Class rdf:about="#CoupledSystem">

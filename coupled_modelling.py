@@ -25,7 +25,7 @@ def sync_entity(entity):
         if syncs.get('entities_wiki'):
             entity.wikidata = syncs['entities_wiki']
         if syncs.get('entities_db'):
-            entity.wikidata = syncs['entities_db']
+            entity.dbpedia = syncs['entities_db']
 
 
 def create_variable(onto, name, annos):
