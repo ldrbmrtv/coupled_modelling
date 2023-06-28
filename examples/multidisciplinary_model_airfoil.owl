@@ -301,7 +301,13 @@
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#hasVariable"/>
-      <owl:someValuesFrom rdf:resource="#RampAngle"/>
+      <owl:someValuesFrom rdf:resource="#Slope"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasVariable"/>
+      <owl:someValuesFrom rdf:resource="#ElasticSupportPitchAngle"/>
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:subClassOf>
@@ -319,12 +325,6 @@
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#hasVariable"/>
-      <owl:someValuesFrom rdf:resource="#AngleOfAttack"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#hasVariable"/>
       <owl:someValuesFrom rdf:resource="#Chord"/>
     </owl:Restriction>
   </rdfs:subClassOf>
@@ -337,13 +337,13 @@
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#hasVariable"/>
-      <owl:someValuesFrom rdf:resource="#ElasticSupportPitchAngle"/>
+      <owl:someValuesFrom rdf:resource="#AngleOfAttack"/>
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#hasVariable"/>
-      <owl:someValuesFrom rdf:resource="#Slope"/>
+      <owl:someValuesFrom rdf:resource="#RampAngle"/>
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:subClassOf>

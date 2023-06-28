@@ -1,10 +1,3 @@
-import os
-import sys
-
-path = os.path.dirname(os.path.realpath(__file__))
-parent = os.path.dirname(path)
-sys.path.append(parent)
-
 from coupled_modelling import *
 
 
@@ -16,8 +9,7 @@ def foo(Lift, ElasticSupportPitchAngle):
 def main():
     
     # Loading onto
-    onto = load_onto(path = path,
-                     name = 'multidisciplinary_model.owl')
+    onto = load_onto('multidisciplinary_model.owl')
 
     # Adding model to coupled system
     coupled_system = onto['CoupledSystem1']

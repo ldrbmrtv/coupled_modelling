@@ -1,18 +1,14 @@
 from owlready2 import *
 import types
-from onto_sync import util_falcon
+from .onto_sync import util_falcon
 import os
 
 
-def get_onto_path():
-    return os.path.dirname(os.path.realpath(__file__))
-
-
-def load_onto(path=None, name='onto.owl'):
+def load_onto(path=None):
     if not path:
-        path = get_onto_path()
-    onto_path.append(path)
-    onto = get_ontology(name).load()
+        path = os.path.dirname(os.path.realpath(__file__))
+        path = os.path.join(path, 'onto.owl')
+    onto = get_ontology(path).load()
 
     return onto
 

@@ -1,10 +1,3 @@
-import os
-import sys
-
-path = os.path.dirname(os.path.realpath(__file__))
-parent = os.path.dirname(path)
-sys.path.append(parent)
-
 from coupled_modelling import *
 import json
 
