@@ -12,7 +12,9 @@
       "NonlinearCoefficient",
       "AngleOfAttack"
     ],
-    "output": "Lift"
+    "output": [
+      "Lift"
+    ]
   },
   "StructuralModel": {
     "label": "Structural model",
@@ -29,6 +31,8 @@
         "cardinality": 2
       }
     ],
-    "output": "ElasticSupportPitchAngle"
+    "output": [
+      "ElasticSupportPitchAngle"
+    ]
   }
 }

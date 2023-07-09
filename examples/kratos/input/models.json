@@ -1,0 +1,20 @@
+{
+  "ModelRigidBody": {
+    "label": "rigid_body",
+    "solver": "SolverFluid",
+    "input": [
+      "Force",
+      "Moment"
+    ],
+    "output": []
+  },
+  "ModelFluid": {
+    "label": "fluid",
+    "solver": "SolverRigidBody",
+    "input": [
+      "Disp",
+      "Rot"
+    ],
+    "output": []
+  }
+}

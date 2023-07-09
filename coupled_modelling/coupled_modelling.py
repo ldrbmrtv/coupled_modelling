@@ -24,30 +24,48 @@ def sync_entity(entity):
             entity.dbpedia = syncs['entities_db']
 
 
-def create_variable(onto, name, annos):
+def create_variable(onto, name, data, sync=True):
     with onto:
         
         # Data Property
         prop = types.new_class(f'has{name}', (DataProperty, FunctionalProperty))
-        prop.label = f'has {annos["label"].lower()}'
+        prop.label = f'has {data["label"].lower()}'
         prop.domain = [onto.Variable]
         prop.range = [float]
 
         # Class
         cl = types.new_class(name, (onto.Variable,))
-        cl.label = annos['label']
-        sync_entity(cl)
+        cl.label = data['label']
         cl.is_a.append(prop.some(float))
-
+        if sync:
+            sync_entity(cl)
+        
         return cl
 
 
-def create_variables(onto, variables):
+def create_variables(onto, variables, sync=True):
     var_classes = []
     with onto:
-        for var, annos in variables.items():
-            var_classes.append(create_variable(onto, var, annos))
+        for var, data in variables.items():
+            var_classes.append(create_variable(onto, var, data, sync))
     return var_classes
+
+
+def create_solver(onto, name, data, sync=True):
+    with onto:
+        cl = types.new_class(name, (onto.Solver,))
+        cl.label = data['label']
+        for var in data['variables']:
+            cl.is_a.append(onto.hasVariable.some(onto[var]))
+
+        if sync:
+            sync_entity(cl)
+
+
+def create_solvers(onto, solvers, sync=True):
+    with onto:
+        for solver, data in solvers.items():
+            create_solver(onto, solver, data, sync)
 
 
 def sync_coupled(model, coupled):
@@ -57,7 +75,7 @@ def sync_coupled(model, coupled):
         coupled.hasVariable.append(prop)
 
 
-def create_model(onto, model, data, coupled):
+def create_model(onto, model, data, coupled, sync=True):
 
     # Creating coupled system
     if type(coupled) == str:
@@ -66,9 +84,13 @@ def create_model(onto, model, data, coupled):
     # Creating model
     model = types.new_class(model, (onto.Model,))
     model.label = data['label']
-    sync_entity(model)
     model.is_a.append(onto.hasCoupledSystem.some(coupled))
+    if data.get('solver'):
+        solver = onto[data['solver']]
+        model.is_a.append(onto.hasSolver.some(solver))
 
+    if sync:
+        sync_entity(model)
     
     # Inputs
     inputs = data['input']
@@ -79,17 +101,18 @@ def create_model(onto, model, data, coupled):
             model.is_a.append(onto.hasInput.exactly(inp['cardinality'], onto[inp['name']]))
 
     # Output
-    output = data['output']
-    model.is_a.append(onto.hasOutput.some(onto[output]))
+    outputs = data['output']
+    for out in outputs:
+        model.is_a.append(onto.hasOutput.some(onto[out]))
 
     sync_coupled(model, coupled)
 
     return coupled, model
 
 
-def create_models(onto, models, coupled):
+def create_models(onto, models, coupled, sync):
     for model, data in models.items():
-        coupled, model = create_model(onto, model, data, coupled)
+        coupled, model = create_model(onto, model, data, coupled, sync)
     return coupled
 
 
@@ -153,13 +176,43 @@ def create_model_run(onto, model, coupled_inst, foo):
     model_inst = model()
     model_inst.hasCoupledSystem.append(coupled_inst)
     sync_inputs(onto, model_inst, coupled_inst)
-    out_cl = model.hasOutput[0]
-    prop = onto[f'has{out_cl.name}']
-    out_inst = out_cl()
-    prop[out_inst] = [run_model(onto, model_inst, foo)]
-    model_inst.hasOutput.append(out_inst)
-    sync_outputs(coupled_inst, out_inst)
+    outputs = model.hasOutput
+    if len(outputs) > 0:
+        out_cl = outputs[0]
+        prop = onto[f'has{out_cl.name}']
+        out_inst = out_cl()
+        prop[out_inst] = [run_model(onto, model_inst, foo)]
+        model_inst.hasOutput.append(out_inst)
+        sync_outputs(coupled_inst, out_inst)
 
     
 def save_onto(onto, name):
     onto.save(name)
+
+
+def export_model_for_kratos(model):
+
+    solver = model.hasSolver[0]
+
+    result = {
+        'name': model.label,
+        'input_data_list': [],
+        'output_data_list': []
+        }
+
+    for inp in model.hasInput:
+        inp = {
+            'data': inp.label[0],
+            'from_solver': solver.label[0]
+            }
+        result['input_data_list'].append(inp)
+
+    return result
+
+
+def export_models_for_kratos(onto, coupled_system):
+    result = []
+    for model in onto.Model.subclasses():
+        if coupled_system in model.hasCoupledSystem:
+            result.append(export_model_for_kratos(model))
+    return result

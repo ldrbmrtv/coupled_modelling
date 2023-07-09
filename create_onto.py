@@ -21,10 +21,14 @@ def main():
             label = ["Coupled system"]
             #comment = []
 
+        class Solver(Thing):
+            label = ["Solver"]
+            #comment = []
+
     # Object properties        
         class hasVariable(ObjectProperty):
             label = ["has variable"]
-            domain = [Model]  
+            domain = [Model, Solver]  
             range = [Variable]
 
         class hasInput(hasVariable):
@@ -41,6 +45,11 @@ def main():
             label = ["has coupled system"]
             domain = [Model]
             range = [CoupledSystem]
+
+        class hasSolver(ObjectProperty):
+            label = ["has solver"]
+            domain = [Model]
+            range = [Solver]
 
     # Annotation properties
         class wikidata(AnnotationProperty):

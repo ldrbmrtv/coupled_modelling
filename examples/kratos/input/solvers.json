@@ -1,0 +1,21 @@
+{
+  "SolverFluid": {
+    "label": "fluid",
+    "variables": [
+      "Disp",
+      "Rot",
+      "Force",
+      "Moment",
+      "Reaction"
+    ]
+  },
+  "SolverRigidBody": {
+    "label": "rigid_body",
+    "variables": [
+      "Disp",
+      "Rot",
+      "Force",
+      "Moment"
+    ]
+  }
+}

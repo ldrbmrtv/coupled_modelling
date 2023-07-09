@@ -1,0 +1,316 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://b4-1/ontologies/2023/1/onto"
+         xmlns="http://b4-1/ontologies/2023/1/onto#">
+
+<owl:Ontology rdf:about="http://b4-1/ontologies/2023/1/onto"/>
+
+<owl:ObjectProperty rdf:about="#hasVariable">
+  <rdfs:domain rdf:resource="#Model"/>
+  <rdfs:domain rdf:resource="#Solver"/>
+  <rdfs:range rdf:resource="#Variable"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has variable</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasInput">
+  <rdfs:domain rdf:resource="#Model"/>
+  <rdfs:range rdf:resource="#Variable"/>
+  <rdfs:subPropertyOf rdf:resource="#hasVariable"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has input</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasOutput">
+  <rdfs:domain rdf:resource="#Model"/>
+  <rdfs:range rdf:resource="#Variable"/>
+  <rdfs:subPropertyOf rdf:resource="#hasVariable"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has output</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasCoupledSystem">
+  <rdfs:domain rdf:resource="#Model"/>
+  <rdfs:range rdf:resource="#CoupledSystem"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has coupled system</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasSolver">
+  <rdfs:domain rdf:resource="#Model"/>
+  <rdfs:range rdf:resource="#Solver"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has solver</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:DatatypeProperty rdf:about="#hasForce">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Variable"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has force</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasMoment">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Variable"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has moment</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasDisp">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Variable"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has disp</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasRot">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Variable"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has rot</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasReaction">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Variable"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has reaction</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:AnnotationProperty rdf:about="#wikidata"/>
+
+<owl:AnnotationProperty rdf:about="#dbpedia"/>
+
+<owl:Class rdf:about="#Model">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A mathematical model is a function that maps an input to an output.</rdfs:comment>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Model</rdfs:label>
+  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.wikidata.org/entity/Q486902</wikidata>
+  <dbpedia rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Model</dbpedia>
+</owl:Class>
+
+<owl:Class rdf:about="#Variable">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Variable</rdfs:label>
+  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.wikidata.org/entity/Q50701</wikidata>
+  <dbpedia rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Variable</dbpedia>
+</owl:Class>
+
+<owl:Class rdf:about="#Solver">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Solver</rdfs:label>
+  <dbpedia rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Resolver_(Shinhwa_album)</dbpedia>
+</owl:Class>
+
+<owl:Class rdf:about="#CoupledSystem">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Coupled system</rdfs:label>
+  <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.wikidata.org/entity/Q17073022</wikidata>
+</owl:Class>
+
+<owl:Class rdf:about="#Force">
+  <rdfs:subClassOf rdf:resource="#Variable"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasForce"/>
+      <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">force</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Moment">
+  <rdfs:subClassOf rdf:resource="#Variable"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasMoment"/>
+      <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">moment</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Disp">
+  <rdfs:subClassOf rdf:resource="#Variable"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasDisp"/>
+      <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">disp</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Rot">
+  <rdfs:subClassOf rdf:resource="#Variable"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasRot"/>
+      <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">rot</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#Reaction">
+  <rdfs:subClassOf rdf:resource="#Variable"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasReaction"/>
+      <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">reaction</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#SolverFluid">
+  <rdfs:subClassOf rdf:resource="#Solver"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasVariable"/>
+      <owl:someValuesFrom rdf:resource="#Disp"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasVariable"/>
+      <owl:someValuesFrom rdf:resource="#Rot"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasVariable"/>
+      <owl:someValuesFrom rdf:resource="#Force"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasVariable"/>
+      <owl:someValuesFrom rdf:resource="#Moment"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasVariable"/>
+      <owl:someValuesFrom rdf:resource="#Reaction"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fluid</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#SolverRigidBody">
+  <rdfs:subClassOf rdf:resource="#Solver"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasVariable"/>
+      <owl:someValuesFrom rdf:resource="#Disp"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasVariable"/>
+      <owl:someValuesFrom rdf:resource="#Rot"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasVariable"/>
+      <owl:someValuesFrom rdf:resource="#Force"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasVariable"/>
+      <owl:someValuesFrom rdf:resource="#Moment"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">rigid_body</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#CoupledSystem1">
+  <rdfs:subClassOf rdf:resource="#CoupledSystem"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasVariable"/>
+      <owl:someValuesFrom rdf:resource="#Moment"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasVariable"/>
+      <owl:someValuesFrom rdf:resource="#Force"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasVariable"/>
+      <owl:someValuesFrom rdf:resource="#Disp"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasVariable"/>
+      <owl:someValuesFrom rdf:resource="#Rot"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#ModelRigidBody">
+  <rdfs:subClassOf rdf:resource="#Model"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasCoupledSystem"/>
+      <owl:someValuesFrom rdf:resource="#CoupledSystem1"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasSolver"/>
+      <owl:someValuesFrom rdf:resource="#SolverFluid"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasInput"/>
+      <owl:someValuesFrom rdf:resource="#Force"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasInput"/>
+      <owl:someValuesFrom rdf:resource="#Moment"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">rigid_body</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#ModelFluid">
+  <rdfs:subClassOf rdf:resource="#Model"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasCoupledSystem"/>
+      <owl:someValuesFrom rdf:resource="#CoupledSystem1"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasSolver"/>
+      <owl:someValuesFrom rdf:resource="#SolverRigidBody"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasInput"/>
+      <owl:someValuesFrom rdf:resource="#Disp"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasInput"/>
+      <owl:someValuesFrom rdf:resource="#Rot"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fluid</rdfs:label>
+</owl:Class>
+
+
+</rdf:RDF>

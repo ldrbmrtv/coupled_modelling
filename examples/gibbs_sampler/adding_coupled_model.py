@@ -16,7 +16,7 @@ def main():
     model_data = {
         'label': 'Airfoil model',
         'input': ['Lift', 'ElasticSupportPitchAngle'],
-        'output': 'ElasticSupportPitchAngle'}
+        'output': ['ElasticSupportPitchAngle']}
     create_model(onto, 'AirfoilModel', model_data, coupled_system)
     
     # Running model incremetally

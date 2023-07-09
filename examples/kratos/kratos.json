@@ -1,0 +1,34 @@
+[
+  {
+    "name": [
+      "rigid_body"
+    ],
+    "input_data_list": [
+      {
+        "data": "moment",
+        "from_solver": "fluid"
+      },
+      {
+        "data": "force",
+        "from_solver": "fluid"
+      }
+    ],
+    "output_data_list": []
+  },
+  {
+    "name": [
+      "fluid"
+    ],
+    "input_data_list": [
+      {
+        "data": "disp",
+        "from_solver": "rigid_body"
+      },
+      {
+        "data": "rot",
+        "from_solver": "rigid_body"
+      }
+    ],
+    "output_data_list": []
+  }
+]

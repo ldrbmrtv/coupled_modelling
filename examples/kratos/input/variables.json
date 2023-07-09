@@ -1,0 +1,17 @@
+{
+  "Force": {
+    "label": "force"
+  },
+  "Moment": {
+    "label": "moment"
+  },
+  "Disp": {
+  	"label": "disp"
+  },
+  "Rot": {
+  	"label": "rot"
+  },
+  "Reaction": {
+  	"label": "reaction"
+  }
+}
