@@ -10,6 +10,7 @@
 
 <owl:ObjectProperty rdf:about="#hasVariable">
   <rdfs:domain rdf:resource="#Model"/>
+  <rdfs:domain rdf:resource="#Solver"/>
   <rdfs:range rdf:resource="#Variable"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has variable</rdfs:label>
 </owl:ObjectProperty>
@@ -32,6 +33,12 @@
   <rdfs:domain rdf:resource="#Model"/>
   <rdfs:range rdf:resource="#CoupledSystem"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has coupled system</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasSolver">
+  <rdfs:domain rdf:resource="#Model"/>
+  <rdfs:range rdf:resource="#Solver"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has solver</rdfs:label>
 </owl:ObjectProperty>
 
 <owl:DatatypeProperty rdf:about="#hasChord">
@@ -135,6 +142,12 @@
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Variable</rdfs:label>
   <wikidata rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://www.wikidata.org/entity/Q50701</wikidata>
   <dbpedia rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Variable</dbpedia>
+</owl:Class>
+
+<owl:Class rdf:about="#Solver">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Solver</rdfs:label>
+  <dbpedia rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://dbpedia.org/resource/Resolver_(Shinhwa_album)</dbpedia>
 </owl:Class>
 
 <owl:Class rdf:about="#CoupledSystem">
@@ -301,25 +314,7 @@
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#hasVariable"/>
-      <owl:someValuesFrom rdf:resource="#AngleOfAttack"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#hasVariable"/>
-      <owl:someValuesFrom rdf:resource="#Chord"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#hasVariable"/>
-      <owl:someValuesFrom rdf:resource="#Span"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#hasVariable"/>
-      <owl:someValuesFrom rdf:resource="#NonlinearCoefficient"/>
+      <owl:someValuesFrom rdf:resource="#RampAngle"/>
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:subClassOf>
@@ -331,7 +326,7 @@
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#hasVariable"/>
-      <owl:someValuesFrom rdf:resource="#RampAngle"/>
+      <owl:someValuesFrom rdf:resource="#NonlinearCoefficient"/>
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:subClassOf>
@@ -343,7 +338,25 @@
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#hasVariable"/>
+      <owl:someValuesFrom rdf:resource="#Span"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasVariable"/>
       <owl:someValuesFrom rdf:resource="#DynamicPressure"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasVariable"/>
+      <owl:someValuesFrom rdf:resource="#AngleOfAttack"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasVariable"/>
+      <owl:someValuesFrom rdf:resource="#Chord"/>
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:subClassOf>

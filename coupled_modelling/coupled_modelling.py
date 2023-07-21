@@ -5,6 +5,15 @@ import os
 
 
 def load_onto(path=None):
+    """
+    Loads an ontology.
+
+    Args:
+        path (str): Path to the ontology file. If no path is given, returns the empty coupled model ontology.
+
+    Returns:
+        owlready2.namespace.Ontology: An ontology loaded from the specified file.
+    """
     if not path:
         path = os.path.dirname(os.path.realpath(__file__))
         path = os.path.join(path, 'onto.owl')
@@ -14,6 +23,13 @@ def load_onto(path=None):
 
 
 def sync_entity(entity):
+    """
+    For a given entity, queries exisiting analogues from Wikidata and
+    DBpedia by its label and writes it to the entity's annotation.
+
+    Args:
+        entity: An entity from your ontology.
+    """
     if len(entity.label) != 1:
         return
     syncs = util_falcon(entity.label[0])
@@ -25,6 +41,22 @@ def sync_entity(entity):
 
 
 def create_variable(onto, name, data, sync=True):
+    """
+    Creates in an ontology a DataProperty and a class for a variable.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+
+        name (str): Name of the variable.
+
+        data (dict): Annotations of the variable.
+
+        sync (bool): If to synchronize a created entity with existing
+        knowledge bases.
+
+    Returns:
+        onto.Variable: A created class for the variable
+    """
     with onto:
         
         # Data Property
@@ -44,14 +76,45 @@ def create_variable(onto, name, data, sync=True):
 
 
 def create_variables(onto, variables, sync=True):
+    """
+    Creates in an ontology DataProperties and classes for a list of variables.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+
+        variables (dict): A dictionary of variable names with their annotations.
+
+        sync (bool): If to synchronize created entities with existing
+        knowledge bases.
+
+    Returns:
+        list: A list of created classes for the variables
+    """
     var_classes = []
     with onto:
         for var, data in variables.items():
             var_classes.append(create_variable(onto, var, data, sync))
+
     return var_classes
 
 
 def create_solver(onto, name, data, sync=True):
+    """
+    Creates in an ontology a class for a solver.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+
+        name (str): Name of the solver.
+
+        data (dict): Annotations of the solver.
+
+        sync (bool): If to synchronize a created entity with existing
+        knowledge bases.
+
+    Returns:
+        onto.Solver: A created class for the solver.
+    """
     with onto:
         cl = types.new_class(name, (onto.Solver,))
         cl.label = data['label']
@@ -61,28 +124,74 @@ def create_solver(onto, name, data, sync=True):
         if sync:
             sync_entity(cl)
 
+    return cl
+
 
 def create_solvers(onto, solvers, sync=True):
+    """
+    Creates in an ontology classes for a list of solvers.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+
+        solvers (dict): A dictionary of solvers names with their annotations.
+
+        sync (bool): If to synchronize created entities with existing
+        knowledge bases.
+
+    Returns:
+        list: A list of created classes for the solvers.
+    """
+    solv_classes = []
     with onto:
         for solver, data in solvers.items():
-            create_solver(onto, solver, data, sync)
+            solv_classes.append(create_solver(onto, solver, data, sync))
+
+    return solv_classes
 
 
 def sync_coupled(model, coupled):
+    """
+    Synchronizes inputs and outputs of a model with a coupled system.
+
+    Args:
+        model (onto.Model): The model.
+
+        coupled (onto.CoupledSystem): The coupled system to synchronize.
+    """
     for prop in model.hasInput:
         coupled.hasVariable.append(prop)
     for prop in model.hasOutput:
         coupled.hasVariable.append(prop)
 
 
-def create_model(onto, model, data, coupled, sync=True):
+def create_model(onto, name, data, coupled, sync=True):
+    """
+    Creates in an ontology a class for a model.
 
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+
+        name (str): Name of the model.
+
+        data (dict): Annotations of the model.
+
+        coupled (onto.CoupledSystem or str): A coupled system to which the
+        model belongs. If str, creates a new class for the coupled system.
+
+        sync (bool): If to synchronize a created entity with existing
+        knowledge bases.
+
+    Returns:
+        onto.Model: A created class for the model.
+    """
+    
     # Creating coupled system
     if type(coupled) == str:
         coupled = types.new_class(coupled, (onto.CoupledSystem,))
 
     # Creating model
-    model = types.new_class(model, (onto.Model,))
+    model = types.new_class(name, (onto.Model,))
     model.label = data['label']
     model.is_a.append(onto.hasCoupledSystem.some(coupled))
     if data.get('solver'):
@@ -110,13 +219,42 @@ def create_model(onto, model, data, coupled, sync=True):
     return coupled, model
 
 
-def create_models(onto, models, coupled, sync):
+def create_models(onto, models, coupled, sync=True):
+    """
+    Creates in an ontology classes for a list of models.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+
+        models (dict): A dictionary of model names with their annotations.
+
+        coupled (onto.CoupledSystem or str): A coupled system to which the
+        models belongs. If str, creates a new class for the coupled system.
+
+        sync (bool): If to synchronize created entities with existing
+        knowledge bases.
+
+    Returns:
+        onto.CoupledSystem: The coupled system to which the models belongs.
+    """
     for model, data in models.items():
         coupled, model = create_model(onto, model, data, coupled, sync)
     return coupled
 
 
 def create_value(onto, variable, value, coupled_inst):
+    """
+    Creates in an ontology an instance of a variable with its value.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+
+        variable (str): Name of the variable class to instanciate.
+
+        value (float): The variable value to specify.
+
+        coupled_inst (onto.CoupledSystem): An instance of a coupled system.
+    """
     cs = onto[coupled_inst]
     prop = onto[f'has{variable}']
     inst = onto[variable]()
@@ -125,6 +263,16 @@ def create_value(onto, variable, value, coupled_inst):
 
 
 def create_values(onto, values, coupled_inst):
+    """
+    Creates in an ontology instances of a list of variables with their values.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+
+        values (dict): A dictionary of variable names with their values.
+
+        coupled_inst (onto.CoupledSystem): An instance of a coupled system.
+    """
     for variable, value in values.items():
         if type(value) == list:
             for item in value:
@@ -133,33 +281,68 @@ def create_values(onto, values, coupled_inst):
             create_value(onto, variable, value, coupled_inst)
 
 
-def sync_inputs(onto, model, coupled):
+def sync_inputs(onto, model_inst, coupled_inst):
+    """
+    Synchronizes inputs of a coupled system instance with an instance of
+    a model.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+
+        model_inst (onto.Model): An instance of a model.
+
+        coupled_inst (onto.CoupledSystem): An instance of a coupled system
+        to synchronize with.
+    """
     with onto:
-        for var in onto.hasVariable[coupled]:
-            for prop in model.is_a[0].hasInput:
-                if var.is_a[0] == prop and var not in model.hasInput:
-                    model.hasInput.append(var)
+        for var in onto.hasVariable[coupled_inst]:
+            for prop in model_inst.is_a[0].hasInput:
+                if var.is_a[0] == prop and var not in model_inst.hasInput:
+                    model_inst.hasInput.append(var)
 
 
-def sync_outputs(coupled, new_var):
+def sync_outputs(coupled_inst, output_var_inst):
+    """
+    Synchronizes outputs of a coupled system instance with an instance of
+    a model output variable.
+
+    Args:
+        coupled_inst (onto.CoupledSystem): The instance of a coupled system.
+
+        output_var_inst (onto.Variable): The instance of the model output
+        variable.
+    """
     new_vars = []
     var_is = False
-    for var in coupled.hasVariable:
-        if var.is_a == new_var.is_a:
-            new_vars.append(new_var)
+    for var in coupled_inst.hasVariable:
+        if var.is_a == output_var_inst.is_a:
+            new_vars.append(output_var_inst)
             var_is = True
         else:
             new_vars.append(var)
     if not var_is:
-        new_vars.append(new_var)
-    coupled.hasVariable = new_vars
+        new_vars.append(output_var_inst)
+    coupled_inst.hasVariable = new_vars
 
 
-def run_model(onto, model, foo):
+def run_model(onto, model_inst, foo):
+    """
+    Executed a given function, taken a model inputs as arguments.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+
+        model_inst (onto.Model): An instance of a model.
+
+        foo (func): The function to execute.
+
+    Returns:
+        A result of the function execution.
+    """
     args = foo.__code__.co_varnames
     arg_vals = []
     for arg in args:
-        inputs = model.hasInput
+        inputs = model_inst.hasInput
         for inst in inputs:
             inst_types = inst.is_a
             if len(inst_types) == 1:
@@ -173,6 +356,18 @@ def run_model(onto, model, foo):
     
 
 def create_model_run(onto, model, coupled_inst, foo):
+    """
+    Creates a model run and executes a given function.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+
+        model (onto.Model): A class of the model to run.
+
+        coupled_inst (onto.CoupledSystem): An instance of a coupled system.
+
+        foo (func): The function to execute.
+    """
     model_inst = model()
     model_inst.hasCoupledSystem.append(coupled_inst)
     sync_inputs(onto, model_inst, coupled_inst)
@@ -186,12 +381,28 @@ def create_model_run(onto, model, coupled_inst, foo):
         sync_outputs(coupled_inst, out_inst)
 
     
-def save_onto(onto, name):
-    onto.save(name)
+def save_onto(onto, path):
+    """
+    Saves the ontology into a file.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+
+        path (str): Path to the file to save.
+    """
+    onto.save(path)
 
 
 def export_model_for_kratos(model):
+    """
+    Exports a model in a KRATOS format.
 
+    Args:
+        model (onto.Model): The model to export.
+
+    Returns:
+        dict: A dictionary with the model data in the KRATOS format.
+    """
     solver = model.hasSolver[0]
 
     result = {
@@ -210,9 +421,20 @@ def export_model_for_kratos(model):
     return result
 
 
-def export_models_for_kratos(onto, coupled_system):
+def export_coupled_for_kratos(onto, coupled):
+    """
+    Exports models from a coupled system in the KRATOS format.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+
+        coupled (onto.CoupledSystem): The class for coupled system to export.
+
+    Returns:
+        list: A list of models data from the coupled system in KRATOS format.
+    """
     result = []
     for model in onto.Model.subclasses():
-        if coupled_system in model.hasCoupledSystem:
+        if coupled in model.hasCoupledSystem:
             result.append(export_model_for_kratos(model))
     return result

@@ -243,13 +243,13 @@
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#hasVariable"/>
-      <owl:someValuesFrom rdf:resource="#Disp"/>
+      <owl:someValuesFrom rdf:resource="#Rot"/>
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#hasVariable"/>
-      <owl:someValuesFrom rdf:resource="#Rot"/>
+      <owl:someValuesFrom rdf:resource="#Disp"/>
     </owl:Restriction>
   </rdfs:subClassOf>
 </owl:Class>

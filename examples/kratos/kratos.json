@@ -21,11 +21,11 @@
     ],
     "input_data_list": [
       {
-        "data": "disp",
+        "data": "rot",
         "from_solver": "rigid_body"
       },
       {
-        "data": "rot",
+        "data": "disp",
         "from_solver": "rigid_body"
       }
     ],

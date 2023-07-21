@@ -5,7 +5,7 @@ import json
 def main():
     input_path = 'input'    
     onto = load_onto()
-
+    
     # Creating variables
     with open(os.path.join(input_path, 'variables.json'), 'r') as f:
         variables = json.load(f)
@@ -25,7 +25,7 @@ def main():
     save_onto(onto, 'multidisciplinary_model.owl')
 
     with open('kratos.json', 'w') as f:
-        result = export_models_for_kratos(onto, coupled_system)
+        result = export_coupled_for_kratos(onto, coupled_system)
         json.dump(result, f, indent = 2)
 
     
