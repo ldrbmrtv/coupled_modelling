@@ -1,8 +1,6 @@
 API
 ===
 
-Test
-
 .. autofunction:: coupled_modelling.load_onto
 .. autofunction:: coupled_modelling.sync_entity
 .. autofunction:: coupled_modelling.create_variable
