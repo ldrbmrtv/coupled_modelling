@@ -36,87 +36,253 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="coupled_modelling.load_onto">
 <span class="sig-prename descclassname"><span class="pre">coupled_modelling.</span></span><span class="sig-name descname"><span class="pre">load_onto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coupled_modelling.load_onto" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Loads an ontology.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to the ontology file, defaults to None</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An ontology loaded from the specified file</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>owlready2.namespace.Ontology</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="coupled_modelling.sync_entity">
 <span class="sig-prename descclassname"><span class="pre">coupled_modelling.</span></span><span class="sig-name descname"><span class="pre">sync_entity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entity</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coupled_modelling.sync_entity" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>For a given entity, queries exisiting analogues from Wikidata and
+DBpedia by its label and writes it to the entity’s annotation.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>entity: An entity from your ontology.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="coupled_modelling.create_variable">
 <span class="sig-prename descclassname"><span class="pre">coupled_modelling.</span></span><span class="sig-name descname"><span class="pre">create_variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">onto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coupled_modelling.create_variable" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Creates in an ontology a DataProperty and a class for a variable.</p>
+<dl>
+<dt>Args:</dt><dd><p>onto (owlready2.namespace.Ontology): Ontology.</p>
+<p>name (str): Name of the variable.</p>
+<p>data (dict): Annotations of the variable.</p>
+<p>sync (bool): If to synchronize a created entity with existing
+knowledge bases.</p>
+</dd>
+<dt>Returns:</dt><dd><p>onto.Variable: A created class for the variable</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="coupled_modelling.create_variables">
 <span class="sig-prename descclassname"><span class="pre">coupled_modelling.</span></span><span class="sig-name descname"><span class="pre">create_variables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">onto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variables</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coupled_modelling.create_variables" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Creates in an ontology DataProperties and classes for a list of variables.</p>
+<dl>
+<dt>Args:</dt><dd><p>onto (owlready2.namespace.Ontology): Ontology.</p>
+<p>variables (dict): A dictionary of variable names with their annotations.</p>
+<p>sync (bool): If to synchronize created entities with existing
+knowledge bases.</p>
+</dd>
+<dt>Returns:</dt><dd><p>list: A list of created classes for the variables</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="coupled_modelling.create_solver">
 <span class="sig-prename descclassname"><span class="pre">coupled_modelling.</span></span><span class="sig-name descname"><span class="pre">create_solver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">onto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coupled_modelling.create_solver" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Creates in an ontology a class for a solver.</p>
+<dl>
+<dt>Args:</dt><dd><p>onto (owlready2.namespace.Ontology): Ontology.</p>
+<p>name (str): Name of the solver.</p>
+<p>data (dict): Annotations of the solver.</p>
+<p>sync (bool): If to synchronize a created entity with existing
+knowledge bases.</p>
+</dd>
+<dt>Returns:</dt><dd><p>onto.Solver: A created class for the solver.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="coupled_modelling.create_solvers">
 <span class="sig-prename descclassname"><span class="pre">coupled_modelling.</span></span><span class="sig-name descname"><span class="pre">create_solvers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">onto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solvers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coupled_modelling.create_solvers" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Creates in an ontology classes for a list of solvers.</p>
+<dl>
+<dt>Args:</dt><dd><p>onto (owlready2.namespace.Ontology): Ontology.</p>
+<p>solvers (dict): A dictionary of solvers names with their annotations.</p>
+<p>sync (bool): If to synchronize created entities with existing
+knowledge bases.</p>
+</dd>
+<dt>Returns:</dt><dd><p>list: A list of created classes for the solvers.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="coupled_modelling.sync_coupled">
 <span class="sig-prename descclassname"><span class="pre">coupled_modelling.</span></span><span class="sig-name descname"><span class="pre">sync_coupled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupled</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coupled_modelling.sync_coupled" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Synchronizes inputs and outputs of a model with a coupled system.</p>
+<dl>
+<dt>Args:</dt><dd><p>model (onto.Model): The model.</p>
+<p>coupled (onto.CoupledSystem): The coupled system to synchronize.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="coupled_modelling.create_model">
-<span class="sig-prename descclassname"><span class="pre">coupled_modelling.</span></span><span class="sig-name descname"><span class="pre">create_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">onto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coupled_modelling.create_model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">coupled_modelling.</span></span><span class="sig-name descname"><span class="pre">create_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">onto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coupled_modelling.create_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates in an ontology a class for a model.</p>
+<dl>
+<dt>Args:</dt><dd><p>onto (owlready2.namespace.Ontology): Ontology.</p>
+<p>name (str): Name of the model.</p>
+<p>data (dict): Annotations of the model.</p>
+<p>coupled (onto.CoupledSystem or str): A coupled system to which the
+model belongs. If str, creates a new class for the coupled system.</p>
+<p>sync (bool): If to synchronize a created entity with existing
+knowledge bases.</p>
+</dd>
+<dt>Returns:</dt><dd><p>onto.Model: A created class for the model.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="coupled_modelling.create_models">
-<span class="sig-prename descclassname"><span class="pre">coupled_modelling.</span></span><span class="sig-name descname"><span class="pre">create_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">onto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">models</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coupled_modelling.create_models" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">coupled_modelling.</span></span><span class="sig-name descname"><span class="pre">create_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">onto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">models</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coupled_modelling.create_models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates in an ontology classes for a list of models.</p>
+<dl>
+<dt>Args:</dt><dd><p>onto (owlready2.namespace.Ontology): Ontology.</p>
+<p>models (dict): A dictionary of model names with their annotations.</p>
+<p>coupled (onto.CoupledSystem or str): A coupled system to which the
+models belongs. If str, creates a new class for the coupled system.</p>
+<p>sync (bool): If to synchronize created entities with existing
+knowledge bases.</p>
+</dd>
+<dt>Returns:</dt><dd><p>onto.CoupledSystem: The coupled system to which the models belongs.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="coupled_modelling.create_value">
 <span class="sig-prename descclassname"><span class="pre">coupled_modelling.</span></span><span class="sig-name descname"><span class="pre">create_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">onto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupled_inst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coupled_modelling.create_value" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Creates in an ontology an instance of a variable with its value.</p>
+<dl>
+<dt>Args:</dt><dd><p>onto (owlready2.namespace.Ontology): Ontology.</p>
+<p>variable (str): Name of the variable class to instanciate.</p>
+<p>value (float): The variable value to specify.</p>
+<p>coupled_inst (onto.CoupledSystem): An instance of a coupled system.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="coupled_modelling.create_values">
 <span class="sig-prename descclassname"><span class="pre">coupled_modelling.</span></span><span class="sig-name descname"><span class="pre">create_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">onto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupled_inst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coupled_modelling.create_values" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Creates in an ontology instances of a list of variables with their values.</p>
+<dl>
+<dt>Args:</dt><dd><p>onto (owlready2.namespace.Ontology): Ontology.</p>
+<p>values (dict): A dictionary of variable names with their values.</p>
+<p>coupled_inst (onto.CoupledSystem): An instance of a coupled system.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="coupled_modelling.sync_inputs">
-<span class="sig-prename descclassname"><span class="pre">coupled_modelling.</span></span><span class="sig-name descname"><span class="pre">sync_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">onto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupled</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coupled_modelling.sync_inputs" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">coupled_modelling.</span></span><span class="sig-name descname"><span class="pre">sync_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">onto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_inst</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupled_inst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coupled_modelling.sync_inputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Synchronizes inputs of a coupled system instance with an instance of
+a model.</p>
+<dl>
+<dt>Args:</dt><dd><p>onto (owlready2.namespace.Ontology): Ontology.</p>
+<p>model_inst (onto.Model): An instance of a model.</p>
+<p>coupled_inst (onto.CoupledSystem): An instance of a coupled system
+to synchronize with.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="coupled_modelling.sync_outputs">
-<span class="sig-prename descclassname"><span class="pre">coupled_modelling.</span></span><span class="sig-name descname"><span class="pre">sync_outputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coupled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_var</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coupled_modelling.sync_outputs" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">coupled_modelling.</span></span><span class="sig-name descname"><span class="pre">sync_outputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coupled_inst</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_var_inst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coupled_modelling.sync_outputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Synchronizes outputs of a coupled system instance with an instance of
+a model output variable.</p>
+<dl>
+<dt>Args:</dt><dd><p>coupled_inst (onto.CoupledSystem): The instance of a coupled system.</p>
+<p>output_var_inst (onto.Variable): The instance of the model output
+variable.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="coupled_modelling.run_model">
-<span class="sig-prename descclassname"><span class="pre">coupled_modelling.</span></span><span class="sig-name descname"><span class="pre">run_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">onto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">foo</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coupled_modelling.run_model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">coupled_modelling.</span></span><span class="sig-name descname"><span class="pre">run_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">onto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_inst</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">foo</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coupled_modelling.run_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executed a given function, taken a model inputs as arguments.</p>
+<dl>
+<dt>Args:</dt><dd><p>onto (owlready2.namespace.Ontology): Ontology.</p>
+<p>model_inst (onto.Model): An instance of a model.</p>
+<p>foo (func): The function to execute.</p>
+</dd>
+<dt>Returns:</dt><dd><p>A result of the function execution.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="coupled_modelling.create_model_run">
 <span class="sig-prename descclassname"><span class="pre">coupled_modelling.</span></span><span class="sig-name descname"><span class="pre">create_model_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">onto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupled_inst</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">foo</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coupled_modelling.create_model_run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Creates a model run and executes a given function.</p>
+<dl>
+<dt>Args:</dt><dd><p>onto (owlready2.namespace.Ontology): Ontology.</p>
+<p>model (onto.Model): A class of the model to run.</p>
+<p>coupled_inst (onto.CoupledSystem): An instance of a coupled system.</p>
+<p>foo (func): The function to execute.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="coupled_modelling.save_onto">
-<span class="sig-prename descclassname"><span class="pre">coupled_modelling.</span></span><span class="sig-name descname"><span class="pre">save_onto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">onto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coupled_modelling.save_onto" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">coupled_modelling.</span></span><span class="sig-name descname"><span class="pre">save_onto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">onto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coupled_modelling.save_onto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the ontology into a file.</p>
+<dl>
+<dt>Args:</dt><dd><p>onto (owlready2.namespace.Ontology): Ontology.</p>
+<p>path (str): Path to the file to save.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="coupled_modelling.export_model_for_kratos">
 <span class="sig-prename descclassname"><span class="pre">coupled_modelling.</span></span><span class="sig-name descname"><span class="pre">export_model_for_kratos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coupled_modelling.export_model_for_kratos" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Exports a model in a KRATOS format.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>model (onto.Model): The model to export.</p>
+</dd>
+<dt>Returns:</dt><dd><p>dict: A dictionary with the model data in the KRATOS format.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="coupled_modelling.export_coupled_for_kratos">
+<span class="sig-prename descclassname"><span class="pre">coupled_modelling.</span></span><span class="sig-name descname"><span class="pre">export_coupled_for_kratos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">onto</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coupled</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#coupled_modelling.export_coupled_for_kratos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exports models from a coupled system in the KRATOS format.</p>
+<dl>
+<dt>Args:</dt><dd><p>onto (owlready2.namespace.Ontology): Ontology.</p>
+<p>coupled (onto.CoupledSystem): The class for coupled system to export.</p>
+</dd>
+<dt>Returns:</dt><dd><p>list: A list of models data from the coupled system in KRATOS format.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 
@@ -157,6 +323,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#coupled_modelling.create_model_run"><code class="docutils literal notranslate"><span class="pre">create_model_run()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#coupled_modelling.save_onto"><code class="docutils literal notranslate"><span class="pre">save_onto()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#coupled_modelling.export_model_for_kratos"><code class="docutils literal notranslate"><span class="pre">export_model_for_kratos()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#coupled_modelling.export_coupled_for_kratos"><code class="docutils literal notranslate"><span class="pre">export_coupled_for_kratos()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
