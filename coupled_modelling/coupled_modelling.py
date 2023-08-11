@@ -8,11 +8,10 @@ def load_onto(path=None):
     """
     Loads an ontology.
 
-    Args:
-        path (str): Path to the ontology file. If no path is given, returns the empty coupled model ontology.
-
-    Returns:
-        owlready2.namespace.Ontology: An ontology loaded from the specified file.
+    :param path: Path to the ontology file, defaults to None
+    :type path: str, optional
+    :return: An ontology loaded from the specified file
+    :rtype: owlready2.namespace.Ontology
     """
     if not path:
         path = os.path.dirname(os.path.realpath(__file__))
