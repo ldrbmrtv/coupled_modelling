@@ -460,10 +460,16 @@ def create_property(onto, cl, prop_name, prop_value):
 def create_classes_property(onto, cl, key, value):
     if type(value) == dict:
         for key1, value1 in value.items():
-            if type(value1) == dict:
+            if type(value1) == dict or type(value1) == list:
                 create_classes(onto, {key1: value1}, cl, f'has_{key1}')
             else:
                 create_property(onto, cl, key1, value1)
+    elif type(value) == list:
+        for i, value1 in enumerate(value):
+            if type(value1) == dict:
+                create_classes(onto, {f'{key}_{i}': value1}, cl, f'has_{key}')
+            else:
+                create_property(onto, cl, f'{key}_{i}', value1)
     else:
         create_property(onto, cl, key, value)
 

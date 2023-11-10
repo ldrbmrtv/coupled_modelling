@@ -47,8 +47,6 @@
 
 <owl:ObjectProperty rdf:about="#has_data_transfer_operators"/>
 
-<owl:ObjectProperty rdf:about="#has_predictors"/>
-
 <owl:ObjectProperty rdf:about="#has_convergence_accelerators"/>
 
 <owl:ObjectProperty rdf:about="#has_convergence_criteria"/>
@@ -59,11 +57,13 @@
 
 <owl:ObjectProperty rdf:about="#has_coupling_sequence"/>
 
+<owl:ObjectProperty rdf:about="#has_data_transfer_operator_options"/>
+
+<owl:ObjectProperty rdf:about="#has_import_meshes"/>
+
 <owl:ObjectProperty rdf:about="#has_export_data"/>
 
 <owl:ObjectProperty rdf:about="#has_import_data"/>
-
-<owl:ObjectProperty rdf:about="#has_import_meshes"/>
 
 <owl:ObjectProperty rdf:about="#has_solver_wrapper_settings"/>
 
@@ -96,6 +96,8 @@
 <owl:DatatypeProperty rdf:about="#num_coupling_iterations"/>
 
 <owl:DatatypeProperty rdf:about="#mapper_type"/>
+
+<owl:DatatypeProperty rdf:about="#use_initial_configuration"/>
 
 <owl:DatatypeProperty rdf:about="#solver"/>
 
@@ -132,11 +134,11 @@
 
 <owl:DatatypeProperty rdf:about="#to_solver_data"/>
 
+<owl:DatatypeProperty rdf:about="#import_meshes_0"/>
+
 <owl:DatatypeProperty rdf:about="#export_data_0"/>
 
 <owl:DatatypeProperty rdf:about="#import_data_0"/>
-
-<owl:DatatypeProperty rdf:about="#import_meshes_0"/>
 
 <owl:DatatypeProperty rdf:about="#connect_to"/>
 
@@ -146,7 +148,9 @@
 
 <owl:DatatypeProperty rdf:about="#variable_name"/>
 
-<owl:DatatypeProperty rdf:about="#location"/>
+<owl:DatatypeProperty rdf:about="#dimension"/>
+
+<owl:DatatypeProperty rdf:about="#input_file"/>
 
 <owl:AnnotationProperty rdf:about="#wikidata"/>
 
@@ -223,13 +227,13 @@
   </rdfs:subClassOf>
   <rdfs:subClassOf>
     <owl:Restriction>
-      <owl:onProperty rdf:resource="#num_coupling_iterations"/>
+      <owl:onProperty rdf:resource="#echo_level"/>
       <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:subClassOf>
     <owl:Restriction>
-      <owl:onProperty rdf:resource="#echo_level"/>
+      <owl:onProperty rdf:resource="#num_coupling_iterations"/>
       <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
     </owl:Restriction>
   </rdfs:subClassOf>
@@ -237,12 +241,6 @@
     <owl:Restriction>
       <owl:onProperty rdf:resource="#has_data_transfer_operators"/>
       <owl:someValuesFrom rdf:resource="#data_transfer_operators"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#has_predictors"/>
-      <owl:someValuesFrom rdf:resource="#predictors"/>
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:subClassOf>
@@ -307,14 +305,10 @@
   </rdfs:subClassOf>
   <rdfs:subClassOf>
     <owl:Restriction>
-      <owl:onProperty rdf:resource="#echo_level"/>
-      <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+      <owl:onProperty rdf:resource="#use_initial_configuration"/>
+      <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
     </owl:Restriction>
   </rdfs:subClassOf>
-</owl:Class>
-
-<owl:Class rdf:about="#predictors">
-  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
 </owl:Class>
 
 <owl:Class rdf:about="#convergence_accelerators">
@@ -499,6 +493,16 @@
       <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:Restriction>
   </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_data_transfer_operator_options"/>
+      <owl:someValuesFrom rdf:resource="#data_transfer_operator_options"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#data_transfer_operator_options">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
 </owl:Class>
 
 <owl:Class rdf:about="#output_data_list_0">
@@ -577,6 +581,12 @@
   <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
   <rdfs:subClassOf>
     <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_import_meshes"/>
+      <owl:someValuesFrom rdf:resource="#import_meshes"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
       <owl:onProperty rdf:resource="#has_export_data"/>
       <owl:someValuesFrom rdf:resource="#export_data"/>
     </owl:Restriction>
@@ -589,8 +599,18 @@
   </rdfs:subClassOf>
   <rdfs:subClassOf>
     <owl:Restriction>
-      <owl:onProperty rdf:resource="#has_import_meshes"/>
-      <owl:someValuesFrom rdf:resource="#import_meshes"/>
+      <owl:onProperty rdf:resource="#input_file"/>
+      <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#import_meshes">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#import_meshes_0"/>
+      <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:Restriction>
   </rdfs:subClassOf>
 </owl:Class>
@@ -610,16 +630,6 @@
   <rdfs:subClassOf>
     <owl:Restriction>
       <owl:onProperty rdf:resource="#import_data_0"/>
-      <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-</owl:Class>
-
-<owl:Class rdf:about="#import_meshes">
-  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#import_meshes_0"/>
       <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:Restriction>
   </rdfs:subClassOf>
@@ -669,8 +679,8 @@
   </rdfs:subClassOf>
   <rdfs:subClassOf>
     <owl:Restriction>
-      <owl:onProperty rdf:resource="#location"/>
-      <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:onProperty rdf:resource="#dimension"/>
+      <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
     </owl:Restriction>
   </rdfs:subClassOf>
 </owl:Class>
@@ -691,8 +701,8 @@
   </rdfs:subClassOf>
   <rdfs:subClassOf>
     <owl:Restriction>
-      <owl:onProperty rdf:resource="#location"/>
-      <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:onProperty rdf:resource="#dimension"/>
+      <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
     </owl:Restriction>
   </rdfs:subClassOf>
 </owl:Class>
@@ -709,12 +719,6 @@
     <owl:Restriction>
       <owl:onProperty rdf:resource="#has_solver_wrapper_settings"/>
       <owl:someValuesFrom rdf:resource="#solver_wrapper_settings"/>
-    </owl:Restriction>
-  </rdfs:subClassOf>
-  <rdfs:subClassOf>
-    <owl:Restriction>
-      <owl:onProperty rdf:resource="#has_io_settings"/>
-      <owl:someValuesFrom rdf:resource="#io_settings"/>
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:subClassOf>
