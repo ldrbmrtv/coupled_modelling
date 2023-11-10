@@ -49,13 +49,25 @@
 
 <owl:ObjectProperty rdf:about="#has_predictors"/>
 
+<owl:ObjectProperty rdf:about="#has_convergence_accelerators_0"/>
+
 <owl:ObjectProperty rdf:about="#has_convergence_accelerators"/>
+
+<owl:ObjectProperty rdf:about="#has_convergence_criteria_0"/>
 
 <owl:ObjectProperty rdf:about="#has_convergence_criteria"/>
 
 <owl:ObjectProperty rdf:about="#has_output_data_list"/>
 
 <owl:ObjectProperty rdf:about="#has_input_data_list"/>
+
+<owl:ObjectProperty rdf:about="#has_coupling_sequence_0"/>
+
+<owl:ObjectProperty rdf:about="#has_input_data_list_0"/>
+
+<owl:ObjectProperty rdf:about="#has_output_data_list_0"/>
+
+<owl:ObjectProperty rdf:about="#has_coupling_sequence_1"/>
 
 <owl:ObjectProperty rdf:about="#has_coupling_sequence"/>
 
@@ -321,7 +333,7 @@
   <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
   <rdfs:subClassOf>
     <owl:Restriction>
-      <owl:onProperty rdf:resource="#has_convergence_accelerators"/>
+      <owl:onProperty rdf:resource="#has_convergence_accelerators_0"/>
       <owl:someValuesFrom rdf:resource="#convergence_accelerators_0"/>
     </owl:Restriction>
   </rdfs:subClassOf>
@@ -353,7 +365,7 @@
   <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
   <rdfs:subClassOf>
     <owl:Restriction>
-      <owl:onProperty rdf:resource="#has_convergence_criteria"/>
+      <owl:onProperty rdf:resource="#has_convergence_criteria_0"/>
       <owl:someValuesFrom rdf:resource="#convergence_criteria_0"/>
     </owl:Restriction>
   </rdfs:subClassOf>
@@ -397,13 +409,13 @@
   <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
   <rdfs:subClassOf>
     <owl:Restriction>
-      <owl:onProperty rdf:resource="#has_coupling_sequence"/>
+      <owl:onProperty rdf:resource="#has_coupling_sequence_0"/>
       <owl:someValuesFrom rdf:resource="#coupling_sequence_0"/>
     </owl:Restriction>
   </rdfs:subClassOf>
   <rdfs:subClassOf>
     <owl:Restriction>
-      <owl:onProperty rdf:resource="#has_coupling_sequence"/>
+      <owl:onProperty rdf:resource="#has_coupling_sequence_1"/>
       <owl:someValuesFrom rdf:resource="#coupling_sequence_1"/>
     </owl:Restriction>
   </rdfs:subClassOf>
@@ -435,7 +447,7 @@
   <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
   <rdfs:subClassOf>
     <owl:Restriction>
-      <owl:onProperty rdf:resource="#has_output_data_list"/>
+      <owl:onProperty rdf:resource="#has_output_data_list_0"/>
       <owl:someValuesFrom rdf:resource="#output_data_list_0"/>
     </owl:Restriction>
   </rdfs:subClassOf>
@@ -445,7 +457,7 @@
   <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
   <rdfs:subClassOf>
     <owl:Restriction>
-      <owl:onProperty rdf:resource="#has_input_data_list"/>
+      <owl:onProperty rdf:resource="#has_input_data_list_0"/>
       <owl:someValuesFrom rdf:resource="#input_data_list_0"/>
     </owl:Restriction>
   </rdfs:subClassOf>

@@ -467,13 +467,13 @@ def create_classes_property(onto, cl, key, value):
     elif type(value) == list:
         for i, value1 in enumerate(value):
             if type(value1) == dict:
-                create_classes(onto, {f'{key}_{i}': value1}, cl, f'has_{key}')
+                create_classes(onto, {f'{key}_{i}': value1}, cl, f'has_{key}_{i}')
             else:
                 create_property(onto, cl, f'{key}_{i}', value1)
     else:
         create_property(onto, cl, key, value)
-
-
+        
+                    
 def create_classes(onto, data, parent = None, rel_name = None):
     with onto:
         for key1, value1 in data.items():
