@@ -11,7 +11,7 @@
         "echo_level": 4,
         "num_coupling_iterations": 20,
         "data_transfer_operators": {
-            "direct_transfer": {
+            "mapping_operation": {
                 "type": "kratos_mapping",
                 "mapper_settings":{
                     "mapper_type": "nearest_neighbor",
@@ -48,8 +48,8 @@
                         "data": "lift_force",
                         "from_solver": "CFD",
                         "from_solver_data": "lift_force",
-                        "data_transfer_operator": "direct_transfer",
-                        "data_transfer_operator_options": []
+                        "data_transfer_operator": "mapping_operation",
+                        "data_transfer_operator_options": ["use_transpose"]
                     }
                 ],
                 "output_data_list": [
@@ -57,7 +57,7 @@
                         "data": "displacements",
                         "to_solver": "CFD",
                         "to_solver_data": "displacements",
-                        "data_transfer_operator": "direct_transfer"
+                        "data_transfer_operator": "mapping_operation"
                     }
                 ]
             }

@@ -1,0 +1,118 @@
+{
+    "problem_data": { # You can understand this block as some very general description of the Coupled simulation
+        "start_time": 0.0,
+        "end_time": 1.0, # it defines if the problem is statik or dynamic.  time is given in sec. If the problem is dynamic then me define how many sec. the solver has to compute. Still to indetify if it is statik, we need to know the time step (which is defined in another file). I will ignore this details for now as we do only statik
+        "echo_level": 2,
+        "print_colors": true,
+        "parallel_type": "OpenMP" # Defines the parallelization type. Important for large problems and when HPC are used
+    },
+    "solver_settings": { # everything inside this block belongs to Coupled System. It describes the way how the coupled variables are solved and transfered between models.
+        "type": "coupled_solvers.gauss_seidel_strong", # Coupled system has type
+        "echo_level": 4, #ignore
+        "num_coupling_iterations": 20,  # Coupled system has num_coupling_iterations
+        "data_transfer_operators": { # One of the key point, how to transfer data from one model to another one
+            "direct_transfer": { # user given name. This block describes the data transfer operation.
+                "type": "kratos_mapping", # operation type
+                "mapper_settings":{
+                    "mapper_type": "nearest_neighbor", # specific for kratos_mapping, nearest_neighbor is a name of the well-known mapping method.
+                    "use_initial_configuration"    : true # kratos specific setting
+                }
+            }
+        },
+        "convergence_accelerators": [
+            { # This block describes specific convergence_acceleration methods to speed up the coupling solver (solve with fewer num_coupling_iterations)
+                "type": "aitken", # kratos type of the well-known method 'Aitken accelation'
+                "solver": "CFD", # from which solver comes the field
+                "data_name": "displacements" # this is important, as it defines on which field it is applied
+            }
+        ],
+        "convergence_criteria": [
+            { # This block describes the convergence_criteria. In short, it is conditions to define when the coupled problem is solved.
+                "type": "relative_norm_initial_residual", # kratos type, based on the residuals between norms of the datafield of the current and previus iteration
+                "solver": "CFD", # from which solver comes the field
+                "data_name": "displacements", # which data field (coupling variable) has to be checked. In FSI it is typically displacements
+                "abs_tolerance": 1e-7, # absolute tolerance
+                "rel_tolerance": 1e-5  # relative tolerance
+            }
+        ],
+        "coupling_sequence": [ # This block describes, how the solution should be performend.
+            {
+                "name": "CFD", # In this example, we start with CFD and it is typical for FSI.
+                "output_data_list": [], # nothing to output. This is Kratos implementaion, which can be confusing for ontology. In reality CFD gets the displacements from SM and send Lift Force to SM. TO avoid write it 2 times, here only SM has it.
+                "input_data_list": []   # nothing to input
+            },
+            {
+                "name": "SM", # Is solved after CFD
+                "input_data_list": [ # Gets "from_solver_data": "lift_force" "from_solver": "CFD", to its "data": "lift_force",
+                    {
+                        "data": "lift_force",
+                        "from_solver": "CFD",
+                        "from_solver_data": "lift_force",
+                        "data_transfer_operator": "direct_transfer", # important detail, how the data is transfered
+                        "data_transfer_operator_options": ["use_transpose"] # some extra kratos options, like transpose the mapping matrix.
+                    }
+                ],
+                "output_data_list": [ # Send "data": "displacements", "to_solver": "CFD", "to_solver_data": "displacements", by "data_transfer_operator": "direct_transfer"
+                    {
+                        "data": "displacements",
+                        "to_solver": "CFD",
+                        "to_solver_data": "displacements",
+                        "data_transfer_operator": "direct_transfer"
+                    }
+                ]
+            }
+        ],
+        "solvers": { This full block describes my models. In specific the common part of the model. Full CFD or SM models are defined in solver specific files and here we give only basic information about it
+            "CFD": { # Firts model, with user given name CFD
+                "type": "solver_wrappers.external.remote_controlled_solver_wrapper", # Kratos specific type for ANY external solver, hence it can be anything. In our case we have used SU2 solver by ontology can't know it from given parameters =(
+                "solver_wrapper_settings": { # this block can vary and it can be unique for different type , See second one
+                    "import_meshes": [ # User give name of the common part of the model. In this case it is a wing, which I have named WING
+                        "WING"
+                    ],
+                    "export_data": [ # basicaly this is coupling variables. In Kratos we always define them as datafields which a assign to certatin model part. See below
+                        "displacements"
+                    ],
+                    "import_data": [ # second coupled variable
+                        "lift_force"
+                    ]
+                },
+                "io_settings" : { # CoSImulation specific parameter which defines how Kratos connects to solver_wrappers.external.remote_controlled_solver_wrapper
+                    "type"       : "kratos_co_sim_io", # kratos type
+                    "echo_level" : 4, # ignoer, echo_level defines the amount of output into terminal
+                    "connect_to" : "run_SU2", # some user give name
+                    "communication_format" : "file" # we exchange information using files
+                },
+                "data": {
+                    "displacements": { # 1st coupled variable of CFD model,
+                        "model_part_name": "WING",# it is assigned to the "model_part_name": which is named "WING"
+                        "variable_name": "MESH_DISPLACEMENT", # Kratos physical variables. In this case it is MESH_DISPLACEMENT
+                        "dimension": 3 # it is a vector field [x1, y1, z1, x2, y2, z2, ... ]
+                    },
+                    "lift_force": { # 2nd coup. var - lift force
+                        "model_part_name": "WING",
+                        "variable_name": "REACTION",
+                        "dimension": 3
+                    }
+                }
+            },
+            "SM": {
+                "type": "solver_wrappers.kratos.structural_mechanics_wrapper", # this is another type of the solver I have used:  internal structural mechnics kratos solver.
+                "solver_wrapper_settings": {
+                    "input_file": "ProjectParametersSM"
+                },
+                "data": {
+                    "displacements": {# 1st coupled variable of SM model,
+                        "model_part_name": "Structure.interface",
+                        "variable_name": "DISPLACEMENT",
+                        "dimension": 3
+                    },
+                    "lift_force": { # 2nd coupled variable of SM model,
+                        "model_part_name": "Structure.interface",
+                        "variable_name": "POINT_LOAD",
+                        "dimension": 3
+                    }
+                }
+            }
+        }
+    }
+}
