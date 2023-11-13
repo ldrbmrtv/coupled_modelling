@@ -22,58 +22,58 @@
         "convergence_accelerators": [
             {
                 "type": "aitken",
-                "solver": "fluid",
-                "data_name": "disp_y"
+                "solver": "CFD",
+                "data_name": "displacements"
             }
         ],
         "convergence_criteria": [
             {
                 "type": "relative_norm_initial_residual",
-                "solver": "fluid",
-                "data_name": "disp_y",
+                "solver": "CFD",
+                "data_name": "displacements",
                 "abs_tolerance": 1e-7,
                 "rel_tolerance": 1e-5
             }
         ],
         "coupling_sequence": [
             {
-                "name": "fluid",
+                "name": "CFD",
                 "output_data_list": [],
                 "input_data_list": []
             },
             {
-                "name": "structure",
+                "name": "SM",
                 "input_data_list": [
                     {
-                        "data": "force_y",
-                        "from_solver": "fluid",
-                        "from_solver_data": "force_y",
+                        "data": "lift_force",
+                        "from_solver": "CFD",
+                        "from_solver_data": "lift_force",
                         "data_transfer_operator": "direct_transfer",
                         "data_transfer_operator_options": []
                     }
                 ],
                 "output_data_list": [
                     {
-                        "data": "disp_y",
-                        "to_solver": "fluid",
-                        "to_solver_data": "disp_y",
+                        "data": "displacements",
+                        "to_solver": "CFD",
+                        "to_solver_data": "displacements",
                         "data_transfer_operator": "direct_transfer"
                     }
                 ]
             }
         ],
         "solvers": {
-            "fluid": {
+            "CFD": {
                 "type": "solver_wrappers.external.remote_controlled_solver_wrapper",
                 "solver_wrapper_settings": {
                     "import_meshes": [
                         "WING"
                     ],
                     "export_data": [
-                        "disp_y"
+                        "displacements"
                     ],
                     "import_data": [
-                        "force_y"
+                        "lift_force"
                     ]
                 },
                 "io_settings" : {
@@ -83,30 +83,30 @@
                     "communication_format" : "file"
                 },
                 "data": {
-                    "disp_y": {
+                    "displacements": {
                         "model_part_name": "WING",
                         "variable_name": "MESH_DISPLACEMENT",
                         "dimension": 3
                     },
-                    "force_y": {
+                    "lift_force": {
                         "model_part_name": "WING",
                         "variable_name": "REACTION",
                         "dimension": 3
                     }
                 }
             },
-            "structure": {
+            "SM": {
                 "type": "solver_wrappers.kratos.structural_mechanics_wrapper",
                 "solver_wrapper_settings": {
                     "input_file": "ProjectParametersSM"
                 },
                 "data": {
-                    "disp_y": {
+                    "displacements": {
                         "model_part_name": "Structure.interface",
                         "variable_name": "DISPLACEMENT",
                         "dimension": 3
                     },
-                    "force_y": {
+                    "lift_force": {
                         "model_part_name": "Structure.interface",
                         "variable_name": "POINT_LOAD",
                         "dimension": 3
