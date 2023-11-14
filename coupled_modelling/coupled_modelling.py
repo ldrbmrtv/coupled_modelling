@@ -500,7 +500,10 @@ def add_statement(onto, coupled_system_name, inst, pred_name, obj_data):
                     rel[inst].append(obj_inst)
             for inst_cl in inst.is_a:
                 k = len(rel[inst])
-                inst_cl.is_a.append(rel.exactly(k, obj_cl))
+                if k == 1:
+                    inst_cl.is_a.append(rel.some(obj_cl))
+                else:
+                    inst_cl.is_a.append(rel.exactly(k, obj_cl))
         elif type(obj_data) == list:
             for i, obj_item in enumerate(obj_data):
                 if type(obj_item) == dict:
@@ -523,12 +526,18 @@ def add_statement(onto, coupled_system_name, inst, pred_name, obj_data):
                     rel = get_relation(onto, pred_name, coupled_system_name)
                     ks = dict(Counter([obj_inst.is_a[0] for obj_inst in rel[inst]]))
                     for t, k in ks.items():
-                        inst_cl.is_a.append(rel.exactly(k, t))
+                        if k == 1:
+                            inst_cl.is_a.append(rel.some(t))
+                        else:
+                            inst_cl.is_a.append(rel.exactly(k, t))
                 else:
                     prop = get_property(onto, pred_name, coupled_system_name)
                     ks = dict(Counter([type(obj_item) for obj_item in obj_data]))
                     for t, k in ks.items():
-                        inst_cl.is_a.append(prop.exactly(k, t))
+                        if k == 1:
+                            inst_cl.is_a.append(prop.some(t))
+                        else:
+                            inst_cl.is_a.append(prop.exactly(k, t))
         else:
             prop = get_property(onto, pred_name, coupled_system_name, True)
             if obj_data not in prop[inst]:
@@ -536,7 +545,10 @@ def add_statement(onto, coupled_system_name, inst, pred_name, obj_data):
                 prop[inst].append(obj_data)
                 for cl in inst.is_a:
                     k = len(prop[inst])
-                    cl.is_a.append(prop.exactly(k, type(obj_data)))
+                    if k == 1:
+                        cl.is_a.append(prop.some(type(obj_data)))
+                    else:
+                        cl.is_a.append(prop.exactly(k, type(obj_data)))
     return inst
 
 
