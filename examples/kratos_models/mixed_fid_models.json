@@ -1,0 +1,132 @@
+{
+    "problem_data": {
+        "start_time": 0.0,
+        "end_time": 1.0,
+        "echo_level": 0,
+        "print_colors": true,
+        "parallel_type": "OpenMP"
+    },
+    "solver_settings": {
+        "type": "coupled_solvers.gauss_seidel_strong",
+        "num_coupling_iterations": 20,
+        "echo_level": 3,
+        "data_transfer_operators": {
+            "direct_transfer": {
+                "type": "kratos_mapping",
+                "mapper_settings":{
+                    "mapper_type": "nearest_neighbor",
+                    "echo_level": 3
+                }
+            }
+        },
+        "predictors": [],
+        "convergence_accelerators": [
+            {
+                "type": "aitken",
+                "solver": "low_fid_fluid",
+                "data_name": "AOA"
+            }
+        ],
+        "convergence_criteria": [
+            {
+                "type": "relative_norm_previous_residual",
+                "solver": "low_fid_fluid",
+                "data_name": "AOA",
+                "abs_tolerance": 1e-7,
+                "rel_tolerance": 1e-5
+            }
+        ],
+        "coupling_sequence": [
+            {
+                "name": "low_fid_fluid",
+                "output_data_list": [],
+                "input_data_list": []
+            },
+            {
+                "name": "spring_structure",
+                "input_data_list": [
+                    {
+                        "data": "lift_force",
+                        "from_solver": "low_fid_fluid",
+                        "from_solver_data": "lift_force",
+                        "data_transfer_operator": "direct_transfer"
+                    }
+                ],
+                "output_data_list": [
+                    {
+                        "data": "AOA",
+                        "to_solver": "low_fid_fluid",
+                        "to_solver_data": "AOA",
+                        "data_transfer_operator": "direct_transfer"
+                    }
+                ]
+            }
+        ],
+        "solvers": {
+            "low_fid_fluid": {
+                "type": "solver_wrappers.external.remote_controlled_solver_wrapper",
+                "solver_wrapper_settings": {
+                    "export_data": [
+                        "AOA"
+                    ],
+                    "import_data": [
+                        "lift_force"
+                    ],
+                    "import_meshes": [
+                        "single_node_mesh_f"
+                    ]
+                },
+                "io_settings": {
+                    "type": "kratos_co_sim_io",
+                    "echo_level": 4,
+                    "connect_to": "run_fluid",
+                    "communication_format": "file"
+                },
+                "data": {
+                    "AOA": {
+                        "model_part_name": "single_node_mesh_f",
+                        "variable_name": "SCALAR_DISPLACEMENT",
+                        "location": "node_historical"
+                    },
+                    "lift_force": {
+                        "model_part_name": "single_node_mesh_f",
+                        "variable_name": "SCALAR_FORCE",
+                        "location": "node_historical"
+                    }
+                }
+            },
+            "spring_structure": {
+                "type": "solver_wrappers.external.remote_controlled_solver_wrapper",
+                "solver_wrapper_settings": {
+                    "export_data": [
+                        "lift_force"
+                    ],
+                    "import_data": [
+                        "AOA"
+                    ],
+                    "import_meshes": [
+                        "single_node_mesh_s"
+                    ]
+                },
+                "io_settings": {
+                    "type": "kratos_co_sim_io",
+                    "echo_level": 4,
+                    "connect_to": "run_structure",
+                    "communication_format": "file"
+                },
+                "data": {
+                    "AOA": {
+                        "model_part_name": "single_node_mesh_s",
+                        "variable_name": "SCALAR_DISPLACEMENT",
+                        "location": "node_historical"
+                    },
+                    "lift_force": {
+                        "model_part_name": "single_node_mesh_s",
+                        "variable_name": "SCALAR_FORCE",
+                        "location": "node_historical"
+                    }
+                }
+            }
+        }
+    }
+}

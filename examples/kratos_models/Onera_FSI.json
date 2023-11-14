@@ -1,0 +1,118 @@
+{
+    "problem_data": {
+        "start_time": 0.0,
+        "end_time": 1.0,
+        "echo_level": 2,
+        "print_colors": true,
+        "parallel_type": "OpenMP"
+    },
+    "solver_settings": {
+        "type": "coupled_solvers.gauss_seidel_strong",
+        "echo_level": 4,
+        "num_coupling_iterations": 20,
+        "data_transfer_operators": {
+            "mapping_operation": {
+                "type": "kratos_mapping",
+                "mapper_settings":{
+                    "mapper_type": "nearest_neighbor",
+                    "use_initial_configuration"    : true
+                }
+            }
+        },
+        "convergence_accelerators": [
+            {
+                "type": "aitken",
+                "solver": "CFD",
+                "data_name": "displacements"
+            }
+        ],
+        "convergence_criteria": [
+            {
+                "type": "relative_norm_initial_residual",
+                "solver": "CFD",
+                "data_name": "displacements",
+                "abs_tolerance": 1e-7,
+                "rel_tolerance": 1e-5
+            }
+        ],
+        "coupling_sequence": [
+            {
+                "name": "CFD",
+                "output_data_list": [],
+                "input_data_list": []
+            },
+            {
+                "name": "SM",
+                "input_data_list": [
+                    {
+                        "data": "lift_force",
+                        "from_solver": "CFD",
+                        "from_solver_data": "lift_force",
+                        "data_transfer_operator": "mapping_operation",
+                        "data_transfer_operator_options": ["use_transpose"]
+                    }
+                ],
+                "output_data_list": [
+                    {
+                        "data": "displacements",
+                        "to_solver": "CFD",
+                        "to_solver_data": "displacements",
+                        "data_transfer_operator": "mapping_operation"
+                    }
+                ]
+            }
+        ],
+        "solvers": {
+            "CFD": {
+                "type": "solver_wrappers.external.remote_controlled_solver_wrapper",
+                "solver_wrapper_settings": {
+                    "import_meshes": [
+                        "WING"
+                    ],
+                    "export_data": [
+                        "displacements"
+                    ],
+                    "import_data": [
+                        "lift_force"
+                    ]
+                },
+                "io_settings" : {
+                    "type"       : "kratos_co_sim_io",
+                    "echo_level" : 4,
+                    "connect_to" : "run_SU2",
+                    "communication_format" : "file"
+                },
+                "data": {
+                    "displacements": {
+                        "model_part_name": "WING",
+                        "variable_name": "MESH_DISPLACEMENT",
+                        "dimension": 3
+                    },
+                    "lift_force": {
+                        "model_part_name": "WING",
+                        "variable_name": "REACTION",
+                        "dimension": 3
+                    }
+                }
+            },
+            "SM": {
+                "type": "solver_wrappers.kratos.structural_mechanics_wrapper",
+                "solver_wrapper_settings": {
+                    "input_file": "ProjectParametersSM"
+                },
+                "data": {
+                    "displacements": {
+                        "model_part_name": "Structure.interface",
+                        "variable_name": "DISPLACEMENT",
+                        "dimension": 3
+                    },
+                    "lift_force": {
+                        "model_part_name": "Structure.interface",
+                        "variable_name": "POINT_LOAD",
+                        "dimension": 3
+                    }
+                }
+            }
+        }
+    }
+}
