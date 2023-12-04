@@ -24,14 +24,14 @@
             {
                 "type": "aitken",
                 "solver": "low_fid_fluid",
-                "data_name": "AOA"
+                "data_name": "pitch_angle"
             }
         ],
         "convergence_criteria": [
             {
                 "type": "relative_norm_previous_residual",
                 "solver": "low_fid_fluid",
-                "data_name": "AOA",
+                "data_name": "pitch_angle",
                 "abs_tolerance": 1e-7,
                 "rel_tolerance": 1e-5
             }
@@ -54,9 +54,9 @@
                 ],
                 "output_data_list": [
                     {
-                        "data": "AOA",
+                        "data": "pitch_angle",
                         "to_solver": "low_fid_fluid",
-                        "to_solver_data": "AOA",
+                        "to_solver_data": "pitch_angle",
                         "data_transfer_operator": "direct_transfer"
                     }
                 ]
@@ -67,7 +67,7 @@
                 "type": "solver_wrappers.external.remote_controlled_solver_wrapper",
                 "solver_wrapper_settings": {
                     "export_data": [
-                        "AOA"
+                        "pitch_angle"
                     ],
                     "import_data": [
                         "lift_force"
@@ -83,7 +83,7 @@
                     "communication_format": "file"
                 },
                 "data": {
-                    "AOA": {
+                    "pitch_angle": {
                         "model_part_name": "single_node_mesh_f",
                         "variable_name": "SCALAR_DISPLACEMENT",
                         "location": "node_historical"
@@ -102,7 +102,7 @@
                         "lift_force"
                     ],
                     "import_data": [
-                        "AOA"
+                        "pitch_angle"
                     ],
                     "import_meshes": [
                         "single_node_mesh_s"
@@ -115,7 +115,7 @@
                     "communication_format": "file"
                 },
                 "data": {
-                    "AOA": {
+                    "pitch_angle": {
                         "model_part_name": "single_node_mesh_s",
                         "variable_name": "SCALAR_DISPLACEMENT",
                         "location": "node_historical"

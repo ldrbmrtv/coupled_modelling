@@ -548,10 +548,12 @@ def add_statement(onto, coupled_system_name, inst, pred_name, obj_data):
     return inst
 
 
-def import_coupled_kratos(onto, data, name = None):
+def import_coupled_kratos(onto, data, prefix = None, label = None):
     with onto:
         coupled_system = get_class(onto, 'coupled_system')
-        cl = get_class(onto, name, parent = coupled_system)
+        cl = get_class(onto, prefix, parent = coupled_system)
+        if label:
+            cl.label = label    
         inst = cl()
         for pred_name, obj_data in data.items():
-            inst = add_statement(onto, name, inst, pred_name, obj_data)
+            inst = add_statement(onto, prefix, inst, pred_name, obj_data)
