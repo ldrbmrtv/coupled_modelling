@@ -385,7 +385,7 @@ def create_model_run(onto, model, coupled_inst, foo):
         sync_outputs(coupled_inst, out_inst)
 
     
-def save_onto(onto, path):
+def save_onto(onto, path=None):
     """
     Saves the ontology into a file.
 
@@ -394,6 +394,9 @@ def save_onto(onto, path):
 
         path (str): Path to the file to save.
     """
+    if not path:
+        path = os.path.dirname(os.path.realpath(__file__))
+        path = os.path.join(path, 'onto.owl')
     onto.save(path, format = 'ntriples')
 
 
@@ -444,16 +447,57 @@ def export_coupled_kratos(onto, coupled):
     return result
 
 
-def get_class(onto, name, coupled_system_name = None, parent = None):
-    if coupled_system_name:
-        name = f'{coupled_system_name}.{name}'
+def get_n(onto, type_):
+    if type_ == 'class':
+        class_ns = list(onto.classes())
+    else:
+        cl = onto.search_one(label = f'{type_}')
+        class_ns = [x.label[0] for x in cl.instances() if len(x.label) > 0]
+    if len(class_ns) > 0:
+        class_ns = [str(x).split('_') for x in class_ns]
+        class_ns = [int(x[-1]) for x in class_ns if len(x) > 0]
+        class_ns = sorted(class_ns)
+        return class_ns[-1] + 1
+    else:
+        return 1
+
+    
+def get_class(onto, name, parent = None, props = None):
     with onto:
-        cl = onto[name]
+        class_n = get_n(onto, 'class')
+        if props:
+            classes = onto.search(label = name)
+            new_props = []
+            for i, prop in enumerate(props):
+                if prop == 'data':
+                    prop = 'data_'
+                new_props.append(prop)
+            new_props = set([onto.search_one(label = f'has_{x}') for x in new_props])
+            for cl in classes:
+                existing_props = set(cl.get_class_properties())
+                inter = existing_props.intersection(new_props)
+                if len(inter) == len(new_props):
+                    return cl
+            cl = None
+        else:
+            cl = onto.search_one(label = name)
         if not cl:
             if parent:
-                cl = types.new_class(name, (parent,))
+                cl = types.new_class(f'class_{class_n}', (parent,))
             else:
-                cl = types.new_class(name, (Thing,))
+                print(name)
+                print(class_n)
+                cl = types.new_class(f'class_{class_n}', (Thing,))
+            cl.label = name
+        return cl
+
+
+def get_class1(onto, name):
+    with onto:
+        cl = onto.search_one(label = name)
+        if not cl:
+            cl = types.new_class(name, (Thing,))
+            cl.label = name
         return cl
 
 
@@ -462,64 +506,113 @@ def get_relation(onto, name, functional = False):
         name = 'data_'
     name = f'has_{name}'
     with onto:
-        rel = onto[name]
+        rel = onto.search_one(label = name)
         if not rel:
             if functional:
                 rel = types.new_class(name, (ObjectProperty, FunctionalProperty))
             else:
                 rel = types.new_class(name, (ObjectProperty,))
+            rel.label = name
         return rel
 
 
 def get_property(onto, name, functional = False):
     name = f'has_{name}'
     with onto:
-        prop = onto[name]
+        prop = onto.search_one(label = name)
         if not prop:
             if functional:
                 prop = types.new_class(name, (DataProperty, FunctionalProperty))
             else:
                 prop = types.new_class(name, (DataProperty,))
+            prop.label = name
         return prop
 
 
-def add_statement(onto, coupled_system_name, inst, pred_name, obj_data):
+def dict2class(onto, coupled_system_name, inst, pred_name, obj_data, obj_sup_cl = None, functional = False, i = None):
+    if i:
+        class_name = f'{pred_name}{i}'
+    else:
+        class_name = pred_name
     with onto:
-        if type(obj_data) == dict:
+        if obj_sup_cl:
+            obj_cl = get_class(onto, class_name, coupled_system_name, obj_sup_cl)
+        else:
             obj_cl = get_class(onto, pred_name, coupled_system_name)
+        rel = get_relation(onto, pred_name, functional)
+        obj_inst = obj_cl()
+        for inst_pred_name, inst_obj_data in obj_data.items():
+            obj_inst = add_statement(onto, coupled_system_name, obj_inst, inst_pred_name, inst_obj_data)
+            if obj_inst not in rel[inst]:
+                print('dict', inst, rel, obj_inst)
+                rel[inst].append(obj_inst)
+
+
+def add_statement(onto, inst, pred_name, obj_data):
+    with onto:
+        if type(obj_data) == dict and all([type(obj_value) == dict for obj_key, obj_value in obj_data.items()]):
+            rel = get_relation(onto, pred_name)
+            for obj_key, obj_value in obj_data.items():
+                obj_cl = get_class(onto, pred_name, props=obj_value.keys())
+                obj_cl_label = obj_cl.label[0]
+                inst_n = get_n(onto, obj_cl_label)
+                obj_inst = obj_cl(f'{obj_cl_label}_{inst_n}')
+                obj_inst.label = f'{obj_cl_label}_{inst_n}'
+                for inst_pred_name, inst_obj_data in obj_value.items():
+                    obj_inst = add_statement(onto, obj_inst, inst_pred_name, inst_obj_data)
+                    if obj_inst not in rel[inst]:
+                        print('dict_dict', inst, rel, obj_inst)
+                        rel[inst].append(obj_inst)
+            for inst_cl in inst.is_a:
+                ks = dict(Counter([obj_inst.is_a[0] for obj_inst in rel[inst]]))
+                for t, k in ks.items():
+                    if k == 1:
+                        inst_cl.is_a.append(rel.some(t))
+                    else:
+                        inst_cl.is_a.append(rel.exactly(k, t))
+        elif type(obj_data) == dict:
+            obj_cl = get_class(onto, pred_name, props=obj_data.keys())
             rel = get_relation(onto, pred_name, True)
-            obj_inst = obj_cl()
+            obj_cl_label = obj_cl.label[0]
+            inst_n = get_n(onto, obj_cl_label)
+            obj_inst = obj_cl(f'{obj_cl_label}_{inst_n}')
+            obj_inst.label = f'{obj_cl_label}_{inst_n}'
             for inst_pred_name, inst_obj_data in obj_data.items():
-                obj_inst = add_statement(onto, coupled_system_name, obj_inst, inst_pred_name, inst_obj_data)
+                obj_inst = add_statement(onto, obj_inst, inst_pred_name, inst_obj_data)
                 if obj_inst not in rel[inst]:
                     print('dict', inst, rel, obj_inst)
                     rel[inst].append(obj_inst)
+            #dict2class(onto, coupled_system_name, inst, pred_name, obj_data, None, True)
             for inst_cl in inst.is_a:
-                k = len(rel[inst])
-                if k == 1:
-                    inst_cl.is_a.append(rel.some(obj_cl))
-                else:
-                    inst_cl.is_a.append(rel.exactly(k, obj_cl))
+                ks = dict(Counter([obj_inst.is_a[0] for obj_inst in rel[inst]]))
+                for t, k in ks.items():
+                    if k == 1:
+                        inst_cl.is_a.append(rel.some(t))
+                    else:
+                        inst_cl.is_a.append(rel.exactly(k, t))
         elif type(obj_data) == list:
             for i, obj_item in enumerate(obj_data):
                 if type(obj_item) == dict:
-                    obj_sup_cl = get_class(onto, pred_name, coupled_system_name)
-                    obj_cl = get_class(onto, f'{pred_name}{i}', coupled_system_name, obj_sup_cl)
+                    obj_cl = get_class(onto, pred_name)
                     rel = get_relation(onto, pred_name)
-                    obj_inst = obj_cl()
+                    obj_cl_label = obj_cl.label[0]
+                    inst_n = get_n(onto, obj_cl_label)
+                    obj_inst = obj_cl(f'{obj_cl_label}_{inst_n}')
+                    obj_inst.label = f'{obj_cl_label}_{inst_n}'
                     for inst_pred_name, inst_obj_data in obj_item.items():
-                        obj_inst = add_statement(onto, coupled_system_name, obj_inst, inst_pred_name, inst_obj_data)
+                        obj_inst = add_statement(onto, obj_inst, inst_pred_name, inst_obj_data)
                         if obj_inst not in rel[inst]:
                             print('list_dict', inst, rel, obj_inst)
                             rel[inst].append(obj_inst)
+                    #dict2class(onto, coupled_system_name, inst, pred_name, obj_item, obj_sup_cl, i)
                 else:
                     prop = get_property(onto, pred_name)
                     if obj_item not in prop[inst]:
                         print('list_literal', inst, prop, obj_item)
                         prop[inst].append(obj_item)
+            rel = get_relation(onto, pred_name)
             for inst_cl in inst.is_a:
                 if all([type(obj_item) == dict for obj_item in obj_data]):
-                    rel = get_relation(onto, pred_name)
                     ks = dict(Counter([obj_inst.is_a[0] for obj_inst in rel[inst]]))
                     for t, k in ks.items():
                         if k == 1:
@@ -548,12 +641,74 @@ def add_statement(onto, coupled_system_name, inst, pred_name, obj_data):
     return inst
 
 
-def import_coupled_kratos(onto, data, prefix = None, label = None):
+def add_triple(onto, inst, pred_name, obj_data):
     with onto:
-        coupled_system = get_class(onto, 'coupled_system')
-        cl = get_class(onto, prefix, parent = coupled_system)
-        if label:
-            cl.label = label    
-        inst = cl()
+        if type(obj_data) == dict and all([type(obj_value) == dict for obj_key, obj_value in obj_data.items()]):
+            rel = get_relation(onto, pred_name)
+            for obj_key, obj_value in obj_data.items():
+                obj_cl = get_class1(onto, pred_name)
+                obj_inst = obj_cl()
+                for inst_pred_name, inst_obj_data in obj_value.items():
+                    obj_inst = add_triple(onto, obj_inst, inst_pred_name, inst_obj_data)
+                    if obj_inst not in rel[inst]:
+                        print('dict_dict', inst, rel, obj_inst)
+                        rel[inst].append(obj_inst)
+        elif type(obj_data) == dict:
+            obj_cl = get_class1(onto, pred_name)
+            rel = get_relation(onto, pred_name, True)
+            obj_inst = obj_cl()
+            for inst_pred_name, inst_obj_data in obj_data.items():
+                obj_inst = add_triple(onto, obj_inst, inst_pred_name, inst_obj_data)
+                if obj_inst not in rel[inst]:
+                    print('dict', inst, rel, obj_inst)
+                    rel[inst].append(obj_inst)
+        elif type(obj_data) == list:
+            for i, obj_item in enumerate(obj_data):
+                if type(obj_item) == dict:
+                    obj_cl = get_class1(onto, pred_name)
+                    rel = get_relation(onto, pred_name)
+                    obj_inst = obj_cl()
+                    for inst_pred_name, inst_obj_data in obj_item.items():
+                        obj_inst = add_triple(onto, obj_inst, inst_pred_name, inst_obj_data)
+                        if obj_inst not in rel[inst]:
+                            print('list_dict', inst, rel, obj_inst)
+                            rel[inst].append(obj_inst)
+                else:
+                    prop = get_property(onto, pred_name)
+                    if obj_item not in prop[inst]:
+                        print('list_literal', inst, prop, obj_item)
+                        prop[inst].append(obj_item)
+        else:
+            prop = get_property(onto, pred_name, True)
+            if obj_data not in prop[inst]:
+                print('literal', inst, prop, obj_data)
+                prop[inst].append(obj_data)
+
+    return inst
+
+
+def infer_axioms(onto):
+    for inst in onto.individuals():
+        new_props = set(inst.get_properties())
+        cl = type(inst)
+        match = False
+        for sub_cl in cl.subclasses():
+            old_props = set([x.property for x in sub_cl.equivalent_to])
+            if old_props == new_props:
+                #inst.is_a = [sub_cl]
+                match = True
+        if not match:
+            new_cl = types.new_class(f'{cl.name}_{inst.name}', (cl,))
+            #inst.is_a = [new_cl]
+            for rel in inst.get_properties():
+                for obj in rel[inst]:
+                    new_cl.equivalent_to.append(rel.some(type(obj)))
+
+
+def import_coupled_kratos(onto, data, label):
+    with onto:
+        coupled_system = get_class1(onto, 'coupled_system')
+        inst = coupled_system(label)
         for pred_name, obj_data in data.items():
-            inst = add_statement(onto, prefix, inst, pred_name, obj_data)
+            inst = add_triple(onto, inst, pred_name, obj_data)
+        infer_axioms(onto)
