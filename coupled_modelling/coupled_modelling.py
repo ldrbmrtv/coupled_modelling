@@ -5,6 +5,12 @@ from collections import Counter
 
 
 def get_onto(name):
+    """
+    Gets an ontology by name.
+
+    Args:
+        name (str): Name of the ontology.
+    """
     return get_ontology(name)
 
 
@@ -12,10 +18,11 @@ def load_onto(path=None):
     """
     Loads an ontology.
 
-    :param path: Path to the ontology file, defaults to None
-    :type path: str, optional
-    :return: An ontology loaded from the specified file
-    :rtype: owlready2.namespace.Ontology
+    Args:
+        path (str, optional): Path to the ontology file, if None the default ontology is used.
+
+    Returns:
+        The loaded ontology
     """
     if not path:
         path = os.path.dirname(os.path.realpath(__file__))
@@ -31,7 +38,6 @@ def save_onto(onto, path=None):
 
     Args:
         onto (owlready2.namespace.Ontology): Ontology.
-
         path (str): Path to the file to save.
     """
     if not path:
@@ -41,6 +47,13 @@ def save_onto(onto, path=None):
 
 
 def get_class(onto, name):
+    """
+    Gets or creates an OWL-class with a given name, which is used as the class URI and its label.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+        name (str): Name of the class.
+    """
     with onto:
         cl = onto.search_one(label = name)
         if not cl:
@@ -50,6 +63,14 @@ def get_class(onto, name):
 
 
 def get_relation(onto, name, functional = False):
+    """
+    Gets or creates an ObjectProperty with a given name.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+        name (str): Name of the ObjectProperty.
+        functional (bool, optional): if the ObjectProperty is functional.
+    """
     if name == 'data':
         name = 'data_'
     name = f'has_{name}'
@@ -65,6 +86,14 @@ def get_relation(onto, name, functional = False):
 
 
 def get_property(onto, name, functional = False):
+    """
+    Gets or creates a DataProperty with a given name.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+        name (str): Name of the DataProperty.
+        functional (bool, optional): if the DataProperty is functional.
+    """
     name = f'has_{name}'
     with onto:
         prop = onto.search_one(label = name)
@@ -78,11 +107,29 @@ def get_property(onto, name, functional = False):
 
 
 def specify_coupled_system(onto, inst, coupled_system):
+    """
+    Assigns an OWL-instance to the given coupled system.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+        inst (OWL instance): OWL-instance.
+        coupled_system (OWL instance): OWL-instance of the coupled system class.
+    """
     prop = get_relation(onto, 'coupled_system', True)
     prop[inst] = [coupled_system]
 
 
 def add_coupled_system(onto, inst, pred_name, obj_data, coupled_system):
+    """
+    Creates a coupled system with given data.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+        inst (OWL instance): OWL-instance.
+        pred_name (str): A property name from the data.
+        obj_data: Value of the property from the data.
+        coupled_system (OWL instance): OWL-instance of the coupled system class.
+    """
     with onto:
         if type(obj_data) == dict and all([type(obj_value) == dict for obj_key, obj_value in obj_data.items()]):
             rel = get_relation(onto, pred_name)
@@ -132,11 +179,20 @@ def add_coupled_system(onto, inst, pred_name, obj_data, coupled_system):
 
 
 def infer_axioms(onto, coupled_system):
+    """
+    Infers new classes and axioms from a given coupled system.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+        coupled_system (OWL instance): OWL-instance of the coupled system class.
+    """
     insts = onto.search(has_coupled_system = coupled_system)
     insts.append(coupled_system)
     for inst in insts:
         new_props = []
         for rel in inst.get_properties():
+            if str(rel) == 'rdf-schema.label':
+                continue
             for obj in rel[inst]:
                 new_props.append(rel)
         new_props = Counter(new_props)
@@ -144,6 +200,7 @@ def infer_axioms(onto, coupled_system):
         match = False
         for sub_cl in cl.subclasses():
             old_props = dict([(x.property, x.cardinality) for x in sub_cl.equivalent_to])
+            old_props.pop('rdf-schema.label', None)
             if old_props == new_props:
                 match = True
                 inst.is_a = [sub_cl]
@@ -157,6 +214,16 @@ def infer_axioms(onto, coupled_system):
 
 
 def create_coupled(onto, label):
+    """
+    Creates an OWL-instance of the coupled system class with a given label.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+        label (str): Label for the coupled system.
+
+    Returns:
+        An OWL instance for the coupled system
+    """
     with onto:
         coupled_system = get_class(onto, 'coupled_system')
         inst = coupled_system()
@@ -165,6 +232,17 @@ def create_coupled(onto, label):
 
 
 def import_coupled_kratos(onto, data, label):
+    """
+    Recursively creates an OWL-instance of the coupled system class with given data and label.
+
+    Args:
+        onto: Ontology.
+        data: Dictionary with the coupled system data.
+        label: Label of the coupled system.
+
+    Returns:
+        The OWL-instance of the coupled system.
+    """
     inst = create_coupled(onto, label)
     for pred_name, obj_data in data.items():
         inst = add_coupled_system(onto, inst, pred_name, obj_data, inst)
@@ -172,6 +250,16 @@ def import_coupled_kratos(onto, data, label):
 
 
 def get_class_properties(onto, class_name):
+    """
+    For a given class, returns a dictionary of its axioms.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+        class_name (str): Class name.
+
+    Returns:
+        The dictionary of the class axioms.
+    """
     cl = onto[class_name]
     props = []
     for x in cl.equivalent_to:
@@ -186,11 +274,31 @@ def get_class_properties(onto, class_name):
 
 
 def get_class_options(onto, class_label):
+    """
+    For a given class, returns its subclasses.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+        class_label (str): Class label.
+
+    Returns:
+        A list of the subclass names.
+    """
     cl = onto.search_one(label = class_label)
     return [x.name for x in cl.subclasses()]
 
 
 def get_instance_properties(onto, inst_name):
+    """
+    For a given instance, returns its statements.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+        inst_name (str): Instance name.
+
+    Returns:
+        A dictionary of instance properties and their values.
+    """
     inst = onto[inst_name]
     props = {}
     for prop in inst.get_properties():
@@ -204,11 +312,33 @@ def get_instance_properties(onto, inst_name):
 
     
 def get_instance_options(onto, class_label):
+    """
+    For a given class, returns its instances.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+        class_label (str): Class label.
+
+    Returns:
+        A list of class instance names.
+    """
     cl = onto.search_one(label = class_label)
     return [x.name for x in cl.instances()]
 
 
 def add_statement(onto, subj, pred, obj=None):
+    """
+    Adds a statement.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+        subj (OWL instance): An instance that is the subject of the statement.
+        pred (str): Label of the property.
+        obj (optional): object of the statement. If None, a new instance is created.
+
+    Returns:
+        An object of the statement.
+    """
     pred = onto.search_one(label = pred)
     with onto:
         if not obj:

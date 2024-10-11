@@ -15,3 +15,5 @@ add_statement(onto, test_solver_settings, 'has_num_coupling_iterations', 30)
 print(get_instance_options(onto, 'coupled_system'))
 print(get_instance_properties(onto, 'coupled_system3'))
 print(get_instance_properties(onto, 'solver_settings3'))
+
+save_onto(onto)

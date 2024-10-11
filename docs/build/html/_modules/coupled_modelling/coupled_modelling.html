@@ -31,18 +31,29 @@
   <h1>Source code for coupled_modelling.coupled_modelling</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">owlready2</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">import</span> <span class="nn">types</span>
-<span class="kn">from</span> <span class="nn">.onto_sync</span> <span class="kn">import</span> <span class="n">util_falcon</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+
+
+<span class="k">def</span> <span class="nf">get_onto</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Gets an ontology by name.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name (str): Name of the ontology.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">get_ontology</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="load_onto"><a class="viewcode-back" href="../../API.html#coupled_modelling.load_onto">[docs]</a><span class="k">def</span> <span class="nf">load_onto</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Loads an ontology.</span>
 
-<span class="sd">    :param path: Path to the ontology file, defaults to None</span>
-<span class="sd">    :type path: str, optional</span>
-<span class="sd">    :return: An ontology loaded from the specified file</span>
-<span class="sd">    :rtype: owlready2.namespace.Ontology</span>
+<span class="sd">    Args:</span>
+<span class="sd">        path (str, optional): Path to the ontology file, if None the default ontology is used.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The loaded ontology</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
@@ -52,422 +63,320 @@
     <span class="k">return</span> <span class="n">onto</span></div>
 
 
-<div class="viewcode-block" id="sync_entity"><a class="viewcode-back" href="../../API.html#coupled_modelling.sync_entity">[docs]</a><span class="k">def</span> <span class="nf">sync_entity</span><span class="p">(</span><span class="n">entity</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    For a given entity, queries exisiting analogues from Wikidata and</span>
-<span class="sd">    DBpedia by its label and writes it to the entity&#39;s annotation.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        entity: An entity from your ontology.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">entity</span><span class="o">.</span><span class="n">label</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">return</span>
-    <span class="n">syncs</span> <span class="o">=</span> <span class="n">util_falcon</span><span class="p">(</span><span class="n">entity</span><span class="o">.</span><span class="n">label</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="k">if</span> <span class="n">syncs</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">syncs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;entities_wiki&#39;</span><span class="p">):</span>
-            <span class="n">entity</span><span class="o">.</span><span class="n">wikidata</span> <span class="o">=</span> <span class="n">syncs</span><span class="p">[</span><span class="s1">&#39;entities_wiki&#39;</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">syncs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;entities_db&#39;</span><span class="p">):</span>
-            <span class="n">entity</span><span class="o">.</span><span class="n">dbpedia</span> <span class="o">=</span> <span class="n">syncs</span><span class="p">[</span><span class="s1">&#39;entities_db&#39;</span><span class="p">]</span></div>
-
-
-<div class="viewcode-block" id="create_variable"><a class="viewcode-back" href="../../API.html#coupled_modelling.create_variable">[docs]</a><span class="k">def</span> <span class="nf">create_variable</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates in an ontology a DataProperty and a class for a variable.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
-
-<span class="sd">        name (str): Name of the variable.</span>
-
-<span class="sd">        data (dict): Annotations of the variable.</span>
-
-<span class="sd">        sync (bool): If to synchronize a created entity with existing</span>
-<span class="sd">        knowledge bases.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        onto.Variable: A created class for the variable</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="n">onto</span><span class="p">:</span>
-        
-        <span class="c1"># Data Property</span>
-        <span class="n">prop</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">new_class</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;has</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">DataProperty</span><span class="p">,</span> <span class="n">FunctionalProperty</span><span class="p">))</span>
-        <span class="n">prop</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;has </span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span>
-        <span class="n">prop</span><span class="o">.</span><span class="n">domain</span> <span class="o">=</span> <span class="p">[</span><span class="n">onto</span><span class="o">.</span><span class="n">Variable</span><span class="p">]</span>
-        <span class="n">prop</span><span class="o">.</span><span class="n">range</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">]</span>
-
-        <span class="c1"># Class</span>
-        <span class="n">cl</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">new_class</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">onto</span><span class="o">.</span><span class="n">Variable</span><span class="p">,))</span>
-        <span class="n">cl</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span>
-        <span class="n">cl</span><span class="o">.</span><span class="n">is_a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">some</span><span class="p">(</span><span class="nb">float</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">sync</span><span class="p">:</span>
-            <span class="n">sync_entity</span><span class="p">(</span><span class="n">cl</span><span class="p">)</span>
-        
-        <span class="k">return</span> <span class="n">cl</span></div>
-
-
-<div class="viewcode-block" id="create_variables"><a class="viewcode-back" href="../../API.html#coupled_modelling.create_variables">[docs]</a><span class="k">def</span> <span class="nf">create_variables</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates in an ontology DataProperties and classes for a list of variables.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
-
-<span class="sd">        variables (dict): A dictionary of variable names with their annotations.</span>
-
-<span class="sd">        sync (bool): If to synchronize created entities with existing</span>
-<span class="sd">        knowledge bases.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        list: A list of created classes for the variables</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">var_classes</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">with</span> <span class="n">onto</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">var</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">variables</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">var_classes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">create_variable</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">sync</span><span class="p">))</span>
-
-    <span class="k">return</span> <span class="n">var_classes</span></div>
-
-
-<div class="viewcode-block" id="create_solver"><a class="viewcode-back" href="../../API.html#coupled_modelling.create_solver">[docs]</a><span class="k">def</span> <span class="nf">create_solver</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates in an ontology a class for a solver.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
-
-<span class="sd">        name (str): Name of the solver.</span>
-
-<span class="sd">        data (dict): Annotations of the solver.</span>
-
-<span class="sd">        sync (bool): If to synchronize a created entity with existing</span>
-<span class="sd">        knowledge bases.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        onto.Solver: A created class for the solver.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="n">onto</span><span class="p">:</span>
-        <span class="n">cl</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">new_class</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">onto</span><span class="o">.</span><span class="n">Solver</span><span class="p">,))</span>
-        <span class="n">cl</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">]:</span>
-            <span class="n">cl</span><span class="o">.</span><span class="n">is_a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">onto</span><span class="o">.</span><span class="n">hasVariable</span><span class="o">.</span><span class="n">some</span><span class="p">(</span><span class="n">onto</span><span class="p">[</span><span class="n">var</span><span class="p">]))</span>
-
-        <span class="k">if</span> <span class="n">sync</span><span class="p">:</span>
-            <span class="n">sync_entity</span><span class="p">(</span><span class="n">cl</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">cl</span></div>
-
-
-<div class="viewcode-block" id="create_solvers"><a class="viewcode-back" href="../../API.html#coupled_modelling.create_solvers">[docs]</a><span class="k">def</span> <span class="nf">create_solvers</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">solvers</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates in an ontology classes for a list of solvers.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
-
-<span class="sd">        solvers (dict): A dictionary of solvers names with their annotations.</span>
-
-<span class="sd">        sync (bool): If to synchronize created entities with existing</span>
-<span class="sd">        knowledge bases.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        list: A list of created classes for the solvers.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">solv_classes</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">with</span> <span class="n">onto</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">solver</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">solvers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">solv_classes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">create_solver</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">solver</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">sync</span><span class="p">))</span>
-
-    <span class="k">return</span> <span class="n">solv_classes</span></div>
-
-
-<div class="viewcode-block" id="sync_coupled"><a class="viewcode-back" href="../../API.html#coupled_modelling.sync_coupled">[docs]</a><span class="k">def</span> <span class="nf">sync_coupled</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">coupled</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Synchronizes inputs and outputs of a model with a coupled system.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        model (onto.Model): The model.</span>
-
-<span class="sd">        coupled (onto.CoupledSystem): The coupled system to synchronize.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">hasInput</span><span class="p">:</span>
-        <span class="n">coupled</span><span class="o">.</span><span class="n">hasVariable</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">hasOutput</span><span class="p">:</span>
-        <span class="n">coupled</span><span class="o">.</span><span class="n">hasVariable</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prop</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="create_model"><a class="viewcode-back" href="../../API.html#coupled_modelling.create_model">[docs]</a><span class="k">def</span> <span class="nf">create_model</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">coupled</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates in an ontology a class for a model.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
-
-<span class="sd">        name (str): Name of the model.</span>
-
-<span class="sd">        data (dict): Annotations of the model.</span>
-
-<span class="sd">        coupled (onto.CoupledSystem or str): A coupled system to which the</span>
-<span class="sd">        model belongs. If str, creates a new class for the coupled system.</span>
-
-<span class="sd">        sync (bool): If to synchronize a created entity with existing</span>
-<span class="sd">        knowledge bases.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        onto.Model: A created class for the model.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="c1"># Creating coupled system</span>
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">coupled</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="n">coupled</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">new_class</span><span class="p">(</span><span class="n">coupled</span><span class="p">,</span> <span class="p">(</span><span class="n">onto</span><span class="o">.</span><span class="n">CoupledSystem</span><span class="p">,))</span>
-
-    <span class="c1"># Creating model</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">new_class</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">onto</span><span class="o">.</span><span class="n">Model</span><span class="p">,))</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">is_a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">onto</span><span class="o">.</span><span class="n">hasCoupledSystem</span><span class="o">.</span><span class="n">some</span><span class="p">(</span><span class="n">coupled</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;solver&#39;</span><span class="p">):</span>
-        <span class="n">solver</span> <span class="o">=</span> <span class="n">onto</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;solver&#39;</span><span class="p">]]</span>
-        <span class="n">model</span><span class="o">.</span><span class="n">is_a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">onto</span><span class="o">.</span><span class="n">hasSolver</span><span class="o">.</span><span class="n">some</span><span class="p">(</span><span class="n">solver</span><span class="p">))</span>
-
-    <span class="k">if</span> <span class="n">sync</span><span class="p">:</span>
-        <span class="n">sync_entity</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-    
-    <span class="c1"># Inputs</span>
-    <span class="n">inputs</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">inp</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
-            <span class="n">model</span><span class="o">.</span><span class="n">is_a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">onto</span><span class="o">.</span><span class="n">hasInput</span><span class="o">.</span><span class="n">some</span><span class="p">(</span><span class="n">onto</span><span class="p">[</span><span class="n">inp</span><span class="p">]))</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
-            <span class="n">model</span><span class="o">.</span><span class="n">is_a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">onto</span><span class="o">.</span><span class="n">hasInput</span><span class="o">.</span><span class="n">exactly</span><span class="p">(</span><span class="n">inp</span><span class="p">[</span><span class="s1">&#39;cardinality&#39;</span><span class="p">],</span> <span class="n">onto</span><span class="p">[</span><span class="n">inp</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]]))</span>
-
-    <span class="c1"># Output</span>
-    <span class="n">outputs</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;output&#39;</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">out</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
-        <span class="n">model</span><span class="o">.</span><span class="n">is_a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">onto</span><span class="o">.</span><span class="n">hasOutput</span><span class="o">.</span><span class="n">some</span><span class="p">(</span><span class="n">onto</span><span class="p">[</span><span class="n">out</span><span class="p">]))</span>
-
-    <span class="n">sync_coupled</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">coupled</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">coupled</span><span class="p">,</span> <span class="n">model</span></div>
-
-
-<div class="viewcode-block" id="create_models"><a class="viewcode-back" href="../../API.html#coupled_modelling.create_models">[docs]</a><span class="k">def</span> <span class="nf">create_models</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">coupled</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates in an ontology classes for a list of models.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
-
-<span class="sd">        models (dict): A dictionary of model names with their annotations.</span>
-
-<span class="sd">        coupled (onto.CoupledSystem or str): A coupled system to which the</span>
-<span class="sd">        models belongs. If str, creates a new class for the coupled system.</span>
-
-<span class="sd">        sync (bool): If to synchronize created entities with existing</span>
-<span class="sd">        knowledge bases.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        onto.CoupledSystem: The coupled system to which the models belongs.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">model</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">models</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">coupled</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">coupled</span><span class="p">,</span> <span class="n">sync</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">coupled</span></div>
-
-
-<div class="viewcode-block" id="create_value"><a class="viewcode-back" href="../../API.html#coupled_modelling.create_value">[docs]</a><span class="k">def</span> <span class="nf">create_value</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">variable</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">coupled_inst</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates in an ontology an instance of a variable with its value.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
-
-<span class="sd">        variable (str): Name of the variable class to instanciate.</span>
-
-<span class="sd">        value (float): The variable value to specify.</span>
-
-<span class="sd">        coupled_inst (onto.CoupledSystem): An instance of a coupled system.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">cs</span> <span class="o">=</span> <span class="n">onto</span><span class="p">[</span><span class="n">coupled_inst</span><span class="p">]</span>
-    <span class="n">prop</span> <span class="o">=</span> <span class="n">onto</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;has</span><span class="si">{</span><span class="n">variable</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span>
-    <span class="n">inst</span> <span class="o">=</span> <span class="n">onto</span><span class="p">[</span><span class="n">variable</span><span class="p">]()</span>
-    <span class="n">prop</span><span class="p">[</span><span class="n">inst</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span><span class="p">]</span>
-    <span class="n">coupled_inst</span><span class="o">.</span><span class="n">hasVariable</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inst</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="create_values"><a class="viewcode-back" href="../../API.html#coupled_modelling.create_values">[docs]</a><span class="k">def</span> <span class="nf">create_values</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">coupled_inst</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates in an ontology instances of a list of variables with their values.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
-
-<span class="sd">        values (dict): A dictionary of variable names with their values.</span>
-
-<span class="sd">        coupled_inst (onto.CoupledSystem): An instance of a coupled system.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">variable</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
-                <span class="n">create_value</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">variable</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">coupled_inst</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">create_value</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">variable</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">coupled_inst</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="sync_inputs"><a class="viewcode-back" href="../../API.html#coupled_modelling.sync_inputs">[docs]</a><span class="k">def</span> <span class="nf">sync_inputs</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">model_inst</span><span class="p">,</span> <span class="n">coupled_inst</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Synchronizes inputs of a coupled system instance with an instance of</span>
-<span class="sd">    a model.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
-
-<span class="sd">        model_inst (onto.Model): An instance of a model.</span>
-
-<span class="sd">        coupled_inst (onto.CoupledSystem): An instance of a coupled system</span>
-<span class="sd">        to synchronize with.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="n">onto</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">onto</span><span class="o">.</span><span class="n">hasVariable</span><span class="p">[</span><span class="n">coupled_inst</span><span class="p">]:</span>
-            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">model_inst</span><span class="o">.</span><span class="n">is_a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hasInput</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">var</span><span class="o">.</span><span class="n">is_a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">prop</span> <span class="ow">and</span> <span class="n">var</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">model_inst</span><span class="o">.</span><span class="n">hasInput</span><span class="p">:</span>
-                    <span class="n">model_inst</span><span class="o">.</span><span class="n">hasInput</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">var</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="sync_outputs"><a class="viewcode-back" href="../../API.html#coupled_modelling.sync_outputs">[docs]</a><span class="k">def</span> <span class="nf">sync_outputs</span><span class="p">(</span><span class="n">coupled_inst</span><span class="p">,</span> <span class="n">output_var_inst</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Synchronizes outputs of a coupled system instance with an instance of</span>
-<span class="sd">    a model output variable.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        coupled_inst (onto.CoupledSystem): The instance of a coupled system.</span>
-
-<span class="sd">        output_var_inst (onto.Variable): The instance of the model output</span>
-<span class="sd">        variable.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">new_vars</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">var_is</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">coupled_inst</span><span class="o">.</span><span class="n">hasVariable</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">var</span><span class="o">.</span><span class="n">is_a</span> <span class="o">==</span> <span class="n">output_var_inst</span><span class="o">.</span><span class="n">is_a</span><span class="p">:</span>
-            <span class="n">new_vars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">output_var_inst</span><span class="p">)</span>
-            <span class="n">var_is</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">new_vars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">var_is</span><span class="p">:</span>
-        <span class="n">new_vars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">output_var_inst</span><span class="p">)</span>
-    <span class="n">coupled_inst</span><span class="o">.</span><span class="n">hasVariable</span> <span class="o">=</span> <span class="n">new_vars</span></div>
-
-
-<div class="viewcode-block" id="run_model"><a class="viewcode-back" href="../../API.html#coupled_modelling.run_model">[docs]</a><span class="k">def</span> <span class="nf">run_model</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">model_inst</span><span class="p">,</span> <span class="n">foo</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Executed a given function, taken a model inputs as arguments.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
-
-<span class="sd">        model_inst (onto.Model): An instance of a model.</span>
-
-<span class="sd">        foo (func): The function to execute.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        A result of the function execution.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="n">foo</span><span class="o">.</span><span class="vm">__code__</span><span class="o">.</span><span class="n">co_varnames</span>
-    <span class="n">arg_vals</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
-        <span class="n">inputs</span> <span class="o">=</span> <span class="n">model_inst</span><span class="o">.</span><span class="n">hasInput</span>
-        <span class="k">for</span> <span class="n">inst</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
-            <span class="n">inst_types</span> <span class="o">=</span> <span class="n">inst</span><span class="o">.</span><span class="n">is_a</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inst_types</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">inst_type</span> <span class="o">=</span> <span class="n">inst_types</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="k">if</span> <span class="n">inst_type</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">arg</span><span class="p">:</span>
-                    <span class="n">prop</span> <span class="o">=</span> <span class="n">onto</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;has</span><span class="si">{</span><span class="n">arg</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span>
-                    <span class="n">prop_vals</span> <span class="o">=</span> <span class="n">prop</span><span class="p">[</span><span class="n">inst</span><span class="p">]</span>
-                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">prop_vals</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                        <span class="n">arg_vals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prop_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">foo</span><span class="p">(</span><span class="o">*</span><span class="n">arg_vals</span><span class="p">)</span></div>
-    
-
-<div class="viewcode-block" id="create_model_run"><a class="viewcode-back" href="../../API.html#coupled_modelling.create_model_run">[docs]</a><span class="k">def</span> <span class="nf">create_model_run</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">coupled_inst</span><span class="p">,</span> <span class="n">foo</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates a model run and executes a given function.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
-
-<span class="sd">        model (onto.Model): A class of the model to run.</span>
-
-<span class="sd">        coupled_inst (onto.CoupledSystem): An instance of a coupled system.</span>
-
-<span class="sd">        foo (func): The function to execute.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">model_inst</span> <span class="o">=</span> <span class="n">model</span><span class="p">()</span>
-    <span class="n">model_inst</span><span class="o">.</span><span class="n">hasCoupledSystem</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coupled_inst</span><span class="p">)</span>
-    <span class="n">sync_inputs</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">model_inst</span><span class="p">,</span> <span class="n">coupled_inst</span><span class="p">)</span>
-    <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">hasOutput</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">out_cl</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">prop</span> <span class="o">=</span> <span class="n">onto</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;has</span><span class="si">{</span><span class="n">out_cl</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span>
-        <span class="n">out_inst</span> <span class="o">=</span> <span class="n">out_cl</span><span class="p">()</span>
-        <span class="n">prop</span><span class="p">[</span><span class="n">out_inst</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">run_model</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">model_inst</span><span class="p">,</span> <span class="n">foo</span><span class="p">)]</span>
-        <span class="n">model_inst</span><span class="o">.</span><span class="n">hasOutput</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_inst</span><span class="p">)</span>
-        <span class="n">sync_outputs</span><span class="p">(</span><span class="n">coupled_inst</span><span class="p">,</span> <span class="n">out_inst</span><span class="p">)</span></div>
-
-    
-<div class="viewcode-block" id="save_onto"><a class="viewcode-back" href="../../API.html#coupled_modelling.save_onto">[docs]</a><span class="k">def</span> <span class="nf">save_onto</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+<div class="viewcode-block" id="save_onto"><a class="viewcode-back" href="../../API.html#coupled_modelling.save_onto">[docs]</a><span class="k">def</span> <span class="nf">save_onto</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Saves the ontology into a file.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
-
 <span class="sd">        path (str): Path to the file to save.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">onto</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;onto.owl&#39;</span><span class="p">)</span>
+    <span class="n">onto</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">format</span> <span class="o">=</span> <span class="s1">&#39;ntriples&#39;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="export_model_for_kratos"><a class="viewcode-back" href="../../API.html#coupled_modelling.export_model_for_kratos">[docs]</a><span class="k">def</span> <span class="nf">export_model_for_kratos</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">get_class</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Exports a model in a KRATOS format.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        model (onto.Model): The model to export.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        dict: A dictionary with the model data in the KRATOS format.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">solver</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">hasSolver</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
-    <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">label</span><span class="p">,</span>
-        <span class="s1">&#39;input_data_list&#39;</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s1">&#39;output_data_list&#39;</span><span class="p">:</span> <span class="p">[]</span>
-        <span class="p">}</span>
-
-    <span class="k">for</span> <span class="n">inp</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">hasInput</span><span class="p">:</span>
-        <span class="n">inp</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">inp</span><span class="o">.</span><span class="n">label</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-            <span class="s1">&#39;from_solver&#39;</span><span class="p">:</span> <span class="n">solver</span><span class="o">.</span><span class="n">label</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="p">}</span>
-        <span class="n">result</span><span class="p">[</span><span class="s1">&#39;input_data_list&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">result</span></div>
-
-
-<div class="viewcode-block" id="export_coupled_for_kratos"><a class="viewcode-back" href="../../API.html#coupled_modelling.export_coupled_for_kratos">[docs]</a><span class="k">def</span> <span class="nf">export_coupled_for_kratos</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">coupled</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Exports models from a coupled system in the KRATOS format.</span>
+<span class="sd">    Gets or creates an OWL-class with a given name, which is used as the class URI and its label.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
+<span class="sd">        name (str): Name of the class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">onto</span><span class="p">:</span>
+        <span class="n">cl</span> <span class="o">=</span> <span class="n">onto</span><span class="o">.</span><span class="n">search_one</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">cl</span><span class="p">:</span>
+            <span class="n">cl</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">new_class</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">Thing</span><span class="p">,))</span>
+            <span class="n">cl</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="k">return</span> <span class="n">cl</span>
 
-<span class="sd">        coupled (onto.CoupledSystem): The class for coupled system to export.</span>
+
+<span class="k">def</span> <span class="nf">get_relation</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">functional</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Gets or creates an ObjectProperty with a given name.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
+<span class="sd">        name (str): Name of the ObjectProperty.</span>
+<span class="sd">        functional (bool, optional): if the ObjectProperty is functional.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;data&#39;</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;data_&#39;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;has_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="k">with</span> <span class="n">onto</span><span class="p">:</span>
+        <span class="n">rel</span> <span class="o">=</span> <span class="n">onto</span><span class="o">.</span><span class="n">search_one</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">rel</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">functional</span><span class="p">:</span>
+                <span class="n">rel</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">new_class</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">ObjectProperty</span><span class="p">,</span> <span class="n">FunctionalProperty</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">rel</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">new_class</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">ObjectProperty</span><span class="p">,))</span>
+            <span class="n">rel</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="k">return</span> <span class="n">rel</span>
+
+
+<span class="k">def</span> <span class="nf">get_property</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">functional</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Gets or creates a DataProperty with a given name.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
+<span class="sd">        name (str): Name of the DataProperty.</span>
+<span class="sd">        functional (bool, optional): if the DataProperty is functional.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;has_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="k">with</span> <span class="n">onto</span><span class="p">:</span>
+        <span class="n">prop</span> <span class="o">=</span> <span class="n">onto</span><span class="o">.</span><span class="n">search_one</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">prop</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">functional</span><span class="p">:</span>
+                <span class="n">prop</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">new_class</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">DataProperty</span><span class="p">,</span> <span class="n">FunctionalProperty</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">prop</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">new_class</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">DataProperty</span><span class="p">,))</span>
+            <span class="n">prop</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="k">return</span> <span class="n">prop</span>
+
+
+<span class="k">def</span> <span class="nf">specify_coupled_system</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">inst</span><span class="p">,</span> <span class="n">coupled_system</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Assigns an OWL-instance to the given coupled system.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
+<span class="sd">        inst (OWL instance): OWL-instance.</span>
+<span class="sd">        coupled_system (OWL instance): OWL-instance of the coupled system class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">prop</span> <span class="o">=</span> <span class="n">get_relation</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="s1">&#39;coupled_system&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">prop</span><span class="p">[</span><span class="n">inst</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">coupled_system</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">add_coupled_system</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">inst</span><span class="p">,</span> <span class="n">pred_name</span><span class="p">,</span> <span class="n">obj_data</span><span class="p">,</span> <span class="n">coupled_system</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a coupled system with given data.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
+<span class="sd">        inst (OWL instance): OWL-instance.</span>
+<span class="sd">        pred_name (str): A property name from the data.</span>
+<span class="sd">        obj_data: Value of the property from the data.</span>
+<span class="sd">        coupled_system (OWL instance): OWL-instance of the coupled system class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">onto</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj_data</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">([</span><span class="nb">type</span><span class="p">(</span><span class="n">obj_value</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span> <span class="k">for</span> <span class="n">obj_key</span><span class="p">,</span> <span class="n">obj_value</span> <span class="ow">in</span> <span class="n">obj_data</span><span class="o">.</span><span class="n">items</span><span class="p">()]):</span>
+            <span class="n">rel</span> <span class="o">=</span> <span class="n">get_relation</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">pred_name</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">obj_key</span><span class="p">,</span> <span class="n">obj_value</span> <span class="ow">in</span> <span class="n">obj_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">obj_cl</span> <span class="o">=</span> <span class="n">get_class</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">pred_name</span><span class="p">)</span>
+                <span class="n">obj_inst</span> <span class="o">=</span> <span class="n">obj_cl</span><span class="p">()</span>
+                <span class="n">specify_coupled_system</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">obj_inst</span><span class="p">,</span> <span class="n">coupled_system</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">inst_pred_name</span><span class="p">,</span> <span class="n">inst_obj_data</span> <span class="ow">in</span> <span class="n">obj_value</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">obj_inst</span> <span class="o">=</span> <span class="n">add_coupled_system</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">obj_inst</span><span class="p">,</span> <span class="n">inst_pred_name</span><span class="p">,</span> <span class="n">inst_obj_data</span><span class="p">,</span> <span class="n">coupled_system</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">obj_inst</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">rel</span><span class="p">[</span><span class="n">inst</span><span class="p">]:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;dict_dict&#39;</span><span class="p">,</span> <span class="n">inst</span><span class="p">,</span> <span class="n">rel</span><span class="p">,</span> <span class="n">obj_inst</span><span class="p">)</span>
+                        <span class="n">rel</span><span class="p">[</span><span class="n">inst</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj_inst</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj_data</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
+            <span class="n">obj_cl</span> <span class="o">=</span> <span class="n">get_class</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">pred_name</span><span class="p">)</span>
+            <span class="n">rel</span> <span class="o">=</span> <span class="n">get_relation</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">pred_name</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="n">obj_inst</span> <span class="o">=</span> <span class="n">obj_cl</span><span class="p">()</span>
+            <span class="n">specify_coupled_system</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">obj_inst</span><span class="p">,</span> <span class="n">coupled_system</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">inst_pred_name</span><span class="p">,</span> <span class="n">inst_obj_data</span> <span class="ow">in</span> <span class="n">obj_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">obj_inst</span> <span class="o">=</span> <span class="n">add_coupled_system</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">obj_inst</span><span class="p">,</span> <span class="n">inst_pred_name</span><span class="p">,</span> <span class="n">inst_obj_data</span><span class="p">,</span> <span class="n">coupled_system</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">obj_inst</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">rel</span><span class="p">[</span><span class="n">inst</span><span class="p">]:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span> <span class="n">inst</span><span class="p">,</span> <span class="n">rel</span><span class="p">,</span> <span class="n">obj_inst</span><span class="p">)</span>
+                    <span class="n">rel</span><span class="p">[</span><span class="n">inst</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj_inst</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj_data</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">obj_item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">obj_data</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj_item</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
+                    <span class="n">obj_cl</span> <span class="o">=</span> <span class="n">get_class</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">pred_name</span><span class="p">)</span>
+                    <span class="n">rel</span> <span class="o">=</span> <span class="n">get_relation</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">pred_name</span><span class="p">)</span>
+                    <span class="n">obj_inst</span> <span class="o">=</span> <span class="n">obj_cl</span><span class="p">()</span>
+                    <span class="n">specify_coupled_system</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">obj_inst</span><span class="p">,</span> <span class="n">coupled_system</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">inst_pred_name</span><span class="p">,</span> <span class="n">inst_obj_data</span> <span class="ow">in</span> <span class="n">obj_item</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                        <span class="n">obj_inst</span> <span class="o">=</span> <span class="n">add_coupled_system</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">obj_inst</span><span class="p">,</span> <span class="n">inst_pred_name</span><span class="p">,</span> <span class="n">inst_obj_data</span><span class="p">,</span> <span class="n">coupled_system</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">obj_inst</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">rel</span><span class="p">[</span><span class="n">inst</span><span class="p">]:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;list_dict&#39;</span><span class="p">,</span> <span class="n">inst</span><span class="p">,</span> <span class="n">rel</span><span class="p">,</span> <span class="n">obj_inst</span><span class="p">)</span>
+                            <span class="n">rel</span><span class="p">[</span><span class="n">inst</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj_inst</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">prop</span> <span class="o">=</span> <span class="n">get_property</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">pred_name</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">obj_item</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">prop</span><span class="p">[</span><span class="n">inst</span><span class="p">]:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;list_literal&#39;</span><span class="p">,</span> <span class="n">inst</span><span class="p">,</span> <span class="n">prop</span><span class="p">,</span> <span class="n">obj_item</span><span class="p">)</span>
+                        <span class="n">prop</span><span class="p">[</span><span class="n">inst</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj_item</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">prop</span> <span class="o">=</span> <span class="n">get_property</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">pred_name</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">obj_data</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">prop</span><span class="p">[</span><span class="n">inst</span><span class="p">]:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;literal&#39;</span><span class="p">,</span> <span class="n">inst</span><span class="p">,</span> <span class="n">prop</span><span class="p">,</span> <span class="n">obj_data</span><span class="p">)</span>
+                <span class="n">prop</span><span class="p">[</span><span class="n">inst</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj_data</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">inst</span>
+
+
+<span class="k">def</span> <span class="nf">infer_axioms</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">coupled_system</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Infers new classes and axioms from a given coupled system.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
+<span class="sd">        coupled_system (OWL instance): OWL-instance of the coupled system class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">insts</span> <span class="o">=</span> <span class="n">onto</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">has_coupled_system</span> <span class="o">=</span> <span class="n">coupled_system</span><span class="p">)</span>
+    <span class="n">insts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coupled_system</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">inst</span> <span class="ow">in</span> <span class="n">insts</span><span class="p">:</span>
+        <span class="n">new_props</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">rel</span> <span class="ow">in</span> <span class="n">inst</span><span class="o">.</span><span class="n">get_properties</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">rel</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;rdf-schema.label&#39;</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">rel</span><span class="p">[</span><span class="n">inst</span><span class="p">]:</span>
+                <span class="n">new_props</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rel</span><span class="p">)</span>
+        <span class="n">new_props</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">new_props</span><span class="p">)</span>
+        <span class="n">cl</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">inst</span><span class="p">)</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">sub_cl</span> <span class="ow">in</span> <span class="n">cl</span><span class="o">.</span><span class="n">subclasses</span><span class="p">():</span>
+            <span class="n">old_props</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">x</span><span class="o">.</span><span class="n">property</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">cardinality</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sub_cl</span><span class="o">.</span><span class="n">equivalent_to</span><span class="p">])</span>
+            <span class="n">old_props</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;rdf-schema.label&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">old_props</span> <span class="o">==</span> <span class="n">new_props</span><span class="p">:</span>
+                <span class="n">match</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">inst</span><span class="o">.</span><span class="n">is_a</span> <span class="o">=</span> <span class="p">[</span><span class="n">sub_cl</span><span class="p">]</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
+            <span class="n">new_cl</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">new_class</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cl</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">inst</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">cl</span><span class="p">,))</span>
+            <span class="k">for</span> <span class="n">rel</span><span class="p">,</span> <span class="n">card</span> <span class="ow">in</span> <span class="n">new_props</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">rel</span><span class="p">[</span><span class="n">inst</span><span class="p">]:</span>
+                    <span class="n">new_cl</span><span class="o">.</span><span class="n">equivalent_to</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rel</span><span class="o">.</span><span class="n">exactly</span><span class="p">(</span><span class="n">card</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)))</span>
+            <span class="n">inst</span><span class="o">.</span><span class="n">is_a</span> <span class="o">=</span> <span class="p">[</span><span class="n">new_cl</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="create_coupled"><a class="viewcode-back" href="../../API.html#coupled_modelling.create_coupled">[docs]</a><span class="k">def</span> <span class="nf">create_coupled</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates an OWL-instance of the coupled system class with a given label.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
+<span class="sd">        label (str): Label for the coupled system.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        list: A list of models data from the coupled system in KRATOS format.</span>
+<span class="sd">        An OWL instance for the coupled system</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">onto</span><span class="o">.</span><span class="n">Model</span><span class="o">.</span><span class="n">subclasses</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">coupled</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">hasCoupledSystem</span><span class="p">:</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">export_model_for_kratos</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">result</span></div>
+    <span class="k">with</span> <span class="n">onto</span><span class="p">:</span>
+        <span class="n">coupled_system</span> <span class="o">=</span> <span class="n">get_class</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="s1">&#39;coupled_system&#39;</span><span class="p">)</span>
+        <span class="n">inst</span> <span class="o">=</span> <span class="n">coupled_system</span><span class="p">()</span>
+        <span class="n">inst</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
+    <span class="k">return</span> <span class="n">inst</span></div>
+
+
+<div class="viewcode-block" id="import_coupled_kratos"><a class="viewcode-back" href="../../API.html#coupled_modelling.import_coupled_kratos">[docs]</a><span class="k">def</span> <span class="nf">import_coupled_kratos</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Recursively creates an OWL-instance of the coupled system class with given data and label.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        onto: Ontology.</span>
+<span class="sd">        data: Dictionary with the coupled system data.</span>
+<span class="sd">        label: Label of the coupled system.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The OWL-instance of the coupled system.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">inst</span> <span class="o">=</span> <span class="n">create_coupled</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">pred_name</span><span class="p">,</span> <span class="n">obj_data</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">inst</span> <span class="o">=</span> <span class="n">add_coupled_system</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">inst</span><span class="p">,</span> <span class="n">pred_name</span><span class="p">,</span> <span class="n">obj_data</span><span class="p">,</span> <span class="n">inst</span><span class="p">)</span>
+    <span class="n">infer_axioms</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">inst</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_class_properties"><a class="viewcode-back" href="../../API.html#coupled_modelling.get_class_properties">[docs]</a><span class="k">def</span> <span class="nf">get_class_properties</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">class_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    For a given class, returns a dictionary of its axioms.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
+<span class="sd">        class_name (str): Class name.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The dictionary of the class axioms.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cl</span> <span class="o">=</span> <span class="n">onto</span><span class="p">[</span><span class="n">class_name</span><span class="p">]</span>
+    <span class="n">props</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">cl</span><span class="o">.</span><span class="n">equivalent_to</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">props</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span><span class="o">.</span><span class="n">property</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;cardinality&#39;</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">cardinality</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">name</span><span class="p">}))</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">props</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span><span class="o">.</span><span class="n">property</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;cardinality&#39;</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">cardinality</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">value</span><span class="p">}))</span>
+    <span class="n">props</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">props</span><span class="p">)</span>
+    <span class="n">props</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;has_coupled_system&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">props</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">props</span></div>
+
+
+<div class="viewcode-block" id="get_class_options"><a class="viewcode-back" href="../../API.html#coupled_modelling.get_class_options">[docs]</a><span class="k">def</span> <span class="nf">get_class_options</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">class_label</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    For a given class, returns its subclasses.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
+<span class="sd">        class_label (str): Class label.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A list of the subclass names.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cl</span> <span class="o">=</span> <span class="n">onto</span><span class="o">.</span><span class="n">search_one</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">class_label</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">cl</span><span class="o">.</span><span class="n">subclasses</span><span class="p">()]</span></div>
+
+
+<div class="viewcode-block" id="get_instance_properties"><a class="viewcode-back" href="../../API.html#coupled_modelling.get_instance_properties">[docs]</a><span class="k">def</span> <span class="nf">get_instance_properties</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">inst_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    For a given instance, returns its statements.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
+<span class="sd">        inst_name (str): Instance name.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A dictionary of instance properties and their values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">inst</span> <span class="o">=</span> <span class="n">onto</span><span class="p">[</span><span class="n">inst_name</span><span class="p">]</span>
+    <span class="n">props</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">inst</span><span class="o">.</span><span class="n">get_properties</span><span class="p">():</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">props</span><span class="p">[</span><span class="n">prop</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">prop</span><span class="p">[</span><span class="n">inst</span><span class="p">]]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">props</span><span class="p">[</span><span class="n">prop</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">prop</span><span class="p">[</span><span class="n">inst</span><span class="p">]</span>
+    <span class="n">props</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;has_coupled_system&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">props</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">props</span></div>
+
+    
+<div class="viewcode-block" id="get_instance_options"><a class="viewcode-back" href="../../API.html#coupled_modelling.get_instance_options">[docs]</a><span class="k">def</span> <span class="nf">get_instance_options</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">class_label</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    For a given class, returns its instances.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
+<span class="sd">        class_label (str): Class label.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A list of class instance names.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cl</span> <span class="o">=</span> <span class="n">onto</span><span class="o">.</span><span class="n">search_one</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">class_label</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">cl</span><span class="o">.</span><span class="n">instances</span><span class="p">()]</span></div>
+
+
+<div class="viewcode-block" id="add_statement"><a class="viewcode-back" href="../../API.html#coupled_modelling.add_statement">[docs]</a><span class="k">def</span> <span class="nf">add_statement</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">pred</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Adds a statement.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
+<span class="sd">        subj (OWL instance): An instance that is the subject of the statement.</span>
+<span class="sd">        pred (str): Label of the property.</span>
+<span class="sd">        obj (optional): object of the statement. If None, a new instance is created.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        An object of the statement.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pred</span> <span class="o">=</span> <span class="n">onto</span><span class="o">.</span><span class="n">search_one</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">pred</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">onto</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">obj</span><span class="p">:</span>
+            <span class="n">cl</span> <span class="o">=</span> <span class="n">get_class</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">pred</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;has_&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="n">cl</span><span class="p">()</span>
+        <span class="n">pred</span><span class="p">[</span><span class="n">subj</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">obj</span></div>
 </pre></div>
 
           </div>
