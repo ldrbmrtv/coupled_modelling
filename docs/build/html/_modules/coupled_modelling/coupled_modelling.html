@@ -375,8 +375,36 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">obj</span><span class="p">:</span>
             <span class="n">cl</span> <span class="o">=</span> <span class="n">get_class</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">pred</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;has_&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
             <span class="n">obj</span> <span class="o">=</span> <span class="n">cl</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">subj</span><span class="p">)</span> <span class="o">==</span> <span class="n">onto</span><span class="p">[</span><span class="s1">&#39;coupled_system&#39;</span><span class="p">]:</span>
+                <span class="n">coupled_system</span> <span class="o">=</span> <span class="n">subj</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">coupled_system</span> <span class="o">=</span> <span class="n">subj</span><span class="o">.</span><span class="n">has_coupled_system</span>
+            <span class="n">specify_coupled_system</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">coupled_system</span><span class="p">)</span>
         <span class="n">pred</span><span class="p">[</span><span class="n">subj</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">obj</span></div>
+
+
+<div class="viewcode-block" id="get_instance_properties_recursively"><a class="viewcode-back" href="../../API.html#coupled_modelling.get_instance_properties_recursively">[docs]</a><span class="k">def</span> <span class="nf">get_instance_properties_recursively</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">inst_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get instance properties and its subproperties recursively.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        onto (owlready2.namespace.Ontology): Ontology.</span>
+<span class="sd">        inst_name (str): Instance name.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary of nested properties.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">props</span> <span class="o">=</span> <span class="n">get_instance_properties</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">inst_name</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">items</span> <span class="ow">in</span> <span class="n">props</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">temp_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">onto</span><span class="p">[</span><span class="n">item</span><span class="p">]:</span>
+                <span class="n">temp_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_instance_properties_recursively</span><span class="p">(</span><span class="n">onto</span><span class="p">,</span> <span class="n">item</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">temp_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="n">props</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_list</span>
+    <span class="k">return</span> <span class="n">props</span></div>
 </pre></div>
 
           </div>

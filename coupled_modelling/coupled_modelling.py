@@ -344,5 +344,33 @@ def add_statement(onto, subj, pred, obj=None):
         if not obj:
             cl = get_class(onto, pred.name.replace('has_', ''))
             obj = cl()
+            if type(subj) == onto['coupled_system']:
+                coupled_system = subj
+            else:
+                coupled_system = subj.has_coupled_system
+            specify_coupled_system(onto, obj, coupled_system)
         pred[subj].append(obj)
     return obj
+
+
+def get_instance_properties_recursively(onto, inst_name):
+    """
+    Get instance properties and its subproperties recursively.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+        inst_name (str): Instance name.
+
+    Returns:
+        Dictionary of nested properties.
+    """
+    props = get_instance_properties(onto, inst_name)
+    for key, items in props.items():
+        temp_list = []
+        for item in items:
+            if onto[item]:
+                temp_list.append(get_instance_properties_recursively(onto, item))
+            else:
+                temp_list.append(item)
+        props[key] = temp_list
+    return props

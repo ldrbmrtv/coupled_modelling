@@ -1,4 +1,5 @@
 from coupled_modelling import *
+import json
 
 
 onto = load_onto()
@@ -47,4 +48,9 @@ print('Checking properties of the connected instance')
 print(get_instance_properties(onto, test_solver_settings.name))
 print('\n')
 
-save_onto(onto)
+print('Getting instance properties recursively')
+export = get_instance_properties_recursively(onto, 'coupled_system1')
+print(export)
+with open('export.json', 'w') as file:
+    json.dump(export, file, indent=2)
+

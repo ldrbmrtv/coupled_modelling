@@ -18,3 +18,5 @@ API
 .. autofunction:: coupled_modelling.create_coupled
 
 .. autofunction:: coupled_modelling.add_statement
+
+.. autofunction:: coupled_modelling.get_instance_properties_recursively
