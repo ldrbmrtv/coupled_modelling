@@ -136,6 +136,7 @@ def add_coupled_system(onto, inst, pred_name, obj_data, coupled_system):
             for obj_key, obj_value in obj_data.items():
                 obj_cl = get_class(onto, pred_name)
                 obj_inst = obj_cl()
+                obj_inst.label = obj_key
                 specify_coupled_system(onto, obj_inst, coupled_system)
                 for inst_pred_name, inst_obj_data in obj_value.items():
                     obj_inst = add_coupled_system(onto, obj_inst, inst_pred_name, inst_obj_data, coupled_system)
@@ -307,7 +308,7 @@ def get_instance_properties(onto, inst_name):
         except:
             props[prop.name] = prop[inst]
     props.pop('has_coupled_system', None)
-    props.pop('label', None)
+    #props.pop('label', None)
     return props
 
     
@@ -339,6 +340,9 @@ def add_statement(onto, subj, pred, obj=None):
     Returns:
         An object of the statement.
     """
+    if pred == 'label':
+        subj.label = obj
+        return obj
     pred = onto.search_one(label = pred)
     with onto:
         if not obj:
@@ -374,3 +378,62 @@ def get_instance_properties_recursively(onto, inst_name):
                 temp_list.append(item)
         props[key] = temp_list
     return props
+
+
+def export_coupled_kratos(onto, coupled_system_name):
+    """
+    Returns a coupled system in Kratos format.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+        coupled_system_name (str): Name of the coupled system.
+
+    Returns:
+        Dictionary of nested properties.
+    """
+    props = get_instance_properties(onto, coupled_system_name)
+    label = None
+    for key in list(props.keys()):
+        props[key.replace('has_', '')] = props.pop(key)
+        if key == 'label':
+            label = props['label'][0]
+        if key == 'has_data_':
+            props['data'] = props.pop('data_')
+    if label:
+        props.pop('label', None)
+    if str(type(onto[coupled_system_name]).name).startswith('coupled_system'):
+        label = None
+    for key, items in props.items():
+        if len(items) > 1 and key in ['solvers', 'data']:
+            temp_dict = {}
+            for item in items:
+                obj_props = export_coupled_kratos(onto, item)
+                temp_dict[list(obj_props.keys())[0]] = list(obj_props.values())[0]
+            props[key] = temp_dict
+        elif len(items) > 1 or key in [
+            'convergence_accelerators',
+            'convergence_criteria',
+            'input_data_list',
+            'output_data_list',
+            'export_data',
+            'import_data',
+            'import_meshes'
+        ]:
+            temp_list = []
+            for item in items:
+                if onto[item]:
+                    temp_list.append(export_coupled_kratos(onto, item))
+                else:
+                    temp_list.append(item)
+            props[key] = temp_list
+        else:
+            item = items[0]
+            if onto[item]:
+                props[key] = export_coupled_kratos(onto, item)
+            else:
+                props[key] = item
+    if label:
+        props = {label: props}
+    label = None
+    return props
+    

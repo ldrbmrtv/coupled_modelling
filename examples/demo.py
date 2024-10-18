@@ -36,6 +36,16 @@ print('Adding a property to the created instance')
 add_statement(onto, test_solver_settings, 'has_num_coupling_iterations', 30)
 print('\n')
 
+print('Creating a new solver instance')
+test_solver = add_statement(onto, test_solver_settings, 'has_solvers')
+print('\n')
+
+print('Adding a label to the created solver instance')
+add_statement(onto, test_solver, 'label', 'test_solver')
+print('\n')
+
+save_onto(onto)
+
 print('Checking that the new coupled system appeared amongs instences of coupled systems')
 print(get_instance_options(onto, 'coupled_system'))
 print('\n')
@@ -49,8 +59,14 @@ print(get_instance_properties(onto, test_solver_settings.name))
 print('\n')
 
 print('Getting instance properties recursively')
-export = get_instance_properties_recursively(onto, 'coupled_system1')
+export = get_instance_properties_recursively(onto, test_coupled.name)
 print(export)
 with open('export.json', 'w') as file:
     json.dump(export, file, indent=2)
+print('\n')
 
+print('Getting instance properties recursively in Kratos format')
+export = export_coupled_kratos(onto, 'coupled_system1')
+print(export)
+with open('export_kratos.json', 'w') as file:
+    json.dump(export, file, indent=2)
