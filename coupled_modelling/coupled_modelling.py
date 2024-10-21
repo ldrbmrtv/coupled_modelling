@@ -357,6 +357,24 @@ def add_statement(onto, subj, pred, obj=None):
     return obj
 
 
+def delete_statement(onto, subj, pred, obj=[]):
+    """
+    Deletes a statement.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+        subj (OWL instance): An instance that is the subject of the statement.
+        pred (str): Label of the property.
+        obj (optional): object of the statement. If not specified, all statements with the given subject and property are removed.
+    """
+    if pred == 'label':
+        subj.label = obj
+    pred = onto.search_one(label = pred)
+    with onto:
+        pred[subj].remove(obj)
+    return obj
+
+
 def get_instance_properties_recursively(onto, inst_name):
     """
     Get instance properties and its subproperties recursively.
@@ -436,4 +454,53 @@ def export_coupled_kratos(onto, coupled_system_name):
         props = {label: props}
     label = None
     return props
-    
+
+
+def copy_instance(onto, inst_name):
+    """
+    Creates a structural copy of a given instance with all its properties.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+        inst_name (str): Instance name.
+
+    Returns:
+        Created instance.
+    """
+    inst = onto[inst_name]
+    cl = type(inst)
+    new_inst = cl()
+    for prop in inst.get_properties():
+        objects = prop[inst]
+        for obj in objects:
+            if hasattr(obj, 'name'):
+                cl = type(obj)
+                obj = cl()
+            prop[new_inst].append(obj)
+    return new_inst
+
+
+def copy_instance_recursively(onto, inst_name):
+    """
+    Creates a structural copy of a given instance with all it properties revursively.
+
+    Args:
+        onto (owlready2.namespace.Ontology): Ontology.
+        inst_name (str): Instance name.
+
+    Returns:
+        Created instance.
+    """
+    inst = onto[inst_name]
+    cl = type(inst)
+    new_inst = cl()
+    for prop in inst.get_properties():
+        if prop.name == 'has_coupled_system':
+            continue
+        objects = prop[inst]
+        for obj in objects:
+            if hasattr(obj, 'name'):
+                cl = type(obj)
+                obj = copy_instance_recursively(onto, obj.name)
+            prop[new_inst].append(obj)
+    return new_inst
