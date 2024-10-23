@@ -4,16 +4,6 @@ import os
 from collections import Counter
 
 
-#def get_onto(name):
-#    """
-#    Gets an ontology by name.
-#
-#    Args:
-#        name (str): Name of the ontology.
-#    """
-#    return get_ontology(name)
-
-
 def load_onto(path=None):
     """
     Loads an ontology.
