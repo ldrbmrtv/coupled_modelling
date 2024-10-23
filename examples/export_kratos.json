@@ -1,129 +1,129 @@
 {
   "solver_settings": {
+    "type": "coupled_solvers.gauss_seidel_strong",
     "solvers": {
       "low_fid_fluid": {
-        "type": "solver_wrappers.external.remote_controlled_solver_wrapper",
         "solver_wrapper_settings": {
-          "import_meshes": [
-            "single_node_mesh_f"
-          ],
           "export_data": [
             "pitch_angle"
           ],
           "import_data": [
             "lift_force"
+          ],
+          "import_meshes": [
+            "single_node_mesh_f"
           ]
         },
+        "type": "solver_wrappers.external.remote_controlled_solver_wrapper",
         "io_settings": {
           "echo_level": 4,
-          "type": "kratos_co_sim_io",
+          "communication_format": "file",
           "connect_to": "run_fluid",
-          "communication_format": "file"
+          "type": "kratos_co_sim_io"
         },
         "data": {
           "pitch_angle": {
             "variable_name": "SCALAR_DISPLACEMENT",
-            "model_part_name": "single_node_mesh_f",
-            "location": "node_historical"
+            "location": "node_historical",
+            "model_part_name": "single_node_mesh_f"
           },
           "lift_force": {
             "variable_name": "SCALAR_FORCE",
-            "model_part_name": "single_node_mesh_f",
-            "location": "node_historical"
+            "location": "node_historical",
+            "model_part_name": "single_node_mesh_f"
           }
         }
       },
       "spring_structure": {
-        "type": "solver_wrappers.external.remote_controlled_solver_wrapper",
         "solver_wrapper_settings": {
-          "import_meshes": [
-            "single_node_mesh_s"
-          ],
           "export_data": [
             "lift_force"
           ],
           "import_data": [
             "pitch_angle"
+          ],
+          "import_meshes": [
+            "single_node_mesh_s"
           ]
         },
+        "type": "solver_wrappers.external.remote_controlled_solver_wrapper",
         "io_settings": {
           "echo_level": 4,
-          "type": "kratos_co_sim_io",
+          "communication_format": "file",
           "connect_to": "run_structure",
-          "communication_format": "file"
+          "type": "kratos_co_sim_io"
         },
         "data": {
           "pitch_angle": {
             "variable_name": "SCALAR_DISPLACEMENT",
-            "model_part_name": "single_node_mesh_s",
-            "location": "node_historical"
+            "location": "node_historical",
+            "model_part_name": "single_node_mesh_s"
           },
           "lift_force": {
             "variable_name": "SCALAR_FORCE",
-            "model_part_name": "single_node_mesh_s",
-            "location": "node_historical"
+            "location": "node_historical",
+            "model_part_name": "single_node_mesh_s"
           }
         }
       }
     },
     "echo_level": 3,
-    "type": "coupled_solvers.gauss_seidel_strong",
-    "data_transfer_operators": {
-      "direct_transfer": {
-        "type": "kratos_mapping",
-        "mapper_settings": {
-          "echo_level": 3,
-          "mapper_type": "nearest_neighbor"
-        }
-      }
-    },
-    "num_coupling_iterations": 20,
     "coupling_sequence": [
       {
         "name": "low_fid_fluid"
       },
       {
-        "name": "spring_structure",
-        "output_data_list": [
-          {
-            "to_solver_data": "pitch_angle",
-            "to_solver": "low_fid_fluid",
-            "data": "pitch_angle",
-            "data_transfer_operator": "direct_transfer"
-          }
-        ],
         "input_data_list": [
           {
-            "from_solver": "low_fid_fluid",
+            "data_transfer_operator": "direct_transfer",
             "data": "lift_force",
-            "from_solver_data": "lift_force",
-            "data_transfer_operator": "direct_transfer"
+            "from_solver": "low_fid_fluid",
+            "from_solver_data": "lift_force"
           }
-        ]
+        ],
+        "output_data_list": [
+          {
+            "to_solver": "low_fid_fluid",
+            "data_transfer_operator": "direct_transfer",
+            "data": "pitch_angle",
+            "to_solver_data": "pitch_angle"
+          }
+        ],
+        "name": "spring_structure"
       }
     ],
     "convergence_criteria": [
       {
-        "data_name": "pitch_angle",
+        "rel_tolerance": 1e-05,
         "type": "relative_norm_previous_residual",
-        "abs_tolerance": 1e-07,
         "solver": "low_fid_fluid",
-        "rel_tolerance": 1e-05
+        "data_name": "pitch_angle",
+        "abs_tolerance": 1e-07
       }
     ],
     "convergence_accelerators": [
       {
-        "data_name": "pitch_angle",
         "type": "aitken",
+        "data_name": "pitch_angle",
         "solver": "low_fid_fluid"
       }
-    ]
+    ],
+    "data_transfer_operators": {
+      "direct_transfer": {
+        "mapper_settings": {
+          "echo_level": 3,
+          "mapper_type": "nearest_neighbor"
+        },
+        "type": "kratos_mapping"
+      }
+    },
+    "num_coupling_iterations": 30
   },
   "problem_data": {
-    "echo_level": 0,
-    "start_time": 0.0,
     "print_colors": true,
     "parallel_type": "OpenMP",
-    "end_time": 1.0
+    "echo_level": 0,
+    "end_time": 1.0,
+    "start_time": 0.0
   }
 }
