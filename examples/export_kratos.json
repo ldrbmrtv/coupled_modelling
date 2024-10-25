@@ -1,106 +1,30 @@
 {
   "solver_settings": {
-    "type": "coupled_solvers.gauss_seidel_strong",
-    "solvers": {
-      "low_fid_fluid": {
-        "solver_wrapper_settings": {
-          "export_data": [
-            "pitch_angle"
-          ],
-          "import_data": [
-            "lift_force"
-          ],
-          "import_meshes": [
-            "single_node_mesh_f"
-          ]
-        },
-        "type": "solver_wrappers.external.remote_controlled_solver_wrapper",
-        "io_settings": {
-          "echo_level": 4,
-          "communication_format": "file",
-          "connect_to": "run_fluid",
-          "type": "kratos_co_sim_io"
-        },
-        "data": {
-          "pitch_angle": {
-            "variable_name": "SCALAR_DISPLACEMENT",
-            "location": "node_historical",
-            "model_part_name": "single_node_mesh_f"
-          },
-          "lift_force": {
-            "variable_name": "SCALAR_FORCE",
-            "location": "node_historical",
-            "model_part_name": "single_node_mesh_f"
-          }
-        }
-      },
-      "spring_structure": {
-        "solver_wrapper_settings": {
-          "export_data": [
-            "lift_force"
-          ],
-          "import_data": [
-            "pitch_angle"
-          ],
-          "import_meshes": [
-            "single_node_mesh_s"
-          ]
-        },
-        "type": "solver_wrappers.external.remote_controlled_solver_wrapper",
-        "io_settings": {
-          "echo_level": 4,
-          "communication_format": "file",
-          "connect_to": "run_structure",
-          "type": "kratos_co_sim_io"
-        },
-        "data": {
-          "pitch_angle": {
-            "variable_name": "SCALAR_DISPLACEMENT",
-            "location": "node_historical",
-            "model_part_name": "single_node_mesh_s"
-          },
-          "lift_force": {
-            "variable_name": "SCALAR_FORCE",
-            "location": "node_historical",
-            "model_part_name": "single_node_mesh_s"
-          }
-        }
-      }
-    },
-    "echo_level": 3,
     "coupling_sequence": [
       {
         "name": "low_fid_fluid"
       },
       {
-        "input_data_list": [
-          {
-            "data_transfer_operator": "direct_transfer",
-            "data": "lift_force",
-            "from_solver": "low_fid_fluid",
-            "from_solver_data": "lift_force"
-          }
-        ],
+        "name": "spring_structure",
         "output_data_list": [
           {
-            "to_solver": "low_fid_fluid",
+            "to_solver_data": "pitch_angle",
             "data_transfer_operator": "direct_transfer",
-            "data": "pitch_angle",
-            "to_solver_data": "pitch_angle"
+            "to_solver": "low_fid_fluid",
+            "data": "pitch_angle"
           }
         ],
-        "name": "spring_structure"
+        "input_data_list": [
+          {
+            "from_solver": "low_fid_fluid",
+            "from_solver_data": "lift_force",
+            "data_transfer_operator": "direct_transfer",
+            "data": "lift_force"
+          }
+        ]
       }
     ],
-    "convergence_criteria": [
-      {
-        "rel_tolerance": 1e-05,
-        "type": "relative_norm_previous_residual",
-        "solver": "low_fid_fluid",
-        "data_name": "pitch_angle",
-        "abs_tolerance": 1e-07
-      }
-    ],
+    "type": "coupled_solvers.gauss_seidel_strong",
     "convergence_accelerators": [
       {
         "type": "aitken",
@@ -108,22 +32,98 @@
         "solver": "low_fid_fluid"
       }
     ],
+    "convergence_criteria": [
+      {
+        "type": "relative_norm_previous_residual",
+        "abs_tolerance": 1e-07,
+        "data_name": "pitch_angle",
+        "solver": "low_fid_fluid",
+        "rel_tolerance": 1e-05
+      }
+    ],
     "data_transfer_operators": {
       "direct_transfer": {
+        "type": "kratos_mapping",
         "mapper_settings": {
-          "echo_level": 3,
-          "mapper_type": "nearest_neighbor"
+          "mapper_type": "nearest_neighbor",
+          "echo_level": 3
+        }
+      }
+    },
+    "echo_level": 3,
+    "solvers": {
+      "low_fid_fluid": {
+        "type": "solver_wrappers.external.remote_controlled_solver_wrapper",
+        "solver_wrapper_settings": {
+          "import_data": [
+            "lift_force"
+          ],
+          "import_meshes": [
+            "single_node_mesh_f"
+          ],
+          "export_data": [
+            "pitch_angle"
+          ]
         },
-        "type": "kratos_mapping"
+        "io_settings": {
+          "type": "kratos_co_sim_io",
+          "communication_format": "file",
+          "connect_to": "run_fluid",
+          "echo_level": 4
+        },
+        "data": {
+          "pitch_angle": {
+            "variable_name": "SCALAR_DISPLACEMENT",
+            "model_part_name": "single_node_mesh_f",
+            "location": "node_historical"
+          },
+          "lift_force": {
+            "variable_name": "SCALAR_FORCE",
+            "model_part_name": "single_node_mesh_f",
+            "location": "node_historical"
+          }
+        }
+      },
+      "spring_structure": {
+        "type": "solver_wrappers.external.remote_controlled_solver_wrapper",
+        "solver_wrapper_settings": {
+          "import_data": [
+            "pitch_angle"
+          ],
+          "import_meshes": [
+            "single_node_mesh_s"
+          ],
+          "export_data": [
+            "lift_force"
+          ]
+        },
+        "io_settings": {
+          "type": "kratos_co_sim_io",
+          "communication_format": "file",
+          "connect_to": "run_structure",
+          "echo_level": 4
+        },
+        "data": {
+          "pitch_angle": {
+            "variable_name": "SCALAR_DISPLACEMENT",
+            "model_part_name": "single_node_mesh_s",
+            "location": "node_historical"
+          },
+          "lift_force": {
+            "variable_name": "SCALAR_FORCE",
+            "model_part_name": "single_node_mesh_s",
+            "location": "node_historical"
+          }
+        }
       }
     },
     "num_coupling_iterations": 30
   },
   "problem_data": {
-    "print_colors": true,
     "parallel_type": "OpenMP",
-    "echo_level": 0,
     "end_time": 1.0,
-    "start_time": 0.0
+    "print_colors": true,
+    "start_time": 0.0,
+    "echo_level": 0
   }
 }

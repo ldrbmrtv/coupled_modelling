@@ -250,7 +250,12 @@ def add_value(subj, prop, value=None):
     if prop == 'label':
         subj.label = value
         return value
-    prop = onto.search_one(label = prop)
+
+    if not value or hasattr(value, 'name'):
+        prop = get_relation(prop)
+    else:
+        prop = get_property(prop)
+
     with onto:
         if not value:
             cl = get_class(prop.name.replace('has_', ''))
@@ -270,7 +275,7 @@ def delete_value(subj, prop, value=[]):
     """
     if prop == 'label':
         subj.label = value
-    prop = onto.search_one(label = prop)
+    prop = onto.search_one(label = f'has_{prop}')
     with onto:
         if value == []:
             prop[subj] = []
@@ -314,12 +319,13 @@ def get_instance_properties_recursively(inst_name):
     return props
 
 
-def copy_instance(inst_name):
+def copy_instance(parent, prop, inst_name):
     """
     Creates a structural copy of a given instance with all its properties.
 
     Args:
         inst_name (str): Instance name.
+        parent_name (str, optional): Name of the parent instance.
 
     Returns:
         Created instance.
@@ -327,6 +333,8 @@ def copy_instance(inst_name):
     inst = onto[inst_name]
     cl = type(inst)
     new_inst = cl()
+    prop = onto.search_one(label = f'has_{prop}')
+    prop[parent].append(new_inst)
     for prop in inst.get_properties():
         objects = prop[inst]
         for obj in objects:
@@ -418,58 +426,71 @@ def export_coupled_kratos(coupled_system_name):
     return props
 
 
-def get_linked_instances(inst_name, insts):
+def get_linked_instances(inst_name, insts, depth):
     """
     For a given instance, returns its connected instances.
 
     Args:
         inst_name (str): Instance name.
-        insts (list): List of instances
+        insts (list): List of instances.
+        depth (int): Depth of the instance tree.
 
     Returns:
         A list of connected instance names.
     """
     inst = onto[inst_name]
-    insts.append(inst)
+    insts[inst] = depth
+    depth += 1
     for prop in inst.get_properties():
         for value in prop[inst]:
             if hasattr(value, 'name'):
-                get_linked_instances(value.name, insts)
+                get_linked_instances(value.name, insts, depth)
 
 
-def infer_axioms(coupled_system):
+def infer_class_properties(inst):
     """
-    Infers new classes and axioms from a given coupled system.
+    Infers new classes and axioms from a given instance.
 
     Args:
-        coupled_system (OWL instance): OWL-instance of the coupled system class.
+        inst (OWL instance): OWL-instance to infer from.
     """
-    insts = []
-    get_linked_instances(coupled_system, insts)
+    new_props = []
+    for rel in inst.get_properties():
+        if str(rel) == 'rdf-schema.label':
+            continue
+        for obj in rel[inst]:
+            new_props.append((rel, type(obj)))
+    new_props = Counter(new_props)
+    cl = type(inst)
+    match = False
+    for sub_cl in cl.subclasses():
+        old_props = dict([((x.property, x.value), x.cardinality) for x in sub_cl.equivalent_to])
+        #old_props.pop('rdf-schema.label', None)
+        if old_props == new_props:
+            match = True
+            inst.is_a = [sub_cl]
+            break
+    if not match:
+        new_cl = types.new_class(f'class_{inst.name}', (cl,))
+        for (rel, obj_cl), card in new_props.items():
+            new_cl.equivalent_to.append(rel.exactly(card, obj_cl))
+        inst.is_a = [new_cl]
 
-    for inst in insts:
-        new_props = []
-        for rel in inst.get_properties():
-            if str(rel) == 'rdf-schema.label':
-                continue
-            for obj in rel[inst]:
-                new_props.append(rel)
-        new_props = Counter(new_props)
-        cl = type(inst)
-        match = False
-        for sub_cl in cl.subclasses():
-            old_props = dict([(x.property, x.cardinality) for x in sub_cl.equivalent_to])
-            old_props.pop('rdf-schema.label', None)
-            if old_props == new_props:
-                match = True
-                inst.is_a = [sub_cl]
-                break
-        if not match:
-            new_cl = types.new_class(f'{cl.name}_{inst.name}', (cl,))
-            for rel, card in new_props.items():
-                for obj in rel[inst]:
-                    new_cl.equivalent_to.append(rel.exactly(card, type(obj)))
-            inst.is_a = [new_cl]
+
+def infer_class_properties_recursively(insts):
+    max_depth = max([x for x in insts.values()])
+    for inst, depth in list(insts.items()):
+        if depth == max_depth:
+            infer_class_properties(inst)
+            del insts[inst]
+    if len(insts):
+        infer_class_properties_recursively(insts)
+
+
+def infer_coupled_system_structure(coupled_system):
+    insts = {}
+    get_linked_instances(coupled_system, insts, 0)
+    infer_class_properties_recursively(insts)
 
 
 def import_coupled_kratos(data, label):
@@ -486,7 +507,7 @@ def import_coupled_kratos(data, label):
     inst = create_coupled(label)
     for pred_name, obj_data in data.items():
         inst = add_coupled_system(inst, pred_name, obj_data, inst)
-    infer_axioms(inst.name)
+    infer_coupled_system_structure(inst.name)
 
 
 onto = load_onto()
