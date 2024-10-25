@@ -1,59 +1,33 @@
 {
+  "problem_data": {
+    "print_colors": true,
+    "start_time": 0.0,
+    "parallel_type": "OpenMP",
+    "echo_level": 0,
+    "end_time": 1.0
+  },
   "solver_settings": {
-    "coupling_sequence": [
-      {
-        "name": "low_fid_fluid"
-      },
-      {
-        "name": "spring_structure",
-        "output_data_list": [
-          {
-            "to_solver_data": "pitch_angle",
-            "data_transfer_operator": "direct_transfer",
-            "to_solver": "low_fid_fluid",
-            "data": "pitch_angle"
-          }
-        ],
-        "input_data_list": [
-          {
-            "from_solver": "low_fid_fluid",
-            "from_solver_data": "lift_force",
-            "data_transfer_operator": "direct_transfer",
-            "data": "lift_force"
-          }
-        ]
-      }
-    ],
-    "type": "coupled_solvers.gauss_seidel_strong",
-    "convergence_accelerators": [
-      {
-        "type": "aitken",
-        "data_name": "pitch_angle",
-        "solver": "low_fid_fluid"
-      }
-    ],
-    "convergence_criteria": [
-      {
-        "type": "relative_norm_previous_residual",
-        "abs_tolerance": 1e-07,
-        "data_name": "pitch_angle",
-        "solver": "low_fid_fluid",
-        "rel_tolerance": 1e-05
-      }
-    ],
-    "data_transfer_operators": {
-      "direct_transfer": {
-        "type": "kratos_mapping",
-        "mapper_settings": {
-          "mapper_type": "nearest_neighbor",
-          "echo_level": 3
-        }
-      }
-    },
-    "echo_level": 3,
     "solvers": {
       "low_fid_fluid": {
         "type": "solver_wrappers.external.remote_controlled_solver_wrapper",
+        "io_settings": {
+          "communication_format": "file",
+          "echo_level": 4,
+          "connect_to": "run_fluid",
+          "type": "kratos_co_sim_io"
+        },
+        "data": {
+          "pitch_angle": {
+            "model_part_name": "single_node_mesh_f",
+            "variable_name": "SCALAR_DISPLACEMENT",
+            "location": "node_historical"
+          },
+          "lift_force": {
+            "model_part_name": "single_node_mesh_f",
+            "variable_name": "SCALAR_FORCE",
+            "location": "node_historical"
+          }
+        },
         "solver_wrapper_settings": {
           "import_data": [
             "lift_force"
@@ -64,28 +38,28 @@
           "export_data": [
             "pitch_angle"
           ]
-        },
-        "io_settings": {
-          "type": "kratos_co_sim_io",
-          "communication_format": "file",
-          "connect_to": "run_fluid",
-          "echo_level": 4
-        },
-        "data": {
-          "pitch_angle": {
-            "variable_name": "SCALAR_DISPLACEMENT",
-            "model_part_name": "single_node_mesh_f",
-            "location": "node_historical"
-          },
-          "lift_force": {
-            "variable_name": "SCALAR_FORCE",
-            "model_part_name": "single_node_mesh_f",
-            "location": "node_historical"
-          }
         }
       },
       "spring_structure": {
         "type": "solver_wrappers.external.remote_controlled_solver_wrapper",
+        "io_settings": {
+          "communication_format": "file",
+          "echo_level": 4,
+          "connect_to": "run_structure",
+          "type": "kratos_co_sim_io"
+        },
+        "data": {
+          "pitch_angle": {
+            "model_part_name": "single_node_mesh_s",
+            "variable_name": "SCALAR_DISPLACEMENT",
+            "location": "node_historical"
+          },
+          "lift_force": {
+            "model_part_name": "single_node_mesh_s",
+            "variable_name": "SCALAR_FORCE",
+            "location": "node_historical"
+          }
+        },
         "solver_wrapper_settings": {
           "import_data": [
             "pitch_angle"
@@ -96,34 +70,60 @@
           "export_data": [
             "lift_force"
           ]
-        },
-        "io_settings": {
-          "type": "kratos_co_sim_io",
-          "communication_format": "file",
-          "connect_to": "run_structure",
-          "echo_level": 4
-        },
-        "data": {
-          "pitch_angle": {
-            "variable_name": "SCALAR_DISPLACEMENT",
-            "model_part_name": "single_node_mesh_s",
-            "location": "node_historical"
-          },
-          "lift_force": {
-            "variable_name": "SCALAR_FORCE",
-            "model_part_name": "single_node_mesh_s",
-            "location": "node_historical"
-          }
         }
       }
     },
-    "num_coupling_iterations": 30
-  },
-  "problem_data": {
-    "parallel_type": "OpenMP",
-    "end_time": 1.0,
-    "print_colors": true,
-    "start_time": 0.0,
-    "echo_level": 0
+    "type": "coupled_solvers.gauss_seidel_strong",
+    "num_coupling_iterations": 30,
+    "coupling_sequence": [
+      {
+        "name": "low_fid_fluid"
+      },
+      {
+        "output_data_list": [
+          {
+            "data": "pitch_angle",
+            "data_transfer_operator": "direct_transfer",
+            "to_solver_data": "pitch_angle",
+            "to_solver": "low_fid_fluid"
+          }
+        ],
+        "name": "spring_structure",
+        "input_data_list": [
+          {
+            "data": "lift_force",
+            "data_transfer_operator": "direct_transfer",
+            "from_solver_data": "lift_force",
+            "from_solver": "low_fid_fluid"
+          }
+        ]
+      }
+    ],
+    "convergence_criteria": [
+      {
+        "type": "relative_norm_previous_residual",
+        "rel_tolerance": 1e-05,
+        "abs_tolerance": 1e-07,
+        "data_name": "pitch_angle",
+        "solver": "low_fid_fluid"
+      }
+    ],
+    "echo_level": 3,
+    "convergence_accelerators": [
+      {
+        "solver": "low_fid_fluid",
+        "data_name": "pitch_angle",
+        "type": "aitken"
+      }
+    ],
+    "data_transfer_operators": {
+      "direct_transfer": {
+        "type": "kratos_mapping",
+        "mapper_settings": {
+          "echo_level": 3,
+          "mapper_type": "nearest_neighbor"
+        }
+      }
+    }
   }
 }

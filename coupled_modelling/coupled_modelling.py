@@ -319,7 +319,7 @@ def get_instance_properties_recursively(inst_name):
     return props
 
 
-def copy_instance(parent, prop, inst_name):
+def copy_instance(inst_name, parent=None):
     """
     Creates a structural copy of a given instance with all its properties.
 
@@ -333,8 +333,11 @@ def copy_instance(parent, prop, inst_name):
     inst = onto[inst_name]
     cl = type(inst)
     new_inst = cl()
-    prop = onto.search_one(label = f'has_{prop}')
-    prop[parent].append(new_inst)
+    if parent:
+        for subj, prop in inst.get_inverse_properties():
+            if type(subj) == cl:
+                break
+        prop[parent].append(new_inst)
     for prop in inst.get_properties():
         objects = prop[inst]
         for obj in objects:
