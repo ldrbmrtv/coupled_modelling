@@ -319,7 +319,15 @@ def get_instance_properties_recursively(inst_name):
     return props
 
 
-def copy_instance(inst_name, parent=None):
+def create_instance(parent, prop, data=None):
+    inst = add_value(parent, prop)
+    if data:
+        for prop, value in data.items():
+            add_value(inst, prop, value)
+    return inst
+
+
+def copy_instance(inst_name, parent=None, data=None):
     """
     Creates a structural copy of a given instance with all its properties.
 
@@ -345,6 +353,9 @@ def copy_instance(inst_name, parent=None):
                 cl = type(obj)
                 obj = cl()
             prop[new_inst].append(obj)
+    if data:
+        for prop, value in data.items():
+            replace_value(new_inst, prop, value)
     return new_inst
 
 
