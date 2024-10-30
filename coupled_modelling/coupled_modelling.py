@@ -92,7 +92,7 @@ def get_property(name, functional = False):
         return prop
 
 
-def add_coupled_system(inst, pred_name, obj_data, coupled_system):
+def add_coupled_system(inst, pred_name, obj_data):
     """
     Creates a coupled system with given data.
 
@@ -100,7 +100,6 @@ def add_coupled_system(inst, pred_name, obj_data, coupled_system):
         inst (OWL instance): OWL-instance.
         pred_name (str): A property name from the data.
         obj_data: Value of the property from the data.
-        coupled_system (OWL instance): OWL-instance of the coupled system class.
     """
     with onto:
         if type(obj_data) == dict and all([type(obj_value) == dict for obj_key, obj_value in obj_data.items()]):
@@ -110,7 +109,7 @@ def add_coupled_system(inst, pred_name, obj_data, coupled_system):
                 obj_inst = obj_cl()
                 obj_inst.label = obj_key
                 for inst_pred_name, inst_obj_data in obj_value.items():
-                    obj_inst = add_coupled_system(obj_inst, inst_pred_name, inst_obj_data, coupled_system)
+                    obj_inst = add_coupled_system(obj_inst, inst_pred_name, inst_obj_data)
                     if obj_inst not in rel[inst]:
                         print('dict_dict', inst, rel, obj_inst)
                         rel[inst].append(obj_inst)
@@ -119,7 +118,7 @@ def add_coupled_system(inst, pred_name, obj_data, coupled_system):
             rel = get_relation(pred_name, True)
             obj_inst = obj_cl()
             for inst_pred_name, inst_obj_data in obj_data.items():
-                obj_inst = add_coupled_system(obj_inst, inst_pred_name, inst_obj_data, coupled_system)
+                obj_inst = add_coupled_system(obj_inst, inst_pred_name, inst_obj_data)
                 if obj_inst not in rel[inst]:
                     print('dict', inst, rel, obj_inst)
                     rel[inst].append(obj_inst)
@@ -130,7 +129,7 @@ def add_coupled_system(inst, pred_name, obj_data, coupled_system):
                     rel = get_relation(pred_name)
                     obj_inst = obj_cl()
                     for inst_pred_name, inst_obj_data in obj_item.items():
-                        obj_inst = add_coupled_system(obj_inst, inst_pred_name, inst_obj_data, coupled_system)
+                        obj_inst = add_coupled_system(obj_inst, inst_pred_name, inst_obj_data)
                         if obj_inst not in rel[inst]:
                             print('list_dict', inst, rel, obj_inst)
                             rel[inst].append(obj_inst)
@@ -162,7 +161,7 @@ def create_coupled(label):
         coupled_system = get_class('coupled_system')
         inst = coupled_system()
         inst.label = label
-    return inst
+    return inst.name
 
 
 def get_class_properties(class_name):
@@ -247,6 +246,10 @@ def add_value(subj, prop, value=None):
     Returns:
         The value, useful if the new instance is created.
     """
+    subj = onto[subj]
+    if onto[value]:
+        value = onto[value]
+    
     if prop == 'label':
         subj.label = value
         return value
@@ -261,7 +264,8 @@ def add_value(subj, prop, value=None):
             cl = get_class(prop.name.replace('has_', ''))
             value = cl()
         prop[subj].append(value)
-    return value
+    if hasattr(value, 'name'):
+        return value.name
 
 
 def delete_value(subj, prop, value=[]):
@@ -273,11 +277,20 @@ def delete_value(subj, prop, value=[]):
         prop (str): Label of the property.
         value (optional): value to delete. If not specified, all values are removed.
     """
+    subj = onto[subj]
+    if onto[value]:
+        value = onto[value]
+    
     if prop == 'label':
-        subj.label = value
+        if value == []:
+            subj.label = []
+        else:
+            subj.label.remove(value)
+        return
     prop = onto.search_one(label = f'has_{prop}')
     with onto:
         if value == []:
+            print(subj, prop)
             prop[subj] = []
         else:
             prop[subj].remove(value)
@@ -319,7 +332,7 @@ def get_instance_properties_recursively(inst_name):
     return props
 
 
-def create_instance(parent, prop, data=None):
+def create_instance(prop, parent, data=None):
     inst = add_value(parent, prop)
     if data:
         for prop, value in data.items():
@@ -327,7 +340,7 @@ def create_instance(parent, prop, data=None):
     return inst
 
 
-def copy_instance(inst_name, parent=None, data=None):
+def copy_instance(inst, parent=None, data=None):
     """
     Creates a structural copy of a given instance with all its properties.
 
@@ -338,10 +351,11 @@ def copy_instance(inst_name, parent=None, data=None):
     Returns:
         Created instance.
     """
-    inst = onto[inst_name]
+    inst = onto[inst]
     cl = type(inst)
     new_inst = cl()
     if parent:
+        parent = onto[parent]
         for subj, prop in inst.get_inverse_properties():
             if type(subj) == cl:
                 break
@@ -350,13 +364,18 @@ def copy_instance(inst_name, parent=None, data=None):
         objects = prop[inst]
         for obj in objects:
             if hasattr(obj, 'name'):
-                cl = type(obj)
-                obj = cl()
+                #cl = type(obj)
+                #obj = cl()
+                continue
             prop[new_inst].append(obj)
     if data:
         for prop, value in data.items():
-            replace_value(new_inst, prop, value)
-    return new_inst
+            onto_prop = get_property(prop)
+            if onto_prop[new_inst]:
+                replace_value(new_inst.name, prop, value)
+            else:
+                add_value(new_inst.name, prop, value)
+    return new_inst.name
 
 
 def copy_instance_recursively(inst_name):
@@ -378,11 +397,12 @@ def copy_instance_recursively(inst_name):
             if hasattr(obj, 'name'):
                 cl = type(obj)
                 obj = copy_instance_recursively(obj.name)
+                obj = onto[obj]
             prop[new_inst].append(obj)
-    return new_inst
+    return new_inst.name
 
 
-def export_coupled_kratos(coupled_system_name):
+def export_coupled_kratos(coupled_system):
     """
     Returns a coupled system in Kratos format.
 
@@ -392,7 +412,7 @@ def export_coupled_kratos(coupled_system_name):
     Returns:
         Dictionary of nested properties.
     """
-    props = get_instance_properties(coupled_system_name)
+    props = get_instance_properties(coupled_system)
     label = None
     for key in list(props.keys()):
         props[key.replace('has_', '')] = props.pop(key)
@@ -402,7 +422,7 @@ def export_coupled_kratos(coupled_system_name):
             props['data'] = props.pop('data_')
     if label:
         props.pop('label', None)
-    if str(type(onto[coupled_system_name]).name).startswith('coupled_system'):
+    if 'coupled_system' in str(type(onto[coupled_system]).name):
         label = None
     for key, items in props.items():
         if len(items) > 1 and key in ['solvers', 'data']:
@@ -418,7 +438,8 @@ def export_coupled_kratos(coupled_system_name):
             'output_data_list',
             'export_data',
             'import_data',
-            'import_meshes'
+            'import_meshes',
+            'data_transfer_operator_options'
         ]:
             temp_list = []
             for item in items:
@@ -477,7 +498,9 @@ def infer_class_properties(inst):
     new_props = Counter(new_props)
     cl = type(inst)
     match = False
-    for sub_cl in cl.subclasses():
+    subclasses = list(cl.subclasses())
+    subclasses.append(cl)
+    for sub_cl in subclasses:
         old_props = dict([((x.property, x.value), x.cardinality) for x in sub_cl.equivalent_to])
         #old_props.pop('rdf-schema.label', None)
         if old_props == new_props:
@@ -518,10 +541,11 @@ def import_coupled_kratos(data, label):
     Returns:
         The OWL-instance of the coupled system.
     """
-    inst = create_coupled(label)
+    inst_name = create_coupled(label)
+    inst = onto[inst_name]
     for pred_name, obj_data in data.items():
-        inst = add_coupled_system(inst, pred_name, obj_data, inst)
-    infer_coupled_system_structure(inst.name)
+        inst = add_coupled_system(inst, pred_name, obj_data)
+    infer_coupled_system_structure(inst_name)
 
 
 onto = load_onto()

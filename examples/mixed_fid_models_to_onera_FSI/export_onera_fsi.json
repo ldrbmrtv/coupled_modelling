@@ -1,0 +1,118 @@
+{
+  "problem_data": {
+    "print_colors": true,
+    "start_time": 0.0,
+    "parallel_type": "OpenMP",
+    "end_time": 1.0,
+    "echo_level": 2
+  },
+  "solver_settings": {
+    "convergence_accelerators": [
+      {
+        "type": "aitken",
+        "solver": "CFD",
+        "data_name": "displacements"
+      }
+    ],
+    "data_transfer_operators": {
+      "mapping_operation": {
+        "type": "kratos_mapping",
+        "mapper_settings": {
+          "mapper_type": "nearest_neighbor",
+          "use_initial_configuration": true
+        }
+      }
+    },
+    "num_coupling_iterations": 20,
+    "type": "coupled_solvers.gauss_seidel_strong",
+    "solvers": {
+      "CFD": {
+        "type": "solver_wrappers.external.remote_controlled_solver_wrapper",
+        "solver_wrapper_settings": {
+          "export_data": [
+            "displacements"
+          ],
+          "import_data": [
+            "lift_force"
+          ],
+          "import_meshes": [
+            "WING"
+          ]
+        },
+        "data": {
+          "displacements": {
+            "variable_name": "MESH_DISPLACEMENT",
+            "dimensions": 3,
+            "model_part_name": "WING"
+          },
+          "lift_force": {
+            "variable_name": "REACTION",
+            "dimensions": 3,
+            "model_part_name": "WING"
+          }
+        },
+        "io_settings": {
+          "type": "kratos_co_sim_io",
+          "echo_level": 4,
+          "communication_format": "file",
+          "connect_to": "run_SU2"
+        }
+      },
+      "SM": {
+        "type": "solver_wrappers.kratos.structural_mechanics_wrapper",
+        "solver_wrapper_settings": {
+          "input_file": "ProjectParametersSM"
+        },
+        "data": {
+          "displacements": {
+            "variable_name": "DISPLACEMENT",
+            "dimensions": 3,
+            "model_part_name": "Structure.interface"
+          },
+          "lift_force": {
+            "variable_name": "POINT_LOAD",
+            "dimensions": 3,
+            "model_part_name": "Structure.interface"
+          }
+        }
+      }
+    },
+    "echo_level": 4,
+    "coupling_sequence": [
+      {
+        "name": "CFD"
+      },
+      {
+        "output_data_list": [
+          {
+            "data_transfer_operator": "mapping_operation",
+            "to_solver_data": "displacements",
+            "data": "displacements",
+            "to_solver": "CFD"
+          }
+        ],
+        "input_data_list": [
+          {
+            "data_transfer_operator_options": [
+              "use_transpose"
+            ],
+            "from_solver_data": "lift_force",
+            "from_solver": "CFD",
+            "data_transfer_operator": "mapping_operation",
+            "data": "lift_force"
+          }
+        ],
+        "name": "SM"
+      }
+    ],
+    "convergence_criteria": [
+      {
+        "type": "relative_norm_initial_residual",
+        "rel_tolerance": 1e-05,
+        "abs_tolerance": 1e-07,
+        "data_name": "displacements",
+        "solver": "CFD"
+      }
+    ]
+  }
+}
