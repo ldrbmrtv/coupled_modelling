@@ -4,10 +4,10 @@ import json
 
 coupled_system = create_coupled('Onera_FSI')
 
-problem_data = copy_instance('problem_data1', coupled_system, {
+problem_data = copy_instance('instance_2', coupled_system, {
     'echo_level': 2})
 
-solver_settings = copy_instance('solver_settings1', coupled_system, {
+solver_settings = copy_instance('instance_3', coupled_system, {
     'echo_level': 4})
 
 convergence_accelerators = create_instance('convergence_accelerators', solver_settings, {
@@ -15,7 +15,7 @@ convergence_accelerators = create_instance('convergence_accelerators', solver_se
     'solver': 'CFD',
     'type': 'aitken'})
 
-convergence_criteria = copy_instance('convergence_criteria1', solver_settings, {
+convergence_criteria = copy_instance('instance_7', solver_settings, {
     'data_name': 'displacements',
     'solver': 'CFD',
     'type': 'relative_norm_initial_residual'})
@@ -26,7 +26,7 @@ coupling_sequence = create_instance('coupling_sequence', solver_settings, {
 coupling_sequence = create_instance('coupling_sequence', solver_settings, {
     'name': 'SM'})
 
-input_data_list = copy_instance('input_data_list1', coupling_sequence, {
+input_data_list = copy_instance('instance_10', coupling_sequence, {
     'data_transfer_operator': 'mapping_operation',
     'from_solver': 'CFD',
     'data_transfer_operator_options': 'use_transpose'})
@@ -45,7 +45,7 @@ mapper_settings = create_instance('mapper_settings', mapping_operation, {
     'mapper_type': 'nearest_neighbor',
     'use_initial_configuration': True})
                                 
-CFD = copy_instance('solvers1', solver_settings, {'label': 'CFD'})
+CFD = copy_instance('instance_12', solver_settings, {'label': 'CFD'})
 
 displacements = create_instance('data', CFD, {
     'label': 'displacements',
@@ -59,9 +59,9 @@ lift_force = create_instance('data', CFD, {
     'model_part_name': 'WING',
     'variable_name': 'REACTION'})
         
-io_settings = copy_instance('io_settings1', CFD, {'connect_to': 'run_SU2'})
+io_settings = copy_instance('instance_14', CFD, {'connect_to': 'run_SU2'})
 
-solver_wrapper_settings = copy_instance('solver_wrapper_settings1', CFD, {
+solver_wrapper_settings = copy_instance('instance_13', CFD, {
     'export_data': 'displacements',
     'import_meshes': 'WING'})
 

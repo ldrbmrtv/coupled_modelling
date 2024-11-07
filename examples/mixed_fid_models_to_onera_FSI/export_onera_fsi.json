@@ -1,118 +1,118 @@
 {
   "problem_data": {
-    "print_colors": true,
-    "start_time": 0.0,
     "parallel_type": "OpenMP",
+    "print_colors": true,
     "end_time": 1.0,
-    "echo_level": 2
+    "echo_level": 2,
+    "start_time": 0.0
   },
   "solver_settings": {
-    "convergence_accelerators": [
-      {
-        "type": "aitken",
-        "solver": "CFD",
-        "data_name": "displacements"
-      }
-    ],
-    "data_transfer_operators": {
-      "mapping_operation": {
-        "type": "kratos_mapping",
-        "mapper_settings": {
-          "mapper_type": "nearest_neighbor",
-          "use_initial_configuration": true
-        }
-      }
-    },
-    "num_coupling_iterations": 20,
-    "type": "coupled_solvers.gauss_seidel_strong",
     "solvers": {
       "CFD": {
-        "type": "solver_wrappers.external.remote_controlled_solver_wrapper",
         "solver_wrapper_settings": {
           "export_data": [
             "displacements"
           ],
-          "import_data": [
-            "lift_force"
-          ],
           "import_meshes": [
             "WING"
+          ],
+          "import_data": [
+            "lift_force"
           ]
         },
         "data": {
           "displacements": {
-            "variable_name": "MESH_DISPLACEMENT",
+            "model_part_name": "WING",
             "dimensions": 3,
-            "model_part_name": "WING"
+            "variable_name": "MESH_DISPLACEMENT"
           },
           "lift_force": {
-            "variable_name": "REACTION",
+            "model_part_name": "WING",
             "dimensions": 3,
-            "model_part_name": "WING"
+            "variable_name": "REACTION"
           }
         },
+        "type": "solver_wrappers.external.remote_controlled_solver_wrapper",
         "io_settings": {
+          "connect_to": "run_SU2",
           "type": "kratos_co_sim_io",
           "echo_level": 4,
-          "communication_format": "file",
-          "connect_to": "run_SU2"
+          "communication_format": "file"
         }
       },
       "SM": {
-        "type": "solver_wrappers.kratos.structural_mechanics_wrapper",
         "solver_wrapper_settings": {
           "input_file": "ProjectParametersSM"
         },
         "data": {
           "displacements": {
-            "variable_name": "DISPLACEMENT",
+            "model_part_name": "Structure.interface",
             "dimensions": 3,
-            "model_part_name": "Structure.interface"
+            "variable_name": "DISPLACEMENT"
           },
           "lift_force": {
-            "variable_name": "POINT_LOAD",
+            "model_part_name": "Structure.interface",
             "dimensions": 3,
-            "model_part_name": "Structure.interface"
+            "variable_name": "POINT_LOAD"
           }
-        }
+        },
+        "type": "solver_wrappers.kratos.structural_mechanics_wrapper"
       }
     },
-    "echo_level": 4,
+    "type": "coupled_solvers.gauss_seidel_strong",
+    "convergence_accelerators": [
+      {
+        "data_name": "displacements",
+        "type": "aitken",
+        "solver": "CFD"
+      }
+    ],
     "coupling_sequence": [
       {
         "name": "CFD"
       },
       {
-        "output_data_list": [
-          {
-            "data_transfer_operator": "mapping_operation",
-            "to_solver_data": "displacements",
-            "data": "displacements",
-            "to_solver": "CFD"
-          }
-        ],
         "input_data_list": [
           {
+            "data_transfer_operator": "mapping_operation",
+            "from_solver_data": "lift_force",
+            "data": "lift_force",
+            "from_solver": "CFD",
             "data_transfer_operator_options": [
               "use_transpose"
-            ],
-            "from_solver_data": "lift_force",
-            "from_solver": "CFD",
-            "data_transfer_operator": "mapping_operation",
-            "data": "lift_force"
+            ]
           }
         ],
-        "name": "SM"
+        "name": "SM",
+        "output_data_list": [
+          {
+            "data": "displacements",
+            "to_solver": "CFD",
+            "to_solver_data": "displacements",
+            "data_transfer_operator": "mapping_operation"
+          }
+        ]
       }
     ],
+    "num_coupling_iterations": 20,
     "convergence_criteria": [
       {
+        "data_name": "displacements",
+        "abs_tolerance": 1e-07,
         "type": "relative_norm_initial_residual",
         "rel_tolerance": 1e-05,
-        "abs_tolerance": 1e-07,
-        "data_name": "displacements",
         "solver": "CFD"
       }
-    ]
+    ],
+    "echo_level": 4,
+    "data_transfer_operators": {
+      "mapping_operation": {
+        "mapper_settings": {
+          "use_initial_configuration": true,
+          "mapper_type": "nearest_neighbor"
+        },
+        "type": "kratos_mapping"
+      }
+    }
   }
 }
