@@ -92,6 +92,11 @@ def get_property(name, functional = False):
         return prop
 
 
+def instance_name():
+    n = len(list(onto.individuals())) + 1
+    return f'instance_{n}'
+
+
 def add_coupled_system(inst, pred_name, obj_data):
     """
     Creates a coupled system with given data.
@@ -106,7 +111,7 @@ def add_coupled_system(inst, pred_name, obj_data):
             rel = get_relation(pred_name)
             for obj_key, obj_value in obj_data.items():
                 obj_cl = get_class(pred_name)
-                obj_inst = obj_cl()
+                obj_inst = obj_cl(instance_name())
                 obj_inst.label = obj_key
                 for inst_pred_name, inst_obj_data in obj_value.items():
                     obj_inst = add_coupled_system(obj_inst, inst_pred_name, inst_obj_data)
@@ -116,7 +121,7 @@ def add_coupled_system(inst, pred_name, obj_data):
         elif type(obj_data) == dict:
             obj_cl = get_class(pred_name)
             rel = get_relation(pred_name, True)
-            obj_inst = obj_cl()
+            obj_inst = obj_cl(instance_name())
             for inst_pred_name, inst_obj_data in obj_data.items():
                 obj_inst = add_coupled_system(obj_inst, inst_pred_name, inst_obj_data)
                 if obj_inst not in rel[inst]:
@@ -127,7 +132,7 @@ def add_coupled_system(inst, pred_name, obj_data):
                 if type(obj_item) == dict:
                     obj_cl = get_class(pred_name)
                     rel = get_relation(pred_name)
-                    obj_inst = obj_cl()
+                    obj_inst = obj_cl(instance_name())
                     for inst_pred_name, inst_obj_data in obj_item.items():
                         obj_inst = add_coupled_system(obj_inst, inst_pred_name, inst_obj_data)
                         if obj_inst not in rel[inst]:
@@ -159,7 +164,7 @@ def create_coupled(label):
     """
     with onto:
         coupled_system = get_class('coupled_system')
-        inst = coupled_system()
+        inst = coupled_system(instance_name())
         inst.label = label
     return inst.name
 
@@ -262,7 +267,7 @@ def add_value(subj, prop, value=None):
     with onto:
         if not value:
             cl = get_class(prop.name.replace('has_', ''))
-            value = cl()
+            value = cl(instance_name())
         prop[subj].append(value)
     if hasattr(value, 'name'):
         return value.name
@@ -353,7 +358,8 @@ def copy_instance(inst, parent=None, data=None):
     """
     inst = onto[inst]
     cl = type(inst)
-    new_inst = cl()
+    print(inst, cl)
+    new_inst = cl(instance_name())
     if parent:
         parent = onto[parent]
         for subj, prop in inst.get_inverse_properties():
@@ -390,7 +396,7 @@ def copy_instance_recursively(inst_name):
     """
     inst = onto[inst_name]
     cl = type(inst)
-    new_inst = cl()
+    new_inst = cl(instance_name())
     for prop in inst.get_properties():
         objects = prop[inst]
         for obj in objects:
@@ -508,7 +514,8 @@ def infer_class_properties(inst):
             inst.is_a = [sub_cl]
             break
     if not match:
-        new_cl = types.new_class(f'class_{inst.name}', (cl,))
+        n = len(list(cl.subclasses())) + 1
+        new_cl = types.new_class(f'{cl.name}_{n}', (cl,))
         for (rel, obj_cl), card in new_props.items():
             new_cl.equivalent_to.append(rel.exactly(card, obj_cl))
         inst.is_a = [new_cl]

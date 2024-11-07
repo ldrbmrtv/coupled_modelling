@@ -80,7 +80,6 @@ lift_force = copy_instance(lift_force, SM, {
 solver_wrapper_settings = create_instance('solver_wrapper_settings', SM, {
     'input_file': 'ProjectParametersSM'})
 
-print(coupled_system)
 infer_coupled_system_structure(coupled_system)
 
 save_onto()
