@@ -17,7 +17,8 @@ def load_onto(path=None):
     if not path:
         path = os.path.dirname(os.path.realpath(__file__))
         path = os.path.join(path, 'onto.owl')
-    onto = get_ontology(path).load()
+    #onto = get_ontology(path).load()
+    onto = default_world.get_ontology(path).load()
 
     return onto
 
@@ -555,4 +556,5 @@ def import_coupled_kratos(data, label):
     infer_coupled_system_structure(inst_name)
 
 
+default_world.set_backend(filename = 'db.sqlite3')
 onto = load_onto()
