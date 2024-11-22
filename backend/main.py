@@ -219,10 +219,13 @@ def get_instance_properties(inst_name):
     inst = onto[inst_name]
     props = {}
     for prop in inst.get_properties():
-        try:
-            props[prop.name] = [x.name for x in prop[inst]]
-        except:
-            props[prop.name] = prop[inst]
+        temp = []
+        for obj in prop[inst]:
+            if hasattr(obj, 'name'):
+                temp.append(obj.name)
+            else:
+                temp.append(obj)
+            props[prop.name.replace('has_', '')] = temp
     return props
 
     
@@ -422,10 +425,10 @@ def export_coupled_kratos(coupled_system):
     props = get_instance_properties(coupled_system)
     label = None
     for key in list(props.keys()):
-        props[key.replace('has_', '')] = props.pop(key)
+        #props[key.replace('has_', '')] = props.pop(key)
         if key == 'label':
             label = props['label'][0]
-        if key == 'has_data_':
+        if key == 'data_':
             props['data'] = props.pop('data_')
     if label:
         props.pop('label', None)
@@ -468,7 +471,7 @@ def export_coupled_kratos(coupled_system):
     return props
 
 
-def get_linked_instances(inst_name, insts, depth):
+def get_connected_instances_recursively(inst_name, insts, depth):
     """
     For a given instance, returns its connected instances.
 
@@ -486,7 +489,7 @@ def get_linked_instances(inst_name, insts, depth):
     for prop in inst.get_properties():
         for value in prop[inst]:
             if hasattr(value, 'name'):
-                get_linked_instances(value.name, insts, depth)
+                get_connected_instances_recursively(value.name, insts, depth)
 
 
 def infer_class_properties(inst):
@@ -534,7 +537,7 @@ def infer_class_properties_recursively(insts):
 
 def infer_coupled_system_structure(coupled_system):
     insts = {}
-    get_linked_instances(coupled_system, insts, 0)
+    get_connected_instances_recursively(coupled_system, insts, 0)
     infer_class_properties_recursively(insts)
 
 
@@ -554,6 +557,7 @@ def import_coupled_kratos(data, label):
     for pred_name, obj_data in data.items():
         inst = add_coupled_system(inst, pred_name, obj_data)
     infer_coupled_system_structure(inst_name)
+    return inst_name
 
 
 default_world.set_backend(filename = 'db.sqlite3')

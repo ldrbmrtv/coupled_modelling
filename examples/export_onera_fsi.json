@@ -28,17 +28,6 @@
         "name": "CFD"
       },
       {
-        "input_data_list": [
-          {
-            "data": "lift_force",
-            "data_transfer_operator": "mapping_operation",
-            "data_transfer_operator_options": [
-              "use_transpose"
-            ],
-            "from_solver": "CFD",
-            "from_solver_data": "lift_force"
-          }
-        ],
         "name": "SM",
         "output_data_list": [
           {
@@ -50,15 +39,6 @@
         ]
       }
     ],
-    "data_transfer_operators": {
-      "mapping_operation": {
-        "mapper_settings": {
-          "mapper_type": "nearest_neighbor",
-          "use_initial_configuration": true
-        },
-        "type": "kratos_mapping"
-      }
-    },
     "echo_level": 4,
     "num_coupling_iterations": 20,
     "solvers": {
@@ -74,12 +54,6 @@
             "model_part_name": "WING",
             "variable_name": "REACTION"
           }
-        },
-        "io_settings": {
-          "communication_format": "file",
-          "connect_to": "run_SU2",
-          "echo_level": 4,
-          "type": "kratos_co_sim_io"
         },
         "solver_wrapper_settings": {
           "export_data": [

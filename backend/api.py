@@ -1,8 +1,18 @@
 from flask import *
-from coupled_modelling import *
+from main import *
 
 
 app = Flask(__name__)
+
+
+@app.route('/api/v1.0/get_instance_properties/', methods=['GET'])
+def api_get_instance_properties():
+    inst = request.args.get('instance')
+    try:
+        props = get_instance_properties(inst)
+        return jsonify(props), '201'
+    except:
+        return '400'
 
 
 @app.route('/api/v1.0/import_coupled_kratos/', methods=['POST'])
@@ -11,8 +21,8 @@ def api_import_coupled_kratos():
     data = args.get('data')
     label = args.get('label')
     try:
-        import_coupled_kratos(data, label)
-        return '201'
+        coupled_system = import_coupled_kratos(data, label)
+        return jsonify(coupled_system), '201'
     except:
         return '400'
 

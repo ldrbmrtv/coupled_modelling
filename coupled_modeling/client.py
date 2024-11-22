@@ -12,6 +12,12 @@ class KnowledgeBase:
             json={'data': data, 'label': label})
         return res.json()
 
+    def get_instance_properties(self, instance):
+        res = requests.get(
+            f'{self.host}get_instance_properties',
+            params={'instance': instance})
+        return res.json()
+
     def create_coupled(self, label):
         res = requests.post(
             f'{self.host}create_coupled',
