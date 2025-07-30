@@ -4,36 +4,37 @@ import os
 from collections import Counter
 
 
-def load_onto(path=None):
-    """
-    Loads an ontology.
+def get_onto_path():
+    path = os.path.dirname(os.path.realpath(__file__))
+    path = os.path.join(path, 'onto_test.owl')
+    
+    return path
 
-    Args:
-        path (str, optional): Path to the ontology file, if None the default ontology is used.
 
-    Returns:
-        The loaded ontology
-    """
-    if not path:
-        path = os.path.dirname(os.path.realpath(__file__))
-        path = os.path.join(path, 'onto.owl')
-    #onto = get_ontology(path).load()
-    onto = default_world.get_ontology(path).load()
-
+def new_onto():
+    onto = default_world.get_ontology(onto_uri)
+    
     return onto
 
 
-def save_onto(path=None):
+def load_onto():
+    """
+    Loads an ontology.
+
+    Returns:
+        Loaded ontology
+    """
+    onto = default_world.get_ontology(onto_uri).load()
+    
+    return onto
+
+
+def save_onto():
     """
     Saves the ontology into a file.
 
-    Args:
-        path (str): Path to the file to save.
     """
-    if not path:
-        path = os.path.dirname(os.path.realpath(__file__))
-        path = os.path.join(path, 'onto.owl')
-    onto.save(path, format = 'ntriples')
+    default_world.save()
 
 
 def get_class(name):
@@ -59,8 +60,8 @@ def get_relation(name, functional = False):
         name (str): Name of the ObjectProperty.
         functional (bool, optional): if the ObjectProperty is functional.
     """
-    if name == 'data':
-        name = 'data_'
+    #if name == 'data':
+    #    name = 'data_'
     name = f'has_{name}'
     with onto:
         rel = onto.search_one(label = name)
@@ -98,6 +99,39 @@ def instance_name():
     return f'instance_{n}'
 
 
+def dict_to_inst(inst, pred_name, data, functional=False):
+    obj_cl = get_class(pred_name)
+    rel = get_relation(pred_name, functional)
+    obj_inst = obj_cl(instance_name())
+    for inst_pred_name, inst_obj_data in data.items():
+        obj_inst = add_coupled_system(obj_inst, inst_pred_name, inst_obj_data)
+        if obj_inst not in rel[inst]:
+            print('dict', inst, rel, obj_inst)
+            rel[inst].append(obj_inst)
+
+
+def str_to_inst(inst, pred_name, label, functional=False):
+    obj_cl = get_class(pred_name)
+    rel = get_relation(pred_name, functional)
+    obj_inst = onto.search_one(label = label)
+    if obj_inst:
+        if not obj_cl in obj_inst.is_a:
+            obj_inst.is_a.append(obj_cl)
+    else:
+        obj_inst = obj_cl(instance_name())
+        obj_inst.label = [label]
+    if obj_inst not in rel[inst]:
+        print('str', inst, rel, obj_inst)
+        rel[inst].append(obj_inst)
+
+
+def num_to_literal(inst, pred_name, num, functional=False):
+    prop = get_property(pred_name, functional)
+    if num not in prop[inst]:
+        print('num', inst, prop, num)
+        prop[inst].append(num)
+
+
 def add_coupled_system(inst, pred_name, obj_data):
     """
     Creates a coupled system with given data.
@@ -112,6 +146,11 @@ def add_coupled_system(inst, pred_name, obj_data):
             rel = get_relation(pred_name)
             for obj_key, obj_value in obj_data.items():
                 obj_cl = get_class(pred_name)
+                #obj_inst = onto.search_one(label = obj_key)
+                #if obj_inst:
+                #    if not obj_cl in obj_inst.is_a:
+                #        obj_inst.is_a.append(obj_cl)
+                #else:
                 obj_inst = obj_cl(instance_name())
                 obj_inst.label = obj_key
                 for inst_pred_name, inst_obj_data in obj_value.items():
@@ -120,35 +159,19 @@ def add_coupled_system(inst, pred_name, obj_data):
                         print('dict_dict', inst, rel, obj_inst)
                         rel[inst].append(obj_inst)
         elif type(obj_data) == dict:
-            obj_cl = get_class(pred_name)
-            rel = get_relation(pred_name, True)
-            obj_inst = obj_cl(instance_name())
-            for inst_pred_name, inst_obj_data in obj_data.items():
-                obj_inst = add_coupled_system(obj_inst, inst_pred_name, inst_obj_data)
-                if obj_inst not in rel[inst]:
-                    print('dict', inst, rel, obj_inst)
-                    rel[inst].append(obj_inst)
+            dict_to_inst(inst, pred_name, obj_data)
         elif type(obj_data) == list:
             for i, obj_item in enumerate(obj_data):
                 if type(obj_item) == dict:
-                    obj_cl = get_class(pred_name)
-                    rel = get_relation(pred_name)
-                    obj_inst = obj_cl(instance_name())
-                    for inst_pred_name, inst_obj_data in obj_item.items():
-                        obj_inst = add_coupled_system(obj_inst, inst_pred_name, inst_obj_data)
-                        if obj_inst not in rel[inst]:
-                            print('list_dict', inst, rel, obj_inst)
-                            rel[inst].append(obj_inst)
+                    dict_to_inst(inst, pred_name, obj_item)
+                elif type(obj_item) == str:
+                    str_to_inst(inst, pred_name, obj_item)
                 else:
-                    prop = get_property(pred_name)
-                    if obj_item not in prop[inst]:
-                        print('list_literal', inst, prop, obj_item)
-                        prop[inst].append(obj_item)
+                    num_to_literal(inst, pred_name, obj_item)
+        elif type(obj_data) == str:
+            str_to_inst(inst, pred_name, obj_data)
         else:
-            prop = get_property(pred_name, True)
-            if obj_data not in prop[inst]:
-                print('literal', inst, prop, obj_data)
-                prop[inst].append(obj_data)
+            num_to_literal(inst, pred_name, obj_data, True)
 
     return inst
 
@@ -182,11 +205,12 @@ def get_class_properties(class_name):
     """
     cl = onto[class_name]
     props = []
-    for x in cl.equivalent_to:
-        try:
-            props.append((x.property.name, {'cardinality': x.cardinality, 'type': x.value.name}))
-        except:
-            props.append((x.property.name, {'cardinality': x.cardinality, 'type': x.value}))
+    for x in cl.is_a:
+        if hasattr(x, 'property'):
+            try:
+                props.append((x.property.name, {'cardinality': x.cardinality, 'type': x.value.name}))
+            except:
+                props.append((x.property.name, {'cardinality': x.cardinality, 'type': x.value}))
     props = dict(props)
     props.pop('label', None)
     return props
@@ -484,6 +508,12 @@ def get_connected_instances_recursively(inst_name, insts, depth):
         A list of connected instance names.
     """
     inst = onto[inst_name]
+    #if insts.get(inst):
+    #    if insts[inst] > depth:
+    #        pass
+    #    else:
+    #        insts[inst] = depth
+    #else:
     insts[inst] = depth
     depth += 1
     for prop in inst.get_properties():
@@ -504,25 +534,37 @@ def infer_class_properties(inst):
         if str(rel) == 'rdf-schema.label':
             continue
         for obj in rel[inst]:
-            new_props.append((rel, type(obj)))
+            if hasattr(obj, 'is_a'):
+                new_props.append((rel, And(obj.is_a)))
+            else:
+                new_props.append((rel, type(obj)))
     new_props = Counter(new_props)
-    cl = type(inst)
-    match = False
-    subclasses = list(cl.subclasses())
-    subclasses.append(cl)
-    for sub_cl in subclasses:
-        old_props = dict([((x.property, x.value), x.cardinality) for x in sub_cl.equivalent_to])
-        #old_props.pop('rdf-schema.label', None)
-        if old_props == new_props:
-            match = True
-            inst.is_a = [sub_cl]
-            break
-    if not match:
-        n = len(list(cl.subclasses())) + 1
-        new_cl = types.new_class(f'{cl.name}_{n}', (cl,))
-        for (rel, obj_cl), card in new_props.items():
-            new_cl.equivalent_to.append(rel.exactly(card, obj_cl))
-        inst.is_a = [new_cl]
+    if not(len(new_props)):
+        return
+    new_classes = []
+    for cl in inst.is_a:
+        match = False
+        subclasses = list(cl.subclasses())
+        #subclasses.append(cl)
+        for sub_cl in subclasses:
+            old_props = {}
+            for x in sub_cl.is_a:
+                if hasattr(x, 'property') and hasattr(x, 'value'):
+                    old_props[(x.property, x.value)] = x.cardinality
+            #old_props.pop('rdf-schema.label', None)
+            if old_props == new_props:
+                match = True
+                if sub_cl not in inst.is_a:
+                    new_classes.append(sub_cl)
+                break
+        if not match:
+            n = len(list(cl.subclasses())) + 1
+            new_cl = types.new_class(f'{cl.name}_{n}', (cl,))
+            for (rel, obj_cl), card in new_props.items():
+                new_cl.is_a.append(rel.exactly(card, obj_cl))
+            #inst.is_a.remove(cl)
+            new_classes.append(new_cl)
+    inst.is_a = new_classes
 
 
 def infer_class_properties_recursively(insts):
@@ -560,5 +602,9 @@ def import_coupled_kratos(data, label):
     return inst_name
 
 
+onto_uri = 'http://coupled_modelling.owl'
 default_world.set_backend(filename = 'db.sqlite3')
-onto = load_onto()
+try:
+    onto = load_onto()
+except:
+    onto = new_onto()

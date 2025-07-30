@@ -1,531 +1,878 @@
-<mixed_fid_models> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
-<mixed_fid_models#coupled_system> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#coupled_system> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2002/07/owl#Thing> .
-<mixed_fid_models#mixed_fid_models> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <mixed_fid_models#coupled_system> .
-<mixed_fid_models#mixed_fid_models1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models> .
-<mixed_fid_models#mixed_fid_models.problem_data> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models.problem_data> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2002/07/owl#Thing> .
-<mixed_fid_models#has_problem_data> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
-<mixed_fid_models#has_problem_data> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-<mixed_fid_models#mixed_fid_models.problem_data1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models.problem_data1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models.problem_data> .
-<mixed_fid_models#has_start_time> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<mixed_fid_models#has_start_time> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-_:1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:1 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_start_time> .
-_:1 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#decimal> .
-<mixed_fid_models#mixed_fid_models.problem_data> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:1 .
-<mixed_fid_models#mixed_fid_models1> <mixed_fid_models#has_problem_data> <mixed_fid_models#mixed_fid_models.problem_data1> .
-<mixed_fid_models#has_end_time> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<mixed_fid_models#has_end_time> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-_:2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:2 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_end_time> .
-_:2 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#decimal> .
-<mixed_fid_models#mixed_fid_models.problem_data> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:2 .
-<mixed_fid_models#has_echo_level> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<mixed_fid_models#has_echo_level> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-_:3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:3 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_echo_level> .
-_:3 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#integer> .
-<mixed_fid_models#mixed_fid_models.problem_data> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:3 .
-<mixed_fid_models#has_print_colors> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<mixed_fid_models#has_print_colors> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-_:4 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:4 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_print_colors> .
-_:4 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#boolean> .
-<mixed_fid_models#mixed_fid_models.problem_data> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:4 .
-<mixed_fid_models#has_parallel_type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<mixed_fid_models#has_parallel_type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-_:5 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:5 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_parallel_type> .
-_:5 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.problem_data> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:5 .
-_:6 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:6 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_problem_data> .
-_:6 <http://www.w3.org/2002/07/owl#someValuesFrom> <mixed_fid_models#mixed_fid_models.problem_data> .
-<mixed_fid_models#mixed_fid_models> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:6 .
-<mixed_fid_models#mixed_fid_models.solver_settings> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models.solver_settings> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2002/07/owl#Thing> .
-<mixed_fid_models#has_solver_settings> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
-<mixed_fid_models#has_solver_settings> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-<mixed_fid_models#mixed_fid_models.solver_settings1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models.solver_settings1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models.solver_settings> .
-<mixed_fid_models#has_type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<mixed_fid_models#has_type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-_:7 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:7 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_type> .
-_:7 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.solver_settings> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:7 .
-<mixed_fid_models#mixed_fid_models1> <mixed_fid_models#has_solver_settings> <mixed_fid_models#mixed_fid_models.solver_settings1> .
-<mixed_fid_models#has_num_coupling_iterations> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<mixed_fid_models#has_num_coupling_iterations> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-_:8 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:8 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_num_coupling_iterations> .
-_:8 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#integer> .
-<mixed_fid_models#mixed_fid_models.solver_settings> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:8 .
-_:9 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:9 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_echo_level> .
-_:9 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#integer> .
-<mixed_fid_models#mixed_fid_models.solver_settings> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:9 .
-<mixed_fid_models#mixed_fid_models.data_transfer_operators> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models.data_transfer_operators> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2002/07/owl#Thing> .
-<mixed_fid_models#has_data_transfer_operators> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
-<mixed_fid_models#has_data_transfer_operators> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-<mixed_fid_models#mixed_fid_models.data_transfer_operators1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models.data_transfer_operators1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models.data_transfer_operators> .
-<mixed_fid_models#mixed_fid_models.direct_transfer> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models.direct_transfer> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2002/07/owl#Thing> .
-<mixed_fid_models#has_direct_transfer> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
-<mixed_fid_models#has_direct_transfer> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-<mixed_fid_models#mixed_fid_models.direct_transfer1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models.direct_transfer1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models.direct_transfer> .
-_:10 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:10 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_type> .
-_:10 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.direct_transfer> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:10 .
-<mixed_fid_models#mixed_fid_models.data_transfer_operators1> <mixed_fid_models#has_direct_transfer> <mixed_fid_models#mixed_fid_models.direct_transfer1> .
-<mixed_fid_models#mixed_fid_models.mapper_settings> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models.mapper_settings> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2002/07/owl#Thing> .
-<mixed_fid_models#has_mapper_settings> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
-<mixed_fid_models#has_mapper_settings> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-<mixed_fid_models#mixed_fid_models.mapper_settings1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models.mapper_settings1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models.mapper_settings> .
-<mixed_fid_models#has_mapper_type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<mixed_fid_models#has_mapper_type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-_:11 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:11 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_mapper_type> .
-_:11 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.mapper_settings> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:11 .
-<mixed_fid_models#mixed_fid_models.direct_transfer1> <mixed_fid_models#has_mapper_settings> <mixed_fid_models#mixed_fid_models.mapper_settings1> .
-_:12 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:12 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_echo_level> .
-_:12 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#integer> .
-<mixed_fid_models#mixed_fid_models.mapper_settings> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:12 .
-_:13 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:13 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_mapper_settings> .
-_:13 <http://www.w3.org/2002/07/owl#someValuesFrom> <mixed_fid_models#mixed_fid_models.mapper_settings> .
-<mixed_fid_models#mixed_fid_models.direct_transfer> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:13 .
-_:14 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:14 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_direct_transfer> .
-_:14 <http://www.w3.org/2002/07/owl#someValuesFrom> <mixed_fid_models#mixed_fid_models.direct_transfer> .
-<mixed_fid_models#mixed_fid_models.data_transfer_operators> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:14 .
-<mixed_fid_models#mixed_fid_models.solver_settings1> <mixed_fid_models#has_data_transfer_operators> <mixed_fid_models#mixed_fid_models.data_transfer_operators1> .
-_:15 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:15 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_data_transfer_operators> .
-_:15 <http://www.w3.org/2002/07/owl#someValuesFrom> <mixed_fid_models#mixed_fid_models.data_transfer_operators> .
-<mixed_fid_models#mixed_fid_models.solver_settings> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:15 .
-<mixed_fid_models#has_predictors> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
-<mixed_fid_models#mixed_fid_models.convergence_accelerators> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models.convergence_accelerators> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2002/07/owl#Thing> .
-<mixed_fid_models#mixed_fid_models.convergence_accelerators0> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models.convergence_accelerators0> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <mixed_fid_models#mixed_fid_models.convergence_accelerators> .
-<mixed_fid_models#has_convergence_accelerators> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
-<mixed_fid_models#mixed_fid_models.convergence_accelerators01> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models.convergence_accelerators01> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models.convergence_accelerators0> .
-_:16 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:16 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_type> .
-_:16 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.convergence_accelerators0> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:16 .
-<mixed_fid_models#mixed_fid_models.solver_settings1> <mixed_fid_models#has_convergence_accelerators> <mixed_fid_models#mixed_fid_models.convergence_accelerators01> .
-<mixed_fid_models#has_solver> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<mixed_fid_models#has_solver> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-_:17 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:17 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_solver> .
-_:17 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.convergence_accelerators0> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:17 .
-<mixed_fid_models#has_data_name> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<mixed_fid_models#has_data_name> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-_:18 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:18 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_data_name> .
-_:18 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.convergence_accelerators0> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:18 .
-_:19 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:19 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_convergence_accelerators> .
-_:19 <http://www.w3.org/2002/07/owl#someValuesFrom> <mixed_fid_models#mixed_fid_models.convergence_accelerators0> .
-<mixed_fid_models#mixed_fid_models.solver_settings> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:19 .
-<mixed_fid_models#mixed_fid_models.convergence_criteria> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models.convergence_criteria> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2002/07/owl#Thing> .
-<mixed_fid_models#mixed_fid_models.convergence_criteria0> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models.convergence_criteria0> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <mixed_fid_models#mixed_fid_models.convergence_criteria> .
-<mixed_fid_models#has_convergence_criteria> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
-<mixed_fid_models#mixed_fid_models.convergence_criteria01> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models.convergence_criteria01> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models.convergence_criteria0> .
-_:20 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:20 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_type> .
-_:20 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.convergence_criteria0> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:20 .
-<mixed_fid_models#mixed_fid_models.solver_settings1> <mixed_fid_models#has_convergence_criteria> <mixed_fid_models#mixed_fid_models.convergence_criteria01> .
-_:21 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:21 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_solver> .
-_:21 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.convergence_criteria0> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:21 .
-_:22 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:22 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_data_name> .
-_:22 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.convergence_criteria0> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:22 .
-<mixed_fid_models#has_abs_tolerance> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<mixed_fid_models#has_abs_tolerance> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-_:23 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:23 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_abs_tolerance> .
-_:23 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#decimal> .
-<mixed_fid_models#mixed_fid_models.convergence_criteria0> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:23 .
-<mixed_fid_models#has_rel_tolerance> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<mixed_fid_models#has_rel_tolerance> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-_:24 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:24 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_rel_tolerance> .
-_:24 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#decimal> .
-<mixed_fid_models#mixed_fid_models.convergence_criteria0> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:24 .
-_:25 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:25 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_convergence_criteria> .
-_:25 <http://www.w3.org/2002/07/owl#someValuesFrom> <mixed_fid_models#mixed_fid_models.convergence_criteria0> .
-<mixed_fid_models#mixed_fid_models.solver_settings> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:25 .
-<mixed_fid_models#mixed_fid_models.coupling_sequence> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models.coupling_sequence> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2002/07/owl#Thing> .
-<mixed_fid_models#mixed_fid_models.coupling_sequence0> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models.coupling_sequence0> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <mixed_fid_models#mixed_fid_models.coupling_sequence> .
-<mixed_fid_models#has_coupling_sequence> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
-<mixed_fid_models#mixed_fid_models.coupling_sequence01> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models.coupling_sequence01> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models.coupling_sequence0> .
-<mixed_fid_models#has_name> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<mixed_fid_models#has_name> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-_:26 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:26 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_name> .
-_:26 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.coupling_sequence0> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:26 .
-<mixed_fid_models#mixed_fid_models.solver_settings1> <mixed_fid_models#has_coupling_sequence> <mixed_fid_models#mixed_fid_models.coupling_sequence01> .
-<mixed_fid_models#has_output_data_list> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
-<mixed_fid_models#has_input_data_list> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
-<mixed_fid_models#mixed_fid_models.coupling_sequence1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models.coupling_sequence1> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <mixed_fid_models#mixed_fid_models.coupling_sequence> .
-<mixed_fid_models#mixed_fid_models.coupling_sequence11> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models.coupling_sequence11> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models.coupling_sequence1> .
-_:27 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:27 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_name> .
-_:27 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.coupling_sequence1> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:27 .
-<mixed_fid_models#mixed_fid_models.solver_settings1> <mixed_fid_models#has_coupling_sequence> <mixed_fid_models#mixed_fid_models.coupling_sequence11> .
-<mixed_fid_models#mixed_fid_models.input_data_list> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models.input_data_list> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2002/07/owl#Thing> .
-<mixed_fid_models#mixed_fid_models.input_data_list0> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models.input_data_list0> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <mixed_fid_models#mixed_fid_models.input_data_list> .
-<mixed_fid_models#mixed_fid_models.input_data_list01> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models.input_data_list01> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models.input_data_list0> .
-<mixed_fid_models#has_data> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<mixed_fid_models#has_data> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-_:28 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:28 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_data> .
-_:28 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.input_data_list0> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:28 .
-<mixed_fid_models#mixed_fid_models.coupling_sequence11> <mixed_fid_models#has_input_data_list> <mixed_fid_models#mixed_fid_models.input_data_list01> .
-<mixed_fid_models#has_from_solver> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<mixed_fid_models#has_from_solver> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-_:29 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:29 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_from_solver> .
-_:29 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.input_data_list0> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:29 .
-<mixed_fid_models#has_from_solver_data> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<mixed_fid_models#has_from_solver_data> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-_:30 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:30 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_from_solver_data> .
-_:30 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.input_data_list0> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:30 .
-<mixed_fid_models#has_data_transfer_operator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<mixed_fid_models#has_data_transfer_operator> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-_:31 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:31 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_data_transfer_operator> .
-_:31 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.input_data_list0> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:31 .
-_:32 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:32 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_input_data_list> .
-_:32 <http://www.w3.org/2002/07/owl#someValuesFrom> <mixed_fid_models#mixed_fid_models.input_data_list0> .
-<mixed_fid_models#mixed_fid_models.coupling_sequence1> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:32 .
-<mixed_fid_models#mixed_fid_models.output_data_list> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models.output_data_list> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2002/07/owl#Thing> .
-<mixed_fid_models#mixed_fid_models.output_data_list0> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models.output_data_list0> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <mixed_fid_models#mixed_fid_models.output_data_list> .
-<mixed_fid_models#mixed_fid_models.output_data_list01> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models.output_data_list01> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models.output_data_list0> .
-_:33 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:33 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_data> .
-_:33 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.output_data_list0> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:33 .
-<mixed_fid_models#mixed_fid_models.coupling_sequence11> <mixed_fid_models#has_output_data_list> <mixed_fid_models#mixed_fid_models.output_data_list01> .
-<mixed_fid_models#has_to_solver> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<mixed_fid_models#has_to_solver> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-_:34 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:34 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_to_solver> .
-_:34 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.output_data_list0> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:34 .
-<mixed_fid_models#has_to_solver_data> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<mixed_fid_models#has_to_solver_data> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-_:35 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:35 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_to_solver_data> .
-_:35 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.output_data_list0> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:35 .
-_:36 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:36 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_data_transfer_operator> .
-_:36 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.output_data_list0> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:36 .
-_:37 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:37 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_output_data_list> .
-_:37 <http://www.w3.org/2002/07/owl#someValuesFrom> <mixed_fid_models#mixed_fid_models.output_data_list0> .
-<mixed_fid_models#mixed_fid_models.coupling_sequence1> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:37 .
-_:38 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:38 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_coupling_sequence> .
-_:38 <http://www.w3.org/2002/07/owl#someValuesFrom> <mixed_fid_models#mixed_fid_models.coupling_sequence0> .
-<mixed_fid_models#mixed_fid_models.solver_settings> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:38 .
-_:39 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:39 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_coupling_sequence> .
-_:39 <http://www.w3.org/2002/07/owl#someValuesFrom> <mixed_fid_models#mixed_fid_models.coupling_sequence1> .
-<mixed_fid_models#mixed_fid_models.solver_settings> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:39 .
-<mixed_fid_models#mixed_fid_models.solvers> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models.solvers> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2002/07/owl#Thing> .
-<mixed_fid_models#has_solvers> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
-<mixed_fid_models#has_solvers> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-<mixed_fid_models#mixed_fid_models.solvers1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models.solvers1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models.solvers> .
-<mixed_fid_models#mixed_fid_models.low_fid_fluid> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models.low_fid_fluid> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2002/07/owl#Thing> .
-<mixed_fid_models#has_low_fid_fluid> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
-<mixed_fid_models#has_low_fid_fluid> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-<mixed_fid_models#mixed_fid_models.low_fid_fluid1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models.low_fid_fluid1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models.low_fid_fluid> .
-_:40 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:40 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_type> .
-_:40 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.low_fid_fluid> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:40 .
-<mixed_fid_models#mixed_fid_models.solvers1> <mixed_fid_models#has_low_fid_fluid> <mixed_fid_models#mixed_fid_models.low_fid_fluid1> .
-<mixed_fid_models#mixed_fid_models.solver_wrapper_settings> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models.solver_wrapper_settings> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2002/07/owl#Thing> .
-<mixed_fid_models#has_solver_wrapper_settings> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
-<mixed_fid_models#has_solver_wrapper_settings> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-<mixed_fid_models#mixed_fid_models.solver_wrapper_settings1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models.solver_wrapper_settings1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models.solver_wrapper_settings> .
-<mixed_fid_models#has_export_data> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-_:41 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:41 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_export_data> .
-_:41 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.solver_wrapper_settings> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:41 .
-<mixed_fid_models#mixed_fid_models.low_fid_fluid1> <mixed_fid_models#has_solver_wrapper_settings> <mixed_fid_models#mixed_fid_models.solver_wrapper_settings1> .
-<mixed_fid_models#has_import_data> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-_:42 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:42 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_import_data> .
-_:42 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.solver_wrapper_settings> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:42 .
-<mixed_fid_models#has_import_meshes> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-_:43 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:43 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_import_meshes> .
-_:43 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.solver_wrapper_settings> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:43 .
-_:44 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:44 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_solver_wrapper_settings> .
-_:44 <http://www.w3.org/2002/07/owl#someValuesFrom> <mixed_fid_models#mixed_fid_models.solver_wrapper_settings> .
-<mixed_fid_models#mixed_fid_models.low_fid_fluid> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:44 .
-<mixed_fid_models#mixed_fid_models.io_settings> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models.io_settings> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2002/07/owl#Thing> .
-<mixed_fid_models#has_io_settings> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
-<mixed_fid_models#has_io_settings> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-<mixed_fid_models#mixed_fid_models.io_settings1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models.io_settings1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models.io_settings> .
-_:45 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:45 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_type> .
-_:45 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.io_settings> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:45 .
-<mixed_fid_models#mixed_fid_models.low_fid_fluid1> <mixed_fid_models#has_io_settings> <mixed_fid_models#mixed_fid_models.io_settings1> .
-_:46 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:46 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_echo_level> .
-_:46 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#integer> .
-<mixed_fid_models#mixed_fid_models.io_settings> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:46 .
-<mixed_fid_models#has_connect_to> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<mixed_fid_models#has_connect_to> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-_:47 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:47 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_connect_to> .
-_:47 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.io_settings> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:47 .
-<mixed_fid_models#has_communication_format> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<mixed_fid_models#has_communication_format> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-_:48 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:48 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_communication_format> .
-_:48 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.io_settings> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:48 .
-_:49 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:49 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_io_settings> .
-_:49 <http://www.w3.org/2002/07/owl#someValuesFrom> <mixed_fid_models#mixed_fid_models.io_settings> .
-<mixed_fid_models#mixed_fid_models.low_fid_fluid> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:49 .
-<mixed_fid_models#mixed_fid_models.data> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models.data> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2002/07/owl#Thing> .
-<mixed_fid_models#has_data_> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
-<mixed_fid_models#has_data_> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-<mixed_fid_models#mixed_fid_models.data1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models.data1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models.data> .
-<mixed_fid_models#mixed_fid_models.AOA> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models.AOA> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2002/07/owl#Thing> .
-<mixed_fid_models#has_AOA> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
-<mixed_fid_models#has_AOA> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-<mixed_fid_models#mixed_fid_models.aoa1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models.aoa1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models.AOA> .
-<mixed_fid_models#has_model_part_name> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<mixed_fid_models#has_model_part_name> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-_:50 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:50 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_model_part_name> .
-_:50 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.AOA> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:50 .
-<mixed_fid_models#mixed_fid_models.data1> <mixed_fid_models#has_AOA> <mixed_fid_models#mixed_fid_models.aoa1> .
-<mixed_fid_models#has_variable_name> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<mixed_fid_models#has_variable_name> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-_:51 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:51 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_variable_name> .
-_:51 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.AOA> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:51 .
-<mixed_fid_models#has_location> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
-<mixed_fid_models#has_location> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-_:52 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:52 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_location> .
-_:52 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.AOA> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:52 .
-_:53 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:53 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_AOA> .
-_:53 <http://www.w3.org/2002/07/owl#someValuesFrom> <mixed_fid_models#mixed_fid_models.AOA> .
-<mixed_fid_models#mixed_fid_models.data> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:53 .
-<mixed_fid_models#mixed_fid_models.low_fid_fluid1> <mixed_fid_models#has_data_> <mixed_fid_models#mixed_fid_models.data1> .
-<mixed_fid_models#mixed_fid_models.lift_force> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models.lift_force> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2002/07/owl#Thing> .
-<mixed_fid_models#has_lift_force> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
-<mixed_fid_models#has_lift_force> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-<mixed_fid_models#mixed_fid_models.lift_force1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models.lift_force1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models.lift_force> .
-_:54 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:54 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_model_part_name> .
-_:54 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.lift_force> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:54 .
-<mixed_fid_models#mixed_fid_models.data1> <mixed_fid_models#has_lift_force> <mixed_fid_models#mixed_fid_models.lift_force1> .
-_:55 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:55 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_variable_name> .
-_:55 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.lift_force> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:55 .
-_:56 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:56 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_location> .
-_:56 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.lift_force> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:56 .
-_:57 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:57 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_lift_force> .
-_:57 <http://www.w3.org/2002/07/owl#someValuesFrom> <mixed_fid_models#mixed_fid_models.lift_force> .
-<mixed_fid_models#mixed_fid_models.data> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:57 .
-_:58 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:58 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_data_> .
-_:58 <http://www.w3.org/2002/07/owl#someValuesFrom> <mixed_fid_models#mixed_fid_models.data> .
-<mixed_fid_models#mixed_fid_models.low_fid_fluid> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:58 .
-_:59 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:59 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_low_fid_fluid> .
-_:59 <http://www.w3.org/2002/07/owl#someValuesFrom> <mixed_fid_models#mixed_fid_models.low_fid_fluid> .
-<mixed_fid_models#mixed_fid_models.solvers> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:59 .
-<mixed_fid_models#mixed_fid_models.solver_settings1> <mixed_fid_models#has_solvers> <mixed_fid_models#mixed_fid_models.solvers1> .
-<mixed_fid_models#mixed_fid_models.spring_structure> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
-<mixed_fid_models#mixed_fid_models.spring_structure> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2002/07/owl#Thing> .
-<mixed_fid_models#has_spring_structure> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
-<mixed_fid_models#has_spring_structure> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#FunctionalProperty> .
-<mixed_fid_models#mixed_fid_models.spring_structure1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models.spring_structure1> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models.spring_structure> .
-_:60 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:60 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_type> .
-_:60 <http://www.w3.org/2002/07/owl#someValuesFrom> <http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.spring_structure> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:60 .
-<mixed_fid_models#mixed_fid_models.solvers1> <mixed_fid_models#has_spring_structure> <mixed_fid_models#mixed_fid_models.spring_structure1> .
-<mixed_fid_models#mixed_fid_models.solver_wrapper_settings2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models.solver_wrapper_settings2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models.solver_wrapper_settings> .
-<mixed_fid_models#mixed_fid_models.spring_structure1> <mixed_fid_models#has_solver_wrapper_settings> <mixed_fid_models#mixed_fid_models.solver_wrapper_settings2> .
-_:61 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:61 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_solver_wrapper_settings> .
-_:61 <http://www.w3.org/2002/07/owl#someValuesFrom> <mixed_fid_models#mixed_fid_models.solver_wrapper_settings> .
-<mixed_fid_models#mixed_fid_models.spring_structure> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:61 .
-<mixed_fid_models#mixed_fid_models.io_settings2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models.io_settings2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models.io_settings> .
-<mixed_fid_models#mixed_fid_models.spring_structure1> <mixed_fid_models#has_io_settings> <mixed_fid_models#mixed_fid_models.io_settings2> .
-_:62 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:62 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_io_settings> .
-_:62 <http://www.w3.org/2002/07/owl#someValuesFrom> <mixed_fid_models#mixed_fid_models.io_settings> .
-<mixed_fid_models#mixed_fid_models.spring_structure> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:62 .
-<mixed_fid_models#mixed_fid_models.data2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models.data2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models.data> .
-<mixed_fid_models#mixed_fid_models.aoa2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models.aoa2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models.AOA> .
-<mixed_fid_models#mixed_fid_models.data2> <mixed_fid_models#has_AOA> <mixed_fid_models#mixed_fid_models.aoa2> .
-<mixed_fid_models#mixed_fid_models.spring_structure1> <mixed_fid_models#has_data_> <mixed_fid_models#mixed_fid_models.data2> .
-<mixed_fid_models#mixed_fid_models.lift_force2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#NamedIndividual> .
-<mixed_fid_models#mixed_fid_models.lift_force2> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <mixed_fid_models#mixed_fid_models.lift_force> .
-<mixed_fid_models#mixed_fid_models.data2> <mixed_fid_models#has_lift_force> <mixed_fid_models#mixed_fid_models.lift_force2> .
-_:63 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:63 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_data_> .
-_:63 <http://www.w3.org/2002/07/owl#someValuesFrom> <mixed_fid_models#mixed_fid_models.data> .
-<mixed_fid_models#mixed_fid_models.spring_structure> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:63 .
-_:64 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:64 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_spring_structure> .
-_:64 <http://www.w3.org/2002/07/owl#someValuesFrom> <mixed_fid_models#mixed_fid_models.spring_structure> .
-<mixed_fid_models#mixed_fid_models.solvers> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:64 .
-_:65 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:65 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_solvers> .
-_:65 <http://www.w3.org/2002/07/owl#someValuesFrom> <mixed_fid_models#mixed_fid_models.solvers> .
-<mixed_fid_models#mixed_fid_models.solver_settings> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:65 .
-_:66 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
-_:66 <http://www.w3.org/2002/07/owl#onProperty> <mixed_fid_models#has_solver_settings> .
-_:66 <http://www.w3.org/2002/07/owl#someValuesFrom> <mixed_fid_models#mixed_fid_models.solver_settings> .
-<mixed_fid_models#mixed_fid_models> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:66 .
-<mixed_fid_models#mixed_fid_models.problem_data1> <mixed_fid_models#has_start_time> "0.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
-<mixed_fid_models#mixed_fid_models.problem_data1> <mixed_fid_models#has_end_time> "1.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
-<mixed_fid_models#mixed_fid_models.problem_data1> <mixed_fid_models#has_echo_level> "0"^^<http://www.w3.org/2001/XMLSchema#integer> .
-<mixed_fid_models#mixed_fid_models.problem_data1> <mixed_fid_models#has_print_colors> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
-<mixed_fid_models#mixed_fid_models.problem_data1> <mixed_fid_models#has_parallel_type> "OpenMP"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.solver_settings1> <mixed_fid_models#has_type> "coupled_solvers.gauss_seidel_strong"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.solver_settings1> <mixed_fid_models#has_num_coupling_iterations> "20"^^<http://www.w3.org/2001/XMLSchema#integer> .
-<mixed_fid_models#mixed_fid_models.solver_settings1> <mixed_fid_models#has_echo_level> "3"^^<http://www.w3.org/2001/XMLSchema#integer> .
-<mixed_fid_models#mixed_fid_models.direct_transfer1> <mixed_fid_models#has_type> "kratos_mapping"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.mapper_settings1> <mixed_fid_models#has_mapper_type> "nearest_neighbor"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.mapper_settings1> <mixed_fid_models#has_echo_level> "3"^^<http://www.w3.org/2001/XMLSchema#integer> .
-<mixed_fid_models#mixed_fid_models.convergence_accelerators01> <mixed_fid_models#has_type> "aitken"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.convergence_accelerators01> <mixed_fid_models#has_solver> "low_fid_fluid"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.convergence_accelerators01> <mixed_fid_models#has_data_name> "AOA"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.convergence_criteria01> <mixed_fid_models#has_type> "relative_norm_previous_residual"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.convergence_criteria01> <mixed_fid_models#has_solver> "low_fid_fluid"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.convergence_criteria01> <mixed_fid_models#has_data_name> "AOA"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.convergence_criteria01> <mixed_fid_models#has_abs_tolerance> "1e-07"^^<http://www.w3.org/2001/XMLSchema#decimal> .
-<mixed_fid_models#mixed_fid_models.convergence_criteria01> <mixed_fid_models#has_rel_tolerance> "1e-05"^^<http://www.w3.org/2001/XMLSchema#decimal> .
-<mixed_fid_models#mixed_fid_models.coupling_sequence01> <mixed_fid_models#has_name> "low_fid_fluid"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.coupling_sequence11> <mixed_fid_models#has_name> "spring_structure"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.input_data_list01> <mixed_fid_models#has_data> "lift_force"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.input_data_list01> <mixed_fid_models#has_from_solver> "low_fid_fluid"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.input_data_list01> <mixed_fid_models#has_from_solver_data> "lift_force"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.input_data_list01> <mixed_fid_models#has_data_transfer_operator> "direct_transfer"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.output_data_list01> <mixed_fid_models#has_data> "AOA"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.output_data_list01> <mixed_fid_models#has_to_solver> "low_fid_fluid"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.output_data_list01> <mixed_fid_models#has_to_solver_data> "AOA"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.output_data_list01> <mixed_fid_models#has_data_transfer_operator> "direct_transfer"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.low_fid_fluid1> <mixed_fid_models#has_type> "solver_wrappers.external.remote_controlled_solver_wrapper"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.solver_wrapper_settings1> <mixed_fid_models#has_export_data> "AOA"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.solver_wrapper_settings1> <mixed_fid_models#has_import_data> "lift_force"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.solver_wrapper_settings1> <mixed_fid_models#has_import_meshes> "single_node_mesh_f"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.io_settings1> <mixed_fid_models#has_type> "kratos_co_sim_io"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.io_settings1> <mixed_fid_models#has_echo_level> "4"^^<http://www.w3.org/2001/XMLSchema#integer> .
-<mixed_fid_models#mixed_fid_models.io_settings1> <mixed_fid_models#has_connect_to> "run_fluid"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.io_settings1> <mixed_fid_models#has_communication_format> "file"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.aoa1> <mixed_fid_models#has_model_part_name> "single_node_mesh_f"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.aoa1> <mixed_fid_models#has_variable_name> "SCALAR_DISPLACEMENT"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.aoa1> <mixed_fid_models#has_location> "node_historical"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.lift_force1> <mixed_fid_models#has_model_part_name> "single_node_mesh_f"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.lift_force1> <mixed_fid_models#has_variable_name> "SCALAR_FORCE"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.lift_force1> <mixed_fid_models#has_location> "node_historical"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.spring_structure1> <mixed_fid_models#has_type> "solver_wrappers.external.remote_controlled_solver_wrapper"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.solver_wrapper_settings2> <mixed_fid_models#has_export_data> "lift_force"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.solver_wrapper_settings2> <mixed_fid_models#has_import_data> "AOA"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.solver_wrapper_settings2> <mixed_fid_models#has_import_meshes> "single_node_mesh_s"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.io_settings2> <mixed_fid_models#has_type> "kratos_co_sim_io"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.io_settings2> <mixed_fid_models#has_echo_level> "4"^^<http://www.w3.org/2001/XMLSchema#integer> .
-<mixed_fid_models#mixed_fid_models.io_settings2> <mixed_fid_models#has_connect_to> "run_structure"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.io_settings2> <mixed_fid_models#has_communication_format> "file"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.aoa2> <mixed_fid_models#has_model_part_name> "single_node_mesh_s"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.aoa2> <mixed_fid_models#has_variable_name> "SCALAR_DISPLACEMENT"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.aoa2> <mixed_fid_models#has_location> "node_historical"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.lift_force2> <mixed_fid_models#has_model_part_name> "single_node_mesh_s"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.lift_force2> <mixed_fid_models#has_variable_name> "SCALAR_FORCE"^^<http://www.w3.org/2001/XMLSchema#string> .
-<mixed_fid_models#mixed_fid_models.lift_force2> <mixed_fid_models#has_location> "node_historical"^^<http://www.w3.org/2001/XMLSchema#string> .
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://coupled_modelling.owl"
+         xmlns="http://coupled_modelling.owl#">
+
+<owl:Ontology rdf:about="http://coupled_modelling.owl"/>
+
+<owl:ObjectProperty rdf:about="#has_problem_data">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_problem_data</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#has_solver_settings">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_solver_settings</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#has_data_transfer_operators">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_data_transfer_operators</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#has_mapper_settings">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_mapper_settings</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#has_convergence_accelerators">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_convergence_accelerators</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#has_convergence_criteria">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_convergence_criteria</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#has_coupling_sequence">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_coupling_sequence</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#has_input_data_list">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_input_data_list</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#has_output_data_list">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_output_data_list</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#has_solvers">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_solvers</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#has_solver_wrapper_settings">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_solver_wrapper_settings</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#has_io_settings">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_io_settings</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#has_data_">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_data_</rdfs:label>
+</owl:ObjectProperty>
+
+<owl:DatatypeProperty rdf:about="#has_start_time">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_start_time</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_end_time">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_end_time</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_echo_level">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_echo_level</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_print_colors">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_print_colors</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_parallel_type">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_parallel_type</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_type">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_type</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_num_coupling_iterations">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_num_coupling_iterations</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_mapper_type">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_mapper_type</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_solver">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_solver</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_data_name">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_data_name</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_abs_tolerance">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_abs_tolerance</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_rel_tolerance">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_rel_tolerance</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_name">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_name</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_data">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_data</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_from_solver">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_from_solver</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_from_solver_data">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_from_solver_data</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_data_transfer_operator">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_data_transfer_operator</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_to_solver">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_to_solver</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_to_solver_data">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_to_solver_data</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_export_data">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_export_data</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_import_data">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_import_data</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_import_meshes">
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_import_meshes</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_connect_to">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_connect_to</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_communication_format">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_communication_format</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_model_part_name">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_model_part_name</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_variable_name">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_variable_name</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#has_location">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_location</rdfs:label>
+</owl:DatatypeProperty>
+
+<owl:Class rdf:about="#coupled_system">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">coupled_system</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#problem_data">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">problem_data</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#solver_settings">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">solver_settings</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#data_transfer_operators">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">data_transfer_operators</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#mapper_settings">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mapper_settings</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#convergence_accelerators">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">convergence_accelerators</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#convergence_criteria">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">convergence_criteria</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#coupling_sequence">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">coupling_sequence</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#input_data_list">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">input_data_list</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#output_data_list">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">output_data_list</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#solvers">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">solvers</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#solver_wrapper_settings">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">solver_wrapper_settings</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#io_settings">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">io_settings</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#data">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">data</rdfs:label>
+</owl:Class>
+
+<owl:Class rdf:about="#solver_wrapper_settings_1">
+  <rdfs:subClassOf rdf:resource="#solver_wrapper_settings"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_import_meshes"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_import_data"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_export_data"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#data_1">
+  <rdfs:subClassOf rdf:resource="#data"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_location"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_variable_name"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_model_part_name"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#io_settings_1">
+  <rdfs:subClassOf rdf:resource="#io_settings"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_communication_format"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_connect_to"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_echo_level"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_type"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#input_data_list_1">
+  <rdfs:subClassOf rdf:resource="#input_data_list"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_data"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_from_solver_data"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_data_transfer_operator"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_from_solver"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#output_data_list_1">
+  <rdfs:subClassOf rdf:resource="#output_data_list"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_data"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_to_solver"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_to_solver_data"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_data_transfer_operator"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#mapper_settings_1">
+  <rdfs:subClassOf rdf:resource="#mapper_settings"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_mapper_type"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_echo_level"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#solvers_1">
+  <rdfs:subClassOf rdf:resource="#solvers"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_type"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_solver_wrapper_settings"/>
+      <owl:onClass rdf:resource="#solver_wrapper_settings_1"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_data_"/>
+      <owl:onClass rdf:resource="#data_1"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_io_settings"/>
+      <owl:onClass rdf:resource="#io_settings_1"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#convergence_accelerators_1">
+  <rdfs:subClassOf rdf:resource="#convergence_accelerators"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_data_name"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_solver"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_type"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#coupling_sequence_1">
+  <rdfs:subClassOf rdf:resource="#coupling_sequence"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_name"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#coupling_sequence_2">
+  <rdfs:subClassOf rdf:resource="#coupling_sequence"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_name"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_input_data_list"/>
+      <owl:onClass rdf:resource="#input_data_list_1"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_output_data_list"/>
+      <owl:onClass rdf:resource="#output_data_list_1"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#data_transfer_operators_1">
+  <rdfs:subClassOf rdf:resource="#data_transfer_operators"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_mapper_settings"/>
+      <owl:onClass rdf:resource="#mapper_settings_1"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_type"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#convergence_criteria_1">
+  <rdfs:subClassOf rdf:resource="#convergence_criteria"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_data_name"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_solver"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_type"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_rel_tolerance"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_abs_tolerance"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#solver_settings_1">
+  <rdfs:subClassOf rdf:resource="#solver_settings"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_solvers"/>
+      <owl:onClass rdf:resource="#solvers_1"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_convergence_accelerators"/>
+      <owl:onClass rdf:resource="#convergence_accelerators_1"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_coupling_sequence"/>
+      <owl:onClass rdf:resource="#coupling_sequence_1"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_coupling_sequence"/>
+      <owl:onClass rdf:resource="#coupling_sequence_2"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_data_transfer_operators"/>
+      <owl:onClass rdf:resource="#data_transfer_operators_1"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_num_coupling_iterations"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_type"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_echo_level"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_convergence_criteria"/>
+      <owl:onClass rdf:resource="#convergence_criteria_1"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#problem_data_1">
+  <rdfs:subClassOf rdf:resource="#problem_data"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_start_time"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_parallel_type"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_echo_level"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_print_colors"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_end_time"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#coupled_system_1">
+  <rdfs:subClassOf rdf:resource="#coupled_system"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_solver_settings"/>
+      <owl:onClass rdf:resource="#solver_settings_1"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_problem_data"/>
+      <owl:onClass rdf:resource="#problem_data_1"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:NamedIndividual rdf:about="#instance_1">
+  <has_problem_data rdf:resource="#instance_2"/>
+  <has_solver_settings rdf:resource="#instance_3"/>
+  <rdf:type rdf:resource="#coupled_system_1"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mixed_fid_models</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_2">
+  <rdf:type rdf:resource="#problem_data_1"/>
+  <has_start_time rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</has_start_time>
+  <has_end_time rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</has_end_time>
+  <has_echo_level rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</has_echo_level>
+  <has_print_colors rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</has_print_colors>
+  <has_parallel_type rdf:datatype="http://www.w3.org/2001/XMLSchema#string">OpenMP</has_parallel_type>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_3">
+  <has_data_transfer_operators rdf:resource="#instance_4"/>
+  <has_convergence_accelerators rdf:resource="#instance_6"/>
+  <has_convergence_criteria rdf:resource="#instance_7"/>
+  <has_coupling_sequence rdf:resource="#instance_8"/>
+  <has_coupling_sequence rdf:resource="#instance_9"/>
+  <has_solvers rdf:resource="#instance_12"/>
+  <has_solvers rdf:resource="#instance_17"/>
+  <rdf:type rdf:resource="#solver_settings_1"/>
+  <has_type rdf:datatype="http://www.w3.org/2001/XMLSchema#string">coupled_solvers.gauss_seidel_strong</has_type>
+  <has_num_coupling_iterations rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">20</has_num_coupling_iterations>
+  <has_echo_level rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</has_echo_level>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_4">
+  <has_mapper_settings rdf:resource="#instance_5"/>
+  <rdf:type rdf:resource="#data_transfer_operators_1"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">direct_transfer</rdfs:label>
+  <has_type rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kratos_mapping</has_type>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_5">
+  <rdf:type rdf:resource="#mapper_settings_1"/>
+  <has_mapper_type rdf:datatype="http://www.w3.org/2001/XMLSchema#string">nearest_neighbor</has_mapper_type>
+  <has_echo_level rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</has_echo_level>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_6">
+  <rdf:type rdf:resource="#convergence_accelerators_1"/>
+  <has_type rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aitken</has_type>
+  <has_solver rdf:datatype="http://www.w3.org/2001/XMLSchema#string">low_fid_fluid</has_solver>
+  <has_data_name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pitch_angle</has_data_name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_7">
+  <rdf:type rdf:resource="#convergence_criteria_1"/>
+  <has_type rdf:datatype="http://www.w3.org/2001/XMLSchema#string">relative_norm_previous_residual</has_type>
+  <has_solver rdf:datatype="http://www.w3.org/2001/XMLSchema#string">low_fid_fluid</has_solver>
+  <has_data_name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pitch_angle</has_data_name>
+  <has_abs_tolerance rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1e-07</has_abs_tolerance>
+  <has_rel_tolerance rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1e-05</has_rel_tolerance>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_8">
+  <rdf:type rdf:resource="#coupling_sequence_1"/>
+  <has_name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">low_fid_fluid</has_name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_9">
+  <has_input_data_list rdf:resource="#instance_10"/>
+  <has_output_data_list rdf:resource="#instance_11"/>
+  <rdf:type rdf:resource="#coupling_sequence_2"/>
+  <has_name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">spring_structure</has_name>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_10">
+  <rdf:type rdf:resource="#input_data_list_1"/>
+  <has_data rdf:datatype="http://www.w3.org/2001/XMLSchema#string">lift_force</has_data>
+  <has_from_solver rdf:datatype="http://www.w3.org/2001/XMLSchema#string">low_fid_fluid</has_from_solver>
+  <has_from_solver_data rdf:datatype="http://www.w3.org/2001/XMLSchema#string">lift_force</has_from_solver_data>
+  <has_data_transfer_operator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">direct_transfer</has_data_transfer_operator>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_11">
+  <rdf:type rdf:resource="#output_data_list_1"/>
+  <has_data rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pitch_angle</has_data>
+  <has_to_solver rdf:datatype="http://www.w3.org/2001/XMLSchema#string">low_fid_fluid</has_to_solver>
+  <has_to_solver_data rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pitch_angle</has_to_solver_data>
+  <has_data_transfer_operator rdf:datatype="http://www.w3.org/2001/XMLSchema#string">direct_transfer</has_data_transfer_operator>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_12">
+  <has_solver_wrapper_settings rdf:resource="#instance_13"/>
+  <has_io_settings rdf:resource="#instance_14"/>
+  <has_data_ rdf:resource="#instance_15"/>
+  <has_data_ rdf:resource="#instance_16"/>
+  <rdf:type rdf:resource="#solvers_1"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">low_fid_fluid</rdfs:label>
+  <has_type rdf:datatype="http://www.w3.org/2001/XMLSchema#string">solver_wrappers.external.remote_controlled_solver_wrapper</has_type>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_13">
+  <rdf:type rdf:resource="#solver_wrapper_settings_1"/>
+  <has_export_data rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pitch_angle</has_export_data>
+  <has_import_data rdf:datatype="http://www.w3.org/2001/XMLSchema#string">lift_force</has_import_data>
+  <has_import_meshes rdf:datatype="http://www.w3.org/2001/XMLSchema#string">single_node_mesh_f</has_import_meshes>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_14">
+  <rdf:type rdf:resource="#io_settings_1"/>
+  <has_type rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kratos_co_sim_io</has_type>
+  <has_echo_level rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</has_echo_level>
+  <has_connect_to rdf:datatype="http://www.w3.org/2001/XMLSchema#string">run_fluid</has_connect_to>
+  <has_communication_format rdf:datatype="http://www.w3.org/2001/XMLSchema#string">file</has_communication_format>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_15">
+  <rdf:type rdf:resource="#data_1"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pitch_angle</rdfs:label>
+  <has_model_part_name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">single_node_mesh_f</has_model_part_name>
+  <has_variable_name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SCALAR_DISPLACEMENT</has_variable_name>
+  <has_location rdf:datatype="http://www.w3.org/2001/XMLSchema#string">node_historical</has_location>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_16">
+  <rdf:type rdf:resource="#data_1"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">lift_force</rdfs:label>
+  <has_model_part_name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">single_node_mesh_f</has_model_part_name>
+  <has_variable_name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SCALAR_FORCE</has_variable_name>
+  <has_location rdf:datatype="http://www.w3.org/2001/XMLSchema#string">node_historical</has_location>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_17">
+  <has_solver_wrapper_settings rdf:resource="#instance_18"/>
+  <has_io_settings rdf:resource="#instance_19"/>
+  <has_data_ rdf:resource="#instance_20"/>
+  <has_data_ rdf:resource="#instance_21"/>
+  <rdf:type rdf:resource="#solvers_1"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">spring_structure</rdfs:label>
+  <has_type rdf:datatype="http://www.w3.org/2001/XMLSchema#string">solver_wrappers.external.remote_controlled_solver_wrapper</has_type>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_18">
+  <rdf:type rdf:resource="#solver_wrapper_settings_1"/>
+  <has_export_data rdf:datatype="http://www.w3.org/2001/XMLSchema#string">lift_force</has_export_data>
+  <has_import_data rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pitch_angle</has_import_data>
+  <has_import_meshes rdf:datatype="http://www.w3.org/2001/XMLSchema#string">single_node_mesh_s</has_import_meshes>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_19">
+  <rdf:type rdf:resource="#io_settings_1"/>
+  <has_type rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kratos_co_sim_io</has_type>
+  <has_echo_level rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</has_echo_level>
+  <has_connect_to rdf:datatype="http://www.w3.org/2001/XMLSchema#string">run_structure</has_connect_to>
+  <has_communication_format rdf:datatype="http://www.w3.org/2001/XMLSchema#string">file</has_communication_format>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_20">
+  <rdf:type rdf:resource="#data_1"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pitch_angle</rdfs:label>
+  <has_model_part_name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">single_node_mesh_s</has_model_part_name>
+  <has_variable_name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SCALAR_DISPLACEMENT</has_variable_name>
+  <has_location rdf:datatype="http://www.w3.org/2001/XMLSchema#string">node_historical</has_location>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_21">
+  <rdf:type rdf:resource="#data_1"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">lift_force</rdfs:label>
+  <has_model_part_name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">single_node_mesh_s</has_model_part_name>
+  <has_variable_name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SCALAR_FORCE</has_variable_name>
+  <has_location rdf:datatype="http://www.w3.org/2001/XMLSchema#string">node_historical</has_location>
+</owl:NamedIndividual>
+
+
+</rdf:RDF>
