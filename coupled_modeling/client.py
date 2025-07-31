@@ -43,6 +43,13 @@ class KnowledgeBase:
     def save(self):
         res = requests.post(f'{self.host}save_onto')
         return res.json()
+    
+    def save_locally(self, path):
+        res = requests.get(f'{self.host}save_locally')
+        onto_file = res.content
+        with open(path, 'wb') as f:
+            f.write(onto_file)
+        #return res.json()
 
     def export_coupled_kratos(self, coupled_system):
         res = requests.post(

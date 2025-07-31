@@ -6,7 +6,7 @@ from collections import Counter
 
 def get_onto_path():
     path = os.path.dirname(os.path.realpath(__file__))
-    path = os.path.join(path, 'onto_test.owl')
+    path = os.path.join(path, 'onto.owl')
     
     return path
 
@@ -31,10 +31,18 @@ def load_onto():
 
 def save_onto():
     """
-    Saves the ontology into a file.
+    Saves the ontology.
 
     """
     default_world.save()
+
+
+def save_locally():
+    """
+    Saves the ontology into a file.
+
+    """
+    onto.save(get_onto_path())
 
 
 def get_class(name):
@@ -113,7 +121,13 @@ def dict_to_inst(inst, pred_name, data, functional=False):
 def str_to_inst(inst, pred_name, label, functional=False):
     obj_cl = get_class(pred_name)
     rel = get_relation(pred_name, functional)
-    obj_inst = onto.search_one(label = label)
+    res = onto.search(label = label)
+    obj_inst = None
+    for item in res:
+        props = list(item.get_properties())
+        if len(props) == 1:
+            obj_inst = item
+            break
     if obj_inst:
         if not obj_cl in obj_inst.is_a:
             obj_inst.is_a.append(obj_cl)

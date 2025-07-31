@@ -31,4 +31,4 @@ export_path = os.path.join(
     'examples',
     'test.owl')
 
-onto.save(export_path, format='ntriples')
+onto.save(export_path)

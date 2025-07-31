@@ -95,5 +95,14 @@ def api_export_coupled_kratos():
         return jsonify(e), 400
 
 
+@app.route('/api/v1.0/save_locally/', methods=['GET'])
+def api_save_locally():
+    try:
+        save_locally()
+        return send_file(get_onto_path()), 201
+    except Exception as e:
+        return jsonify(e), 400
+
+
 if __name__ == "__main__":
     app.run()
