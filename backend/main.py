@@ -265,10 +265,17 @@ def get_instance_properties(inst_name):
         temp = []
         for obj in prop[inst]:
             if hasattr(obj, 'name'):
-                temp.append(obj.name)
+                if has_only_label(obj):
+                    temp.append(obj.label[0])
+                else:
+                    temp.append(obj.name)
             else:
                 temp.append(obj)
-            props[prop.name.replace('has_', '')] = temp
+        prop_name = prop.name.replace('has_', '')
+        if len(temp) == 1 and not prop_name in force_list():
+            props[prop_name] = temp[0]
+        else:
+            props[prop_name] = temp
     return props
 
     
@@ -500,21 +507,20 @@ def export_coupled_kratos(coupled_system):
     label = None
     for key in list(props.keys()):
         if key == 'label':
-            label = props['label'][0]
-        #if key == 'data_':
-        #    props['data'] = props.pop('data_')
+            #label = props['label'][0]
+            label = props['label']
     if label:
         props.pop('label', None)
     if 'coupled_system' in str(type(onto[coupled_system]).name):
         label = None
     for key, items in props.items():
-        if len(items) > 1 and key in force_dict():
+        if type(items) == list and len(items) > 1 and key in force_dict():
             temp_dict = {}
             for item in items:
                 obj_props = export_coupled_kratos(item)
                 temp_dict[list(obj_props.keys())[0]] = list(obj_props.values())[0]
             props[key] = temp_dict
-        elif len(items) > 1 or key in force_list():
+        elif (type(items) == list and len(items) > 1) or key in force_list():
             temp_list = []
             for item in items:
                 if onto[item]:
@@ -526,15 +532,15 @@ def export_coupled_kratos(coupled_system):
                     temp_list.append(item)
             props[key] = temp_list
         else:
-            #print(key, items)
-            item = items[0]
-            if onto[item]:
-                if has_only_label(onto[item]):
-                    props[key] = onto[item].label[0]
+            #item = items[0]
+            inst = onto[items]
+            if inst:
+                if has_only_label(inst):
+                    props[key] = inst.label[0]
                 else:
-                    props[key] = export_coupled_kratos(item)
+                    props[key] = export_coupled_kratos(items)
             else:
-                props[key] = item
+                props[key] = items
     if label:
         props = {label: props}
     label = None
