@@ -5,16 +5,6 @@ from main import *
 app = Flask(__name__)
 
 
-@app.route('/api/v1.0/get_instance_properties/', methods=['GET'])
-def api_get_instance_properties():
-    inst = request.args.get('instance')
-    try:
-        props = get_instance_properties(inst)
-        return jsonify(props), '201'
-    except:
-        return '400'
-
-
 @app.route('/api/v1.0/import_coupled_kratos/', methods=['POST'])
 def api_import_coupled_kratos():
     args = request.get_json()
@@ -23,15 +13,6 @@ def api_import_coupled_kratos():
     try:
         inst = import_coupled_kratos(data, label)
         return jsonify(inst), 201
-    except Exception as e:
-        return jsonify(e), 400
-
-
-@app.route('/api/v1.0/save_onto/', methods=['POST'])
-def api_save_onto():
-    try:
-        save_onto()
-        return jsonify(''), 201
     except Exception as e:
         return jsonify(e), 400
 
@@ -73,6 +54,27 @@ def api_create_instance():
         return jsonify(e), 400
 
 
+@app.route('/api/v1.0/get_instance_properties/', methods=['GET'])
+def api_get_instance_properties():
+    inst = request.args.get('instance')
+    try:
+        props = get_instance_properties(inst)
+        return jsonify(props), '201'
+    except:
+        return '400'
+
+
+@app.route('/api/v1.0/get_values/', methods=['GET'])
+def api_get_values():
+    inst = request.args.get('instance')
+    prop = request.args.get('property')
+    try:
+        value = get_values(inst, prop)
+        return jsonify(value), '201'
+    except:
+        return '400'
+
+
 @app.route('/api/v1.0/infer_coupled_structure/', methods=['POST'])
 def api_infer_coupled_structure():
     args = request.get_json()
@@ -91,6 +93,15 @@ def api_export_coupled_kratos():
     try:
         export = export_coupled_kratos(inst)
         return jsonify(export), 201
+    except Exception as e:
+        return jsonify(e), 400
+
+
+@app.route('/api/v1.0/save_onto/', methods=['POST'])
+def api_save_onto():
+    try:
+        save_onto()
+        return jsonify(''), 201
     except Exception as e:
         return jsonify(e), 400
 

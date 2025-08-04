@@ -107,6 +107,12 @@ def instance_name():
     return f'instance_{n}'
 
 
+def has_only_label(inst):
+    props = list(inst.get_properties())
+    props = [x.name for x in props]
+    return props == ['label']
+
+
 def dict_to_inst(inst, pred_name, data, functional=False):
     obj_cl = get_class(pred_name)
     rel = get_relation(pred_name, functional)
@@ -124,8 +130,7 @@ def str_to_inst(inst, pred_name, label, functional=False):
     res = onto.search(label = label)
     obj_inst = None
     for item in res:
-        props = list(item.get_properties())
-        if len(props) == 1:
+        if has_only_label(item):
             obj_inst = item
             break
     if obj_inst:
@@ -281,12 +286,35 @@ def get_instances(class_label):
     return [x.name for x in cl.instances()]
 
 
-def add_value(subj, prop, value=None):
+def get_values(subj, prop):
+    """
+    Returns a property for the given subject .
+
+    Args:
+        subj (str): A name of the instance that is the subject of the statement.
+        prop (str): Label of the property.
+
+    Returns:
+        The value.
+    """
+    subj = onto[subj]
+    prop = onto[f'has_{prop}']
+    values = prop[subj]
+    res = []
+    for value in values:
+        if hasattr(value, 'name'):
+            res.append(value.name)
+        else:
+            res.append(value)
+    return res
+
+    
+def add_value(subj, prop_name, value=None):
     """
     Adds a value to the given subject and property.
 
     Args:
-        subj (OWL instance): An instance that is the subject of the statement.
+        subj (str): A name of the instance that is the subject of the statement.
         prop (str): Label of the property.
         value (optional): value to add. If None, a new instance is created.
 
@@ -297,20 +325,25 @@ def add_value(subj, prop, value=None):
     if onto[value]:
         value = onto[value]
     
-    if prop == 'label':
+    if prop_name == 'label':
         subj.label = value
         return value
 
-    if not value or hasattr(value, 'name'):
-        prop = get_relation(prop)
-    else:
-        prop = get_property(prop)
-
     with onto:
         if not value:
-            cl = get_class(prop.name.replace('has_', ''))
+            cl = get_class(prop_name)
             value = cl(instance_name())
-        prop[subj].append(value)
+            prop = get_relation(prop_name)
+            prop[subj].append(value)
+        elif type(value) == str:
+            if value.startswith('instance'):
+                prop = get_relation(prop_name)
+                prop[subj].append(value)
+            else:
+                value = str_to_inst(subj, prop_name, value)
+        else:
+            prop = get_property(prop_name)
+            prop[subj].append(value)
     if hasattr(value, 'name'):
         return value.name
 
@@ -320,7 +353,7 @@ def delete_value(subj, prop, value=[]):
     Deletes a value from the given subject and property.
 
     Args:
-        subj (OWL instance): An instance that is the subject of the statement.
+        subj (str): A name of the instance that is the subject of the statement.
         prop (str): Label of the property.
         value (optional): value to delete. If not specified, all values are removed.
     """
@@ -348,7 +381,7 @@ def replace_value(subj, prop, new_value, old_value=[]):
     Replace a value from the given subject and property.
 
     Args:
-        subj (OWL instance): An instance that is the subject of the statement.
+        subj (str): A name of the instance that is the subject of the statement.
         prop (str): Label of the property.
         new_value: new value to add.
         old_value (optional): old value to delete. If not specified, all values are removed.
@@ -398,9 +431,10 @@ def copy_instance(inst, parent=None, data=None):
     Returns:
         Created instance.
     """
+    #print(inst)
     inst = onto[inst]
     cl = type(inst)
-    print(inst, cl)
+    #print(inst, cl)
     new_inst = cl(instance_name())
     if parent:
         parent = onto[parent]
@@ -408,21 +442,23 @@ def copy_instance(inst, parent=None, data=None):
             if type(subj) == cl:
                 break
         prop[parent].append(new_inst)
+    new_props = data.keys()
     for prop in inst.get_properties():
+        if prop.name.replace('has_', '') in new_props:
+            continue
         objects = prop[inst]
         for obj in objects:
             if hasattr(obj, 'name'):
-                #cl = type(obj)
-                #obj = cl()
-                continue
+                if not has_only_label(obj):
+                    continue
             prop[new_inst].append(obj)
     if data:
         for prop, value in data.items():
-            onto_prop = get_property(prop)
-            if onto_prop[new_inst]:
-                replace_value(new_inst.name, prop, value)
-            else:
-                add_value(new_inst.name, prop, value)
+            #onto_prop = get_property(prop)
+            #if onto_prop[new_inst]:
+            #    replace_value(new_inst.name, prop, value)
+            #else:
+            add_value(new_inst.name, prop, value)
     return new_inst.name
 
 
@@ -463,50 +499,63 @@ def export_coupled_kratos(coupled_system):
     props = get_instance_properties(coupled_system)
     label = None
     for key in list(props.keys()):
-        #props[key.replace('has_', '')] = props.pop(key)
         if key == 'label':
             label = props['label'][0]
-        if key == 'data_':
-            props['data'] = props.pop('data_')
+        #if key == 'data_':
+        #    props['data'] = props.pop('data_')
     if label:
         props.pop('label', None)
     if 'coupled_system' in str(type(onto[coupled_system]).name):
         label = None
     for key, items in props.items():
-        if len(items) > 1 and key in ['solvers', 'data']:
+        if len(items) > 1 and key in force_dict():
             temp_dict = {}
             for item in items:
                 obj_props = export_coupled_kratos(item)
                 temp_dict[list(obj_props.keys())[0]] = list(obj_props.values())[0]
             props[key] = temp_dict
-        elif len(items) > 1 or key in [
-            'convergence_accelerators',
-            'convergence_criteria',
-            'input_data_list',
-            'output_data_list',
-            'export_data',
-            'import_data',
-            'import_meshes',
-            'data_transfer_operator_options'
-        ]:
+        elif len(items) > 1 or key in force_list():
             temp_list = []
             for item in items:
                 if onto[item]:
-                    temp_list.append(export_coupled_kratos(item))
+                    if has_only_label(onto[item]):
+                        temp_list.append(onto[item].label[0])
+                    else:
+                        temp_list.append(export_coupled_kratos(item))
                 else:
                     temp_list.append(item)
             props[key] = temp_list
         else:
-            print(key, items)
+            #print(key, items)
             item = items[0]
             if onto[item]:
-                props[key] = export_coupled_kratos(item)
+                if has_only_label(onto[item]):
+                    props[key] = onto[item].label[0]
+                else:
+                    props[key] = export_coupled_kratos(item)
             else:
                 props[key] = item
     if label:
         props = {label: props}
     label = None
     return props
+
+
+def force_dict():
+    return ['solvers', 'data']
+
+
+def force_list():
+    return [
+        'convergence_accelerators',
+        'convergence_criteria',
+        'input_data_list',
+        'output_data_list',
+        'export_data',
+        'import_data',
+        'import_meshes',
+        'data_transfer_operator_options'
+    ]
 
 
 def get_connected_instances_recursively(inst_name, insts, depth):
