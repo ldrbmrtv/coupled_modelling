@@ -4,7 +4,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../../coupled-modelling/'))
+sys.path.insert(0, os.path.abspath('../../coupled_modelling/'))
 
 
 # -- Project information -----------------------------------------------------
@@ -32,8 +32,5 @@ exclude_patterns = []
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'alabaster'
-html_static_path = ['_static']
-
-
 source_suffix = '.rst'
 master_doc = 'index'
