@@ -17,7 +17,9 @@ Contents
 --------
 
 .. toctree::
+   :maxdepth: 1
 
    installation
+   usage
    reference
    notebooks/demo_client
