@@ -18,7 +18,8 @@
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Reference" href="../reference.html" />
+    <link rel="next" title="Reference" href="../reference.html" />
+    <link rel="prev" title="Usage" href="../usage.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -231,7 +232,7 @@
  &#39;start_time&#39;: 0.0}
 </pre></div></div>
 </div>
-<p>All properties of the existing problem data instance can be reused, except of echo_level. Copying problem data from the existing coupled system with a new echo_level value</p>
+<p>All properties of the existing problem data instance can be reused, except of echo_level. Thus, we copy problem data from the existing coupled system with the new coupled system as a parent instance and a new echo_level value</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
@@ -514,7 +515,7 @@
 &lt;coupled_modelling.coupled_modelling.Instance at 0x1dee3b3d850&gt;
 </pre></div></div>
 </div>
-<p>Then we create new nested instances for the second item in the new coupling sequence. Copying a new input data list</p>
+<p>Then we create new nested instances for the second item in the new coupling sequence. Copying the old input data list</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
@@ -1040,7 +1041,7 @@
 &lt;coupled_modelling.coupled_modelling.Instance at 0x1dee3b3fa70&gt;
 </pre></div></div>
 </div>
-<p>Exporting created coupled system in JSON</p>
+<p>Exporting created coupled system in a Kratos-compatible JSON format</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
 </pre></div>
@@ -1125,7 +1126,7 @@
 </pre></div>
 </div>
 </div>
-<p>Inferring new classes from the created coupled system</p>
+<p>Inferring new ontology classes from the created coupled system</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
 </pre></div>
@@ -1204,15 +1205,17 @@
 <script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../reference.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Demo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference.html">Reference</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="../reference.html" title="previous chapter">Reference</a></li>
+      <li>Previous: <a href="../usage.html" title="previous chapter">Usage</a></li>
+      <li>Next: <a href="../reference.html" title="next chapter">Reference</a></li>
   </ul></li>
 </ul>
 </div>

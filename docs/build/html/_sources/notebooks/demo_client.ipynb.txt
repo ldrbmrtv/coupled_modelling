@@ -272,7 +272,7 @@
    "id": "1619b95a",
    "metadata": {},
    "source": [
-    "All properties of the existing problem data instance can be reused, except of echo_level. Copying problem data from the existing coupled system with a new echo_level value"
+    "All properties of the existing problem data instance can be reused, except of echo_level. Thus, we copy problem data from the existing coupled system with the new coupled system as a parent instance and a new echo_level value"
    ]
   },
   {
@@ -691,7 +691,7 @@
    "id": "f17a0c95",
    "metadata": {},
    "source": [
-    "Then we create new nested instances for the second item in the new coupling sequence. Copying a new input data list"
+    "Then we create new nested instances for the second item in the new coupling sequence. Copying the old input data list"
    ]
   },
   {
@@ -1467,7 +1467,7 @@
    "id": "ab309762",
    "metadata": {},
    "source": [
-    "Exporting created coupled system in JSON"
+    "Exporting created coupled system in a Kratos-compatible JSON format"
    ]
   },
   {
@@ -1572,7 +1572,7 @@
    "id": "1105de57",
    "metadata": {},
    "source": [
-    "Inferring new classes from the created coupled system"
+    "Inferring new ontology classes from the created coupled system"
    ]
   },
   {

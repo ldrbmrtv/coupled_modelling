@@ -21,5 +21,5 @@ Contents
 
    installation
    usage
-   reference
    notebooks/demo_client
+   reference
