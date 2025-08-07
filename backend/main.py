@@ -23,8 +23,9 @@ def load_onto():
 
     Returns:
         Loaded ontology
-    """
-    onto = default_world.get_ontology(onto_uri).load()
+    """ 
+    onto = default_world.get_ontology(onto_uri)
+    onto.load()
     
     return onto
 
@@ -614,7 +615,7 @@ def infer_class_properties(inst):
     for cl in inst.is_a:
         match = False
         subclasses = list(cl.subclasses())
-        #subclasses.append(cl)
+        subclasses.append(cl)
         for sub_cl in subclasses:
             old_props = {}
             for x in sub_cl.is_a:
@@ -623,8 +624,8 @@ def infer_class_properties(inst):
             #old_props.pop('rdf-schema.label', None)
             if old_props == new_props:
                 match = True
-                if sub_cl not in inst.is_a:
-                    new_classes.append(sub_cl)
+                #if sub_cl not in inst.is_a:
+                new_classes.append(sub_cl)
                 break
         if not match:
             n = len(list(cl.subclasses())) + 1
@@ -671,7 +672,7 @@ def import_coupled_kratos(data, label):
     return inst_name
 
 
-onto_uri = 'http://coupled_modelling.owl'
+onto_uri = 'http://coupled_modelling.owl#'
 default_world.set_backend(filename = 'db.sqlite3')
 try:
     onto = load_onto()

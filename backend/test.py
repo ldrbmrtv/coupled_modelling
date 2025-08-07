@@ -25,6 +25,8 @@ for label, path in inputs.items():
     with open(path) as f:
         data = json.load(f)
     import_coupled_kratos(data, label)
+    
+save_onto()
 
 export_path = os.path.join(
     os.path.dirname(os.path.abspath('')),
