@@ -20,4 +20,4 @@ Contents
 
    installation
    reference
-   examples
+   notebooks/demo_client
