@@ -63,6 +63,16 @@ def api_get_instance_properties():
     except:
         return '400'
 
+@app.route('/api/v1.0/get_instance_properties_recursively/', methods=['GET'])
+def api_get_instance_properties_recursively():
+    inst = request.args.get('instance')
+    depth = request.args.get('depth')
+    depth = int(depth)
+    #try:
+    props = get_instance_properties_recursively(inst, depth)
+    return jsonify(props), '201'
+    #except:
+    #    return '400'
 
 @app.route('/api/v1.0/get_values/', methods=['GET'])
 def api_get_values():

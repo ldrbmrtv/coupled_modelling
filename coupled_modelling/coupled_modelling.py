@@ -121,16 +121,24 @@ class Instance:
         self.host = host
         self.properties = {}
 
-    def get_properties(self):
+    def get_properties(self, depth=1):
         """
-        Retrieves properties of the instance.
+        Recursively retrieves properties of the instance.
 
+        Args:
+            depth (int, optional): Depth of the recursion, 1 if not specified.
+        
         Returns:
             Dictionary of properties for the instance.
         """
-        res = requests.get(
-            f'{self.host}get_instance_properties',
-            params={'instance': self.name})
+        if depth > 1:
+            res = requests.get(
+                f'{self.host}get_instance_properties_recursively',
+                params={'instance': self.name, 'depth': depth})
+        else:
+            res = requests.get(
+                f'{self.host}get_instance_properties',
+                params={'instance': self.name})
         if res.status_code == 201:
             self.properties = res.json()
         return res.json()

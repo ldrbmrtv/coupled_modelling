@@ -398,25 +398,34 @@ def replace_value(subj, prop, new_value, old_value=[]):
     add_value(subj, prop, new_value)
 
 
-def get_instance_properties_recursively(inst_name):
+def get_instance_properties_recursively(inst_name, depth):
     """
     Get instance properties and its subproperties recursively.
 
     Args:
         inst_name (str): Instance name.
+        depth (int): Depth of the recursion.
 
     Returns:
         Dictionary of nested properties.
     """
     props = get_instance_properties(inst_name)
-    for key, items in props.items():
-        temp_list = []
-        for item in items:
-            if onto[item]:
-                temp_list.append(get_instance_properties_recursively(item))
+    depth -= 1
+    if depth > 0:
+        for key, items in props.items():
+            if type(items) == list:
+                temp_list = []
+                for item in items:
+                    if onto[item]:
+                        temp_list.append({item: get_instance_properties_recursively(item, depth)})
+                    else:
+                        temp_list.append(item)
+                props[key] = temp_list
             else:
-                temp_list.append(item)
-        props[key] = temp_list
+                if onto[items]:
+                    props[key] = {items: get_instance_properties_recursively(items, depth)}
+                else:
+                    props[key] = items
     return props
 
 
