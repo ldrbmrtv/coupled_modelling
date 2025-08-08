@@ -17,4 +17,4 @@ Usage
 
 .. code-block:: console
 
-   python apy.py
+   python api.py
