@@ -125,5 +125,48 @@ def api_save_locally():
         return jsonify(e), 400
 
 
+@app.route('/api/v1.0/get_class_hierarchy/', methods=['GET'])
+def api_get_class_hierarchy():
+    try:
+        classes = get_class_hierarchy()
+        return jsonify(classes), 201
+    except Exception as e:
+        return jsonify(e), 400
+
+
+@app.route('/api/v1.0/get_class_properties/', methods=['GET'])
+def api_get_class_properties():
+    try:
+        cl = request.args.get('class')
+        props = get_class_properties(cl)
+        print(props)
+        return jsonify(props), 201
+    except Exception as e:
+        return jsonify(e), 400
+
+
+@app.route('/api/v1.0/get_class_properties_recursively/', methods=['GET'])
+def api_get_class_properties_recursively():
+    try:
+        args = request.args
+        cl = args.get('class')
+        depth = args.get('depth')
+        depth = int(depth)
+        props = get_class_properties_recursively(cl, depth)
+        return jsonify(props), 201
+    except Exception as e:
+        return jsonify(e), 400
+
+
+@app.route('/api/v1.0/get_class_instances/', methods=['GET'])
+def api_get_class_instances():
+    try:
+        cl = request.args.get('class')
+        insts = get_class_instances(cl)
+        return jsonify(insts), 201
+    except Exception as e:
+        return jsonify(e), 400
+
+
 if __name__ == "__main__":
     app.run()

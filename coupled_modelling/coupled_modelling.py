@@ -11,8 +11,9 @@ class KnowledgeBase:
 
     def __init__(self, host):
         self.host = host
-        
-    def import_coupled_kratos(self, label, data):
+        self.class_hierarchy = []
+    
+    def import_kratos(self, label, data):
         """
         Creates an instance of the the coupled system with the given data and label.
 
@@ -103,6 +104,87 @@ class KnowledgeBase:
         with open(path, 'wb') as f:
             f.write(onto_file)
         #return res.json()
+    
+    def get_class_hierarchy(self):
+        """
+        Retrieves a dictionary of all high level classes in the knowledge base with their subclasses.
+
+        Returns:
+            The dictionary of classes.
+        """
+        res = requests.get(
+            f'{self.host}get_class_hierarchy')
+        if res.status_code == 201:
+            self.class_hierarchy = res.json()
+        return res.json()
+        
+    def get_class(self, name):
+        """
+        Initializes the specified class.
+
+        Args:
+            name (str): Name of the class.
+        
+        Returns:
+            The initialized class.
+        """
+        cl = Class(self.host, name)
+        return cl
+
+class Class:
+    """
+    Class of the knowledge base
+
+    Args:
+        name (str): Name of the class.
+        host (str): URL of the knowledge base.
+    
+    Attributess:
+        properties (dict): A dictionary of the class properties.
+        instances (list): A list of the class instances.
+  
+    """
+    def __init__(self, host, name):
+        self.host = host
+        self.name = name
+        self.properties = []
+        self.instances = []
+    
+    def get_properties(self, depth=1):
+        """
+        Recursively retrieves properties of the class.
+
+        Args:
+            depth (int, optional): Depth of the recursion, 1 if not specified.
+        
+        Returns:
+            Dictionary of properties for the class.
+        """
+        if depth > 1:
+            res = requests.get(
+                f'{self.host}get_class_properties_recursively',
+                params={'class': self.name, 'depth': depth})
+        else:
+            res = requests.get(
+                f'{self.host}get_class_properties',
+                params={'class': self.name})
+        if res.status_code == 201:
+            self.properties = res.json()
+        return res.json()
+
+    def get_instances(self):
+        """
+        Retrieves all instances of the class.
+
+        Returns:
+            List of the class instances.
+        """
+        res = requests.get(
+            f'{self.host}get_class_instances',
+            params={'class': self.name})
+        if res.status_code == 201:
+            self.instances = res.json()
+        return res.json()
 
 class Instance:
     """
@@ -115,7 +197,6 @@ class Instance:
     Attributess:
         properties (dict): A dictionary of the instance properties.
     """
-
     def __init__(self, host, name):
         self.name = name
         self.host = host
@@ -163,7 +244,9 @@ class Instance:
             return res.json()
     
 class CoupledSystem(Instance):
-
+    """
+    Instance of the coupled system
+    """
     def infer_classes(self):
         """
         Generates classes reflecting the structure of the coupled system.

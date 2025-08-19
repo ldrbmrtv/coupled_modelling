@@ -225,14 +225,43 @@ def get_class_properties(class_name):
     """
     cl = onto[class_name]
     props = []
-    for x in cl.is_a:
-        if hasattr(x, 'property'):
-            try:
-                props.append((x.property.name, {'cardinality': x.cardinality, 'type': x.value.name}))
-            except:
-                props.append((x.property.name, {'cardinality': x.cardinality, 'type': x.value}))
-    props = dict(props)
-    props.pop('label', None)
+    for restr in cl.is_a:
+        if hasattr(restr, 'property'):
+            value = restr.value
+            if hasattr(value, 'Classes'):
+                props.append({
+                    'property': restr.property.name,
+                    'cardinality': restr.cardinality,
+                    'value': [x.name for x in value.Classes]})
+            else:
+                props.append({
+                    'property': restr.property.name,
+                    'cardinality': restr.cardinality,
+                    'value': value.__name__})
+    #props.pop('label', None)
+    return props
+
+
+def get_class_properties_recursively(class_name, depth):
+    """
+    For a given class, returns a dictionary of its axioms of the specified depth.
+
+    Args:
+        class_name (str): Class name.
+        depth (int): Depth of the recursion
+
+    Returns:
+        The dictionary of the class axioms.
+    """
+    props = get_class_properties(class_name)
+    depth -= 1
+    if depth > 0:
+        for i, item in enumerate(props):
+            if type(item['value']) == list:
+                temp_list = []
+                for value in item['value']:
+                    temp_list.append({value: get_class_properties_recursively(value, depth)})
+                props[i]['value'] = temp_list
     return props
 
 
@@ -280,17 +309,17 @@ def get_instance_properties(inst_name):
     return props
 
     
-def get_instances(class_label):
+def get_class_instances(class_name):
     """
     For a given class, returns its instances.
 
     Args:
-        class_label (str): Class label.
+        class_name (str): Name of the class.
 
     Returns:
         A list of class instance names.
     """
-    cl = onto.search_one(label = class_label)
+    cl = onto[class_name]
     return [x.name for x in cl.instances()]
 
 
@@ -679,6 +708,14 @@ def import_coupled_kratos(data, label):
         inst = add_coupled_system(inst, pred_name, obj_data)
     infer_coupled_system_structure(inst_name)
     return inst_name
+
+
+def get_class_hierarchy():
+    res = {}
+    for cl in onto.classes():
+        if cl.is_a == [Thing]:
+            res[cl.name] = [x.name for x in cl.subclasses()]
+    return res
 
 
 onto_uri = 'http://coupled_modelling.owl#'
