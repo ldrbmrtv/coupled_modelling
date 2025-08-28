@@ -114,7 +114,7 @@ class KnowledgeBase:
         """
         res = requests.get(
             f'{self.host}get_class_hierarchy')
-        if res.status_code == 201:
+        if res.status_code == 200:
             self.class_hierarchy = res.json()
         return res.json()
         
@@ -130,6 +130,7 @@ class KnowledgeBase:
         """
         cl = Class(self.host, name)
         return cl
+
 
 class Class:
     """
@@ -150,25 +151,23 @@ class Class:
         self.properties = []
         self.instances = []
     
-    def get_properties(self, depth=1):
+    def get_properties(self, depth=1, recursive=False):
         """
         Recursively retrieves properties of the class.
 
         Args:
-            depth (int, optional): Depth of the recursion, 1 if not specified.
+            depth (int, optional): Depth of the recursion, if not specified the entire tree of properties is returned.
+            recursive (bool, optional): If True, the depth of recursion is unlimited.
         
         Returns:
             Dictionary of properties for the class.
         """
-        if depth > 1:
-            res = requests.get(
-                f'{self.host}get_class_properties_recursively',
-                params={'class': self.name, 'depth': depth})
-        else:
-            res = requests.get(
-                f'{self.host}get_class_properties',
-                params={'class': self.name})
-        if res.status_code == 201:
+        if recursive:
+            depth = None
+        res = requests.get(
+            f'{self.host}get_class_properties_recursively',
+            params={'class': self.name, 'depth': depth, 'recursive': recursive})
+        if res.status_code == 200:
             self.properties = res.json()
         return res.json()
 
@@ -182,9 +181,10 @@ class Class:
         res = requests.get(
             f'{self.host}get_class_instances',
             params={'class': self.name})
-        if res.status_code == 201:
+        if res.status_code == 200:
             self.instances = res.json()
         return res.json()
+
 
 class Instance:
     """
@@ -202,47 +202,104 @@ class Instance:
         self.host = host
         self.properties = {}
 
-    def get_properties(self, depth=1):
+    def get_properties(self, depth=1, recursive=False):
         """
         Recursively retrieves properties of the instance.
 
         Args:
-            depth (int, optional): Depth of the recursion, 1 if not specified.
+            depth (int, optional): Depth of the recursion, if not specified the entire three of properties is returned.
+            recursive (bool, optional): If True, the depth of recursion is unlimited.
         
         Returns:
             Dictionary of properties for the instance.
         """
-        if depth > 1:
-            res = requests.get(
-                f'{self.host}get_instance_properties_recursively',
-                params={'instance': self.name, 'depth': depth})
-        else:
-            res = requests.get(
-                f'{self.host}get_instance_properties',
-                params={'instance': self.name})
-        if res.status_code == 201:
+        if recursive:
+            depth = None
+        res = requests.get(
+            f'{self.host}get_instance_properties_recursively',
+            params={'instance': self.name, 'depth': depth, 'recursive': recursive})
+        if res.status_code == 200:
             self.properties = res.json()
         return res.json()
 
-    def make_copy(self, parent, data):
+    def make_copy(self, parent=None,  data=None, depth=1, recursive=False):
         """
-        Duplicates the instance and attaches a newly created duplicate to the specified parent with additional data.
+        Duplicates the instance with all its nested properties and attaches a newly created duplicate to the specified parent with additional data.
 
         Args:
-            parent (str): The new parent for the copied instance.
             data (dict): Data to update the copied instance.
+            parent (str): The new parent for the copied instance.
+            depth (int, optional): The depth of recursive property copying.
+            recursive (bool, optional): If True, the depth of recursion is unlimited.
         
         Returns:
             The created instance.
         """
-        params = {'instance': self.name, 'parent': parent.name, 'data': data}
-        res = requests.post(f'{self.host}copy_instance', json=params)
+        if recursive:
+            depth = None
+        params = {'instance': self.name, 'data': data, 'depth': depth, 'recursive': recursive}
+        if parent:
+            params['parent'] = parent.name
+        res = requests.post(f'{self.host}copy_instance_recursively', json=params)
         if res.status_code == 201:
             new_inst = Instance(self.host, res.json())
             return new_inst
         else:
             return res.json()
     
+    def replace_values(self, data):
+        """
+        Replaces all values of the property with the specified new value for each key-value pair in the provided dictionary.
+
+        Args:
+            data (dict): A dictionary of properties with new values.
+        """
+        params = {'instance': self.name, 'data': data}
+        res = requests.post(f'{self.host}replace_values', json=params)
+        if res.status_code == 201:
+            self.get_properties()
+        return res.json()
+    
+    def delete_values(self, properties):
+        """
+        Delete all values for each property in the specified list.
+
+        Args:
+            properties (list): A list of properties values of which to delete.
+        """
+        params = {'instance': self.name, 'properties': properties}
+        res = requests.post(f'{self.host}delete_values', json=params)
+        if res.status_code == 201:
+            self.get_properties()
+        return res.json()
+
+    def add_values(self, data):
+        """
+        Adds property-value pairs from the provided dictionary to the instance.
+
+        Args:
+            data (dict): A dictionary of properties with values to add.
+        """
+        params = {'instance': self.name, 'data': data}
+        res = requests.post(f'{self.host}add_values', json=params)
+        if res.status_code == 201:
+            self.get_properties()
+        return res.json()
+    
+    def replace_properties(self, data):
+        """
+        Deletes all existing properties of the instance and adds new properties with their values from the provided dictionary.
+
+        Args:
+            data (dict): A dictionary of new properties with their values.
+        """
+        params = {'instance': self.name, 'data': data}
+        res = requests.post(f'{self.host}replace_properties', json=params)
+        if res.status_code == 201:
+            self.get_properties()
+        return res.json()
+
+
 class CoupledSystem(Instance):
     """
     Instance of the coupled system
@@ -268,3 +325,17 @@ class CoupledSystem(Instance):
             json={'coupled_system': self.name})
         return res.json()
     
+    def make_copy(self, data=None, depth=1, recursive=False):
+        """
+        Duplicates the coupled system with all its nested properties with additional data.
+
+        Args:
+            data (dict): Data to update the copied instance.
+            depth (int, optional): The depth of recursive property copying.
+            recursive (bool, optional): If True, the depth of recursion is unlimited.
+        
+        Returns:
+            The created coupled system instance.
+        """
+        inst = super().make_copy(None, data, depth, recursive)
+        return CoupledSystem(self.host, inst.name)

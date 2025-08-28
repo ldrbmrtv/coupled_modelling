@@ -21,5 +21,7 @@ Contents
 
    installation
    usage
-   notebooks/demo_client
+   notebooks/demo_client_explore
+   notebooks/demo_client_create
+   notebooks/demo_client_edit
    reference

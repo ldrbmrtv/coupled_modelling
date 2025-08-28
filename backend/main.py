@@ -7,13 +7,17 @@ from collections import Counter
 def get_onto_path():
     path = os.path.dirname(os.path.realpath(__file__))
     path = os.path.join(path, 'onto.owl')
-    
+    return path
+
+
+def get_db_path():
+    path = os.path.dirname(os.path.realpath(__file__))
+    path = os.path.join(path, 'db.sqlite3')
     return path
 
 
 def new_onto():
     onto = default_world.get_ontology(onto_uri)
-    
     return onto
 
 
@@ -242,26 +246,36 @@ def get_class_properties(class_name):
     return props
 
 
-def get_class_properties_recursively(class_name, depth):
+def get_class_properties_recursively(class_name, depth=1, recursive=False):
     """
     For a given class, returns a dictionary of its axioms of the specified depth.
 
     Args:
         class_name (str): Class name.
-        depth (int): Depth of the recursion
+        depth (int, optional): Depth of the recursion.
+        recursive (bool, optional): If True, the depth of recursion is unlimited.
 
     Returns:
         The dictionary of the class axioms.
     """
     props = get_class_properties(class_name)
-    depth -= 1
-    if depth > 0:
+    
+    if recursive:
+        depth = None
+    
+    if depth:
+        depth -= 1
+    
+    print(depth)
+    print(recursive)
+
+    if depth == None or depth > 0:
         for i, item in enumerate(props):
             if type(item['value']) == list:
                 temp_list = []
                 for value in item['value']:
-                    temp_list.append({value: get_class_properties_recursively(value, depth)})
-                props[i]['value'] = temp_list
+                    temp_list.append({value: get_class_properties_recursively(value, depth, recursive)})
+                    props[i]['value'] = temp_list
     return props
 
 
@@ -359,33 +373,32 @@ def add_value(subj, prop_name, value=None):
         The value, useful if the new instance is created.
     """
     subj = onto[subj]
-    if onto[value]:
+    if hasattr(value, 'name'):
         value = onto[value]
     
     if prop_name == 'label':
         subj.label = value
         return value
 
-    with onto:
-        if not value:
-            cl = get_class(prop_name)
-            value = cl(instance_name())
+    if not value:
+        cl = get_class(prop_name)
+        value = cl(instance_name())
+        prop = get_relation(prop_name)
+        prop[subj].append(value)
+    elif type(value) == str:
+        if value.startswith('instance'):
             prop = get_relation(prop_name)
             prop[subj].append(value)
-        elif type(value) == str:
-            if value.startswith('instance'):
-                prop = get_relation(prop_name)
-                prop[subj].append(value)
-            else:
-                value = str_to_inst(subj, prop_name, value)
         else:
-            prop = get_property(prop_name)
-            prop[subj].append(value)
+            value = str_to_inst(subj, prop_name, value)
+    else:
+        prop = get_property(prop_name)
+        prop[subj].append(value)
     if hasattr(value, 'name'):
         return value.name
 
 
-def delete_value(subj, prop, value=[]):
+def delete_value(subj, prop, value=None):
     """
     Deletes a value from the given subject and property.
 
@@ -395,64 +408,88 @@ def delete_value(subj, prop, value=[]):
         value (optional): value to delete. If not specified, all values are removed.
     """
     subj = onto[subj]
-    if onto[value]:
+    if value and hasattr(value, 'name'):
         value = onto[value]
     
     if prop == 'label':
-        if value == []:
-            subj.label = []
-        else:
-            subj.label.remove(value)
+        subj.label = []
         return
-    prop = onto.search_one(label = f'has_{prop}')
-    with onto:
-        if value == []:
-            print(subj, prop)
-            prop[subj] = []
-        else:
-            prop[subj].remove(value)
+    
+    print(prop)
+    prop = onto[f'has_{prop}']
+    print(prop)
+    if value:
+        prop[subj].remove(value)
+    else:
+        prop[subj] = []            
 
 
-def replace_value(subj, prop, new_value, old_value=[]):
+def replace_values(subj, data):
     """
-    Replace a value from the given subject and property.
+    Replaces all values of the property with the specified new value for each key-value pair in the provided dictionary.
 
     Args:
-        subj (str): A name of the instance that is the subject of the statement.
-        prop (str): Label of the property.
-        new_value: new value to add.
-        old_value (optional): old value to delete. If not specified, all values are removed.
+        subj (str): A name of the instance properties of which to replace.
+        data (dict): A dictionary of property-value pairs
     """
-    delete_value(subj, prop, old_value)
-    add_value(subj, prop, new_value)
+    for prop, value in data.items():
+        delete_value(subj, prop)
+        add_value(subj, prop, value)
 
 
-def get_instance_properties_recursively(inst_name, depth):
+def delete_values(inst, props):
+    for prop in props:
+        delete_value(inst, prop)
+
+
+def add_values(inst, data):
+    for prop, value in data.items():
+        add_value(inst, prop, value)
+
+
+def replace_properties(inst_name, data):
+    inst = onto[inst_name]
+    props = inst.get_properties()
+    for prop in props:
+        prop = prop.name.replace('has_', '')
+        delete_value(inst_name, prop)
+    for prop, value in data.items():
+        add_value(inst_name, prop, value)
+
+
+def get_instance_properties_recursively(inst_name, depth=1, recursive=False):
     """
     Get instance properties and its subproperties recursively.
 
     Args:
         inst_name (str): Instance name.
-        depth (int): Depth of the recursion.
+        depth (int, optional): Depth of the recursion.
+        recursive (bool, optional): If True, the depth of recursion is unlimited.
 
     Returns:
         Dictionary of nested properties.
     """
     props = get_instance_properties(inst_name)
-    depth -= 1
-    if depth > 0:
+
+    if recursive == True:
+        depth = None
+
+    if depth:
+        depth -= 1
+    
+    if depth == None or depth > 0:                    
         for key, items in props.items():
             if type(items) == list:
                 temp_list = []
                 for item in items:
                     if onto[item]:
-                        temp_list.append({item: get_instance_properties_recursively(item, depth)})
+                        temp_list.append({item: get_instance_properties_recursively(item, depth, recursive)})
                     else:
                         temp_list.append(item)
                 props[key] = temp_list
             else:
                 if onto[items]:
-                    props[key] = {items: get_instance_properties_recursively(items, depth)}
+                    props[key] = {items: get_instance_properties_recursively(items, depth, recursive)}
                 else:
                     props[key] = items
     return props
@@ -477,38 +514,41 @@ def copy_instance(inst, parent=None, data=None):
     Returns:
         Created instance.
     """
-    #print(inst)
     inst = onto[inst]
     cl = type(inst)
-    #print(inst, cl)
     new_inst = cl(instance_name())
+
     if parent:
         parent = onto[parent]
         for subj, prop in inst.get_inverse_properties():
             if type(subj) == cl:
                 break
         prop[parent].append(new_inst)
-    new_props = data.keys()
+    
+    if data:
+        new_props = data.keys()
+    
     for prop in inst.get_properties():
-        if prop.name.replace('has_', '') in new_props:
-            continue
+        
+        if data:
+            if prop.name.replace('has_', '') in new_props:
+                continue
+
         objects = prop[inst]
         for obj in objects:
             if hasattr(obj, 'name'):
                 if not has_only_label(obj):
                     continue
             prop[new_inst].append(obj)
+    
     if data:
         for prop, value in data.items():
-            #onto_prop = get_property(prop)
-            #if onto_prop[new_inst]:
-            #    replace_value(new_inst.name, prop, value)
-            #else:
             add_value(new_inst.name, prop, value)
+    
     return new_inst.name
 
 
-def copy_instance_recursively(inst_name):
+def copy_instance_recursively(inst, parent=None, data=None, depth=1, recursive=False):
     """
     Creates a structural copy of a given instance with all it properties revursively.
 
@@ -518,17 +558,26 @@ def copy_instance_recursively(inst_name):
     Returns:
         Created instance.
     """
-    inst = onto[inst_name]
-    cl = type(inst)
-    new_inst = cl(instance_name())
-    for prop in inst.get_properties():
-        objects = prop[inst]
-        for obj in objects:
-            if hasattr(obj, 'name'):
-                cl = type(obj)
-                obj = copy_instance_recursively(obj.name)
-                obj = onto[obj]
-            prop[new_inst].append(obj)
+    new_inst = copy_instance(inst, parent, data)
+    new_inst = onto[new_inst]
+    inst = onto[inst]
+    
+    if recursive == True:
+        depth = None
+
+    if depth:
+        depth -= 1
+
+    if depth == None or depth > 0:
+        for prop in inst.get_properties():
+            objects = prop[inst]
+            for obj in objects:
+                if hasattr(obj, 'name'):
+                    if not has_only_label(obj):
+                        obj = copy_instance_recursively(obj.name, depth=depth, recursive=recursive)
+                        obj = onto[obj]
+                        prop[new_inst].append(obj)
+
     return new_inst.name
 
 
@@ -689,6 +738,7 @@ def infer_coupled_system_structure(coupled_system):
     insts = {}
     get_connected_instances_recursively(coupled_system, insts, 0)
     infer_class_properties_recursively(insts)
+    save_onto()
 
 
 def import_coupled_kratos(data, label):
@@ -719,7 +769,8 @@ def get_class_hierarchy():
 
 
 onto_uri = 'http://coupled_modelling.owl#'
-default_world.set_backend(filename = 'db.sqlite3')
+default_world.set_backend(filename = get_db_path())
+
 try:
     onto = load_onto()
 except:
