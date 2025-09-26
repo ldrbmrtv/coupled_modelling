@@ -373,14 +373,14 @@ def add_value(subj, prop_name, value=None):
         The value, useful if the new instance is created.
     """
     subj = onto[subj]
-    if hasattr(value, 'name'):
-        value = onto[value]
-    
     if prop_name == 'label':
         subj.label = value
         return value
 
-    if not value:
+    if hasattr(value, 'name'):
+        value = onto[value]
+    
+    if value == None:
         cl = get_class(prop_name)
         value = cl(instance_name())
         prop = get_relation(prop_name)
