@@ -191,6 +191,11 @@
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_result</rdfs:label>
 </owl:DatatypeProperty>
 
+<owl:DatatypeProperty rdf:about="#has_dimension">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">has_dimension</rdfs:label>
+</owl:DatatypeProperty>
+
 <owl:Class rdf:about="#coupled_system">
   <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
   <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">coupled_system</rdfs:label>
@@ -1986,6 +1991,618 @@
   </rdfs:subClassOf>
 </owl:Class>
 
+<owl:Class rdf:about="#mapper_settings_3">
+  <rdfs:subClassOf rdf:resource="#mapper_settings"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_mapper_type"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#mapper_type"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#data_4">
+  <rdfs:subClassOf rdf:resource="#data"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_variable_name"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#variable_name"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_model_part_name"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#model_part_name"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_dimension"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#input_data_list_2">
+  <rdfs:subClassOf rdf:resource="#input_data_list"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_data_transfer_operator_options"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#data_transfer_operator_options"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_from_solver_data"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#data"/>
+            <rdf:Description rdf:about="#from_solver_data"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_data"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#data"/>
+            <rdf:Description rdf:about="#from_solver_data"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_data_transfer_operator"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#data_transfer_operator"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_from_solver"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#solver"/>
+            <rdf:Description rdf:about="#name"/>
+            <rdf:Description rdf:about="#from_solver"/>
+            <rdf:Description rdf:about="#to_solver"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#output_data_list_3">
+  <rdfs:subClassOf rdf:resource="#output_data_list"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_data_transfer_operator"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#data_transfer_operator"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_to_solver"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#solver"/>
+            <rdf:Description rdf:about="#name"/>
+            <rdf:Description rdf:about="#from_solver"/>
+            <rdf:Description rdf:about="#to_solver"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_to_solver_data"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#data_name"/>
+            <rdf:Description rdf:about="#data"/>
+            <rdf:Description rdf:about="#to_solver_data"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_data"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#data_name"/>
+            <rdf:Description rdf:about="#data"/>
+            <rdf:Description rdf:about="#to_solver_data"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#convergence_accelerators_3">
+  <rdfs:subClassOf rdf:resource="#convergence_accelerators"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_type"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#type"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_data_name"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#data_name"/>
+            <rdf:Description rdf:about="#data"/>
+            <rdf:Description rdf:about="#to_solver_data"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_solver"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#solver"/>
+            <rdf:Description rdf:about="#name"/>
+            <rdf:Description rdf:about="#from_solver"/>
+            <rdf:Description rdf:about="#to_solver"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#data_transfer_operators_3">
+  <rdfs:subClassOf rdf:resource="#data_transfer_operators"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_type"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#type"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_mapper_settings"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#mapper_settings_3"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#convergence_criteria_2">
+  <rdfs:subClassOf rdf:resource="#convergence_criteria"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_type"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#type"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_solver"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#solver"/>
+            <rdf:Description rdf:about="#name"/>
+            <rdf:Description rdf:about="#from_solver"/>
+            <rdf:Description rdf:about="#to_solver"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_rel_tolerance"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_abs_tolerance"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_data_name"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#data_name"/>
+            <rdf:Description rdf:about="#data"/>
+            <rdf:Description rdf:about="#to_solver_data"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#solvers_4">
+  <rdfs:subClassOf rdf:resource="#solvers"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_type"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#type"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_solver_wrapper_settings"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#solver_wrapper_settings_3"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_data"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#data_4"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">3</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#solvers_5">
+  <rdfs:subClassOf rdf:resource="#solvers"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_type"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#type"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_solver_wrapper_settings"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#solver_wrapper_settings_3"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_data"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#data_4"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#coupling_sequence_4">
+  <rdfs:subClassOf rdf:resource="#coupling_sequence"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_input_data_list"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#input_data_list_2"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_name"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#name"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_output_data_list"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#output_data_list_3"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#solver_settings_2">
+  <rdfs:subClassOf rdf:resource="#solver_settings"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_type"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#type"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_convergence_accelerators"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#convergence_accelerators_3"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_data_transfer_operators"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#data_transfer_operators_3"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_num_coupling_iterations"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_convergence_criteria"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#convergence_criteria_2"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_solvers"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#solvers_4"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_solvers"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#solvers_5"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_echo_level"/>
+      <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_coupling_sequence"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#coupling_sequence_1"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_coupling_sequence"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#coupling_sequence_4"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
+<owl:Class rdf:about="#coupled_system_3">
+  <rdfs:subClassOf rdf:resource="#coupled_system"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_solver_settings"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#solver_settings_2"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#has_problem_data"/>
+      <owl:onClass>
+        <owl:Class>
+          <owl:intersectionOf rdf:parseType="Collection">
+            <rdf:Description rdf:about="#problem_data_1"/>
+          </owl:intersectionOf>
+        </owl:Class>
+      </owl:onClass>
+      <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+</owl:Class>
+
 <owl:NamedIndividual rdf:about="#instance_1">
   <has_problem_data rdf:resource="#instance_2"/>
   <has_solver_settings rdf:resource="#instance_4"/>
@@ -2841,6 +3458,403 @@
 <owl:NamedIndividual rdf:about="#instance_118">
   <has_input_file rdf:resource="#instance_77"/>
   <rdf:type rdf:resource="#solver_wrapper_settings_3"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_119">
+  <has_problem_data rdf:resource="#instance_120"/>
+  <has_solver_settings rdf:resource="#instance_121"/>
+  <rdf:type rdf:resource="#coupled_system_1"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mixed_fid_models</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_120">
+  <has_parallel_type rdf:resource="#instance_3"/>
+  <rdf:type rdf:resource="#problem_data_1"/>
+  <has_start_time rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</has_start_time>
+  <has_end_time rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</has_end_time>
+  <has_echo_level rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</has_echo_level>
+  <has_print_colors rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</has_print_colors>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_121">
+  <has_type rdf:resource="#instance_5"/>
+  <has_data_transfer_operators rdf:resource="#instance_122"/>
+  <has_convergence_accelerators rdf:resource="#instance_124"/>
+  <has_convergence_criteria rdf:resource="#instance_125"/>
+  <has_coupling_sequence rdf:resource="#instance_126"/>
+  <has_coupling_sequence rdf:resource="#instance_127"/>
+  <has_solvers rdf:resource="#instance_130"/>
+  <has_solvers rdf:resource="#instance_135"/>
+  <rdf:type rdf:resource="#solver_settings_1"/>
+  <has_num_coupling_iterations rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">20</has_num_coupling_iterations>
+  <has_echo_level rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</has_echo_level>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_122">
+  <has_type rdf:resource="#instance_7"/>
+  <has_mapper_settings rdf:resource="#instance_123"/>
+  <rdf:type rdf:resource="#data_transfer_operators_1"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">direct_transfer</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_123">
+  <has_mapper_type rdf:resource="#instance_9"/>
+  <rdf:type rdf:resource="#mapper_settings_1"/>
+  <has_echo_level rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</has_echo_level>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_124">
+  <has_type rdf:resource="#instance_11"/>
+  <has_solver rdf:resource="#instance_12"/>
+  <has_data_name rdf:resource="#instance_13"/>
+  <rdf:type rdf:resource="#convergence_accelerators_1"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_125">
+  <has_type rdf:resource="#instance_15"/>
+  <has_solver rdf:resource="#instance_12"/>
+  <has_data_name rdf:resource="#instance_13"/>
+  <rdf:type rdf:resource="#convergence_criteria_1"/>
+  <has_abs_tolerance rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1e-07</has_abs_tolerance>
+  <has_rel_tolerance rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1e-05</has_rel_tolerance>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_126">
+  <has_name rdf:resource="#instance_12"/>
+  <rdf:type rdf:resource="#coupling_sequence_1"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_127">
+  <has_name rdf:resource="#instance_18"/>
+  <has_input_data_list rdf:resource="#instance_128"/>
+  <has_output_data_list rdf:resource="#instance_129"/>
+  <rdf:type rdf:resource="#coupling_sequence_2"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_128">
+  <has_data rdf:resource="#instance_20"/>
+  <has_from_solver rdf:resource="#instance_12"/>
+  <has_from_solver_data rdf:resource="#instance_20"/>
+  <has_data_transfer_operator rdf:resource="#instance_21"/>
+  <rdf:type rdf:resource="#input_data_list_1"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_129">
+  <has_data rdf:resource="#instance_13"/>
+  <has_to_solver rdf:resource="#instance_12"/>
+  <has_to_solver_data rdf:resource="#instance_13"/>
+  <has_data_transfer_operator rdf:resource="#instance_21"/>
+  <rdf:type rdf:resource="#output_data_list_1"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_130">
+  <has_type rdf:resource="#instance_24"/>
+  <has_solver_wrapper_settings rdf:resource="#instance_131"/>
+  <has_io_settings rdf:resource="#instance_132"/>
+  <has_data rdf:resource="#instance_133"/>
+  <has_data rdf:resource="#instance_134"/>
+  <rdf:type rdf:resource="#solvers_1"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">low_fid_fluid</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_131">
+  <has_export_data rdf:resource="#instance_13"/>
+  <has_import_data rdf:resource="#instance_20"/>
+  <has_import_meshes rdf:resource="#instance_26"/>
+  <rdf:type rdf:resource="#solver_wrapper_settings_1"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_132">
+  <has_type rdf:resource="#instance_28"/>
+  <has_connect_to rdf:resource="#instance_29"/>
+  <has_communication_format rdf:resource="#instance_30"/>
+  <rdf:type rdf:resource="#io_settings_1"/>
+  <has_echo_level rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</has_echo_level>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_133">
+  <has_model_part_name rdf:resource="#instance_26"/>
+  <has_variable_name rdf:resource="#instance_32"/>
+  <has_location rdf:resource="#instance_33"/>
+  <rdf:type rdf:resource="#data_1"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pitch_angle</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_134">
+  <has_model_part_name rdf:resource="#instance_26"/>
+  <has_variable_name rdf:resource="#instance_35"/>
+  <has_location rdf:resource="#instance_33"/>
+  <rdf:type rdf:resource="#data_1"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">lift_force</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_135">
+  <has_type rdf:resource="#instance_24"/>
+  <has_solver_wrapper_settings rdf:resource="#instance_136"/>
+  <has_io_settings rdf:resource="#instance_137"/>
+  <has_data rdf:resource="#instance_138"/>
+  <has_data rdf:resource="#instance_139"/>
+  <rdf:type rdf:resource="#solvers_2"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">spring_structure</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_136">
+  <has_export_data rdf:resource="#instance_20"/>
+  <has_import_data rdf:resource="#instance_13"/>
+  <has_import_meshes rdf:resource="#instance_38"/>
+  <rdf:type rdf:resource="#solver_wrapper_settings_2"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_137">
+  <has_type rdf:resource="#instance_28"/>
+  <has_connect_to rdf:resource="#instance_40"/>
+  <has_communication_format rdf:resource="#instance_30"/>
+  <rdf:type rdf:resource="#io_settings_1"/>
+  <has_echo_level rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</has_echo_level>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_138">
+  <has_model_part_name rdf:resource="#instance_38"/>
+  <has_variable_name rdf:resource="#instance_32"/>
+  <has_location rdf:resource="#instance_33"/>
+  <rdf:type rdf:resource="#data_1"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pitch_angle</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_139">
+  <has_model_part_name rdf:resource="#instance_38"/>
+  <has_variable_name rdf:resource="#instance_35"/>
+  <has_location rdf:resource="#instance_33"/>
+  <rdf:type rdf:resource="#data_1"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">lift_force</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_140">
+  <has_problem_data rdf:resource="#instance_141"/>
+  <has_solver_settings rdf:resource="#instance_143"/>
+  <rdf:type rdf:resource="#coupled_system_3"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FSI_Mok</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_141">
+  <has_parallel_type rdf:resource="#instance_142"/>
+  <rdf:type rdf:resource="#problem_data_1"/>
+  <has_start_time rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</has_start_time>
+  <has_end_time rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">25.0</has_end_time>
+  <has_echo_level rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">0</has_echo_level>
+  <has_print_colors rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</has_print_colors>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_142">
+  <rdf:type rdf:resource="#parallel_type"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MPI</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_143">
+  <has_type rdf:resource="#instance_5"/>
+  <has_convergence_accelerators rdf:resource="#instance_144"/>
+  <has_convergence_criteria rdf:resource="#instance_148"/>
+  <has_data_transfer_operators rdf:resource="#instance_149"/>
+  <has_coupling_sequence rdf:resource="#instance_151"/>
+  <has_coupling_sequence rdf:resource="#instance_152"/>
+  <has_solvers rdf:resource="#instance_159"/>
+  <has_solvers rdf:resource="#instance_168"/>
+  <rdf:type rdf:resource="#solver_settings_2"/>
+  <has_echo_level rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</has_echo_level>
+  <has_num_coupling_iterations rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">12</has_num_coupling_iterations>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_144">
+  <has_type rdf:resource="#instance_145"/>
+  <has_solver rdf:resource="#instance_146"/>
+  <has_data_name rdf:resource="#instance_147"/>
+  <rdf:type rdf:resource="#convergence_accelerators_3"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_145">
+  <rdf:type rdf:resource="#type"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mvqn</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_146">
+  <rdf:type rdf:resource="#solver"/>
+  <rdf:type rdf:resource="#name"/>
+  <rdf:type rdf:resource="#from_solver"/>
+  <rdf:type rdf:resource="#to_solver"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fluid</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_147">
+  <rdf:type rdf:resource="#data_name"/>
+  <rdf:type rdf:resource="#data"/>
+  <rdf:type rdf:resource="#to_solver_data"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">disp</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_148">
+  <has_type rdf:resource="#instance_15"/>
+  <has_solver rdf:resource="#instance_146"/>
+  <has_data_name rdf:resource="#instance_147"/>
+  <rdf:type rdf:resource="#convergence_criteria_2"/>
+  <has_abs_tolerance rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1e-06</has_abs_tolerance>
+  <has_rel_tolerance rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1e-06</has_rel_tolerance>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_149">
+  <has_type rdf:resource="#instance_7"/>
+  <has_mapper_settings rdf:resource="#instance_150"/>
+  <rdf:type rdf:resource="#data_transfer_operators_3"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mapper</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_150">
+  <has_mapper_type rdf:resource="#instance_9"/>
+  <rdf:type rdf:resource="#mapper_settings_3"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_151">
+  <has_name rdf:resource="#instance_146"/>
+  <rdf:type rdf:resource="#coupling_sequence_1"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_152">
+  <has_name rdf:resource="#instance_153"/>
+  <has_input_data_list rdf:resource="#instance_154"/>
+  <has_output_data_list rdf:resource="#instance_158"/>
+  <rdf:type rdf:resource="#coupling_sequence_4"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_153">
+  <rdf:type rdf:resource="#name"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">structure</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_154">
+  <has_data rdf:resource="#instance_155"/>
+  <has_from_solver rdf:resource="#instance_146"/>
+  <has_from_solver_data rdf:resource="#instance_155"/>
+  <has_data_transfer_operator rdf:resource="#instance_156"/>
+  <has_data_transfer_operator_options rdf:resource="#instance_157"/>
+  <has_data_transfer_operator_options rdf:resource="#instance_56"/>
+  <rdf:type rdf:resource="#input_data_list_2"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_155">
+  <rdf:type rdf:resource="#data"/>
+  <rdf:type rdf:resource="#from_solver_data"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">load</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_156">
+  <rdf:type rdf:resource="#data_transfer_operator"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mapper</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_157">
+  <rdf:type rdf:resource="#data_transfer_operator_options"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">swap_sign</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_158">
+  <has_data rdf:resource="#instance_147"/>
+  <has_to_solver rdf:resource="#instance_146"/>
+  <has_to_solver_data rdf:resource="#instance_147"/>
+  <has_data_transfer_operator rdf:resource="#instance_156"/>
+  <rdf:type rdf:resource="#output_data_list_3"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_159">
+  <has_type rdf:resource="#instance_160"/>
+  <has_solver_wrapper_settings rdf:resource="#instance_161"/>
+  <has_data rdf:resource="#instance_163"/>
+  <has_data rdf:resource="#instance_165"/>
+  <has_data rdf:resource="#instance_166"/>
+  <rdf:type rdf:resource="#solvers_4"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fluid</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_160">
+  <rdf:type rdf:resource="#type"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">solver_wrappers.kratos.fluid_dynamics_wrapper</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_161">
+  <has_input_file rdf:resource="#instance_162"/>
+  <rdf:type rdf:resource="#solver_wrapper_settings_3"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_162">
+  <rdf:type rdf:resource="#input_file"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ProjectParametersCFD</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_163">
+  <has_model_part_name rdf:resource="#instance_164"/>
+  <has_variable_name rdf:resource="#instance_63"/>
+  <rdf:type rdf:resource="#data_4"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">disp</rdfs:label>
+  <has_dimension rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</has_dimension>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_164">
+  <rdf:type rdf:resource="#model_part_name"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">FluidModelPart.interface</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_165">
+  <has_model_part_name rdf:resource="#instance_164"/>
+  <has_variable_name rdf:resource="#instance_65"/>
+  <rdf:type rdf:resource="#data_4"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">load</rdfs:label>
+  <has_dimension rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</has_dimension>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_166">
+  <has_model_part_name rdf:resource="#instance_164"/>
+  <has_variable_name rdf:resource="#instance_167"/>
+  <rdf:type rdf:resource="#data_4"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">velocity</rdfs:label>
+  <has_dimension rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</has_dimension>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_167">
+  <rdf:type rdf:resource="#variable_name"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">VELOCITY</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_168">
+  <has_type rdf:resource="#instance_70"/>
+  <has_solver_wrapper_settings rdf:resource="#instance_169"/>
+  <has_data rdf:resource="#instance_171"/>
+  <has_data rdf:resource="#instance_172"/>
+  <rdf:type rdf:resource="#solvers_5"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">structure</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_169">
+  <has_input_file rdf:resource="#instance_170"/>
+  <rdf:type rdf:resource="#solver_wrapper_settings_3"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_170">
+  <rdf:type rdf:resource="#input_file"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ProjectParametersCSM</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_171">
+  <has_model_part_name rdf:resource="#instance_72"/>
+  <has_variable_name rdf:resource="#instance_73"/>
+  <rdf:type rdf:resource="#data_4"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">disp</rdfs:label>
+  <has_dimension rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</has_dimension>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#instance_172">
+  <has_model_part_name rdf:resource="#instance_72"/>
+  <has_variable_name rdf:resource="#instance_75"/>
+  <rdf:type rdf:resource="#data_4"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">load</rdfs:label>
+  <has_dimension rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</has_dimension>
 </owl:NamedIndividual>
 
 
