@@ -207,7 +207,7 @@ def api_get_class_instances():
         return jsonify(insts), 200
     except Exception as e:
         return jsonify(e), 400
-
+    
 
 if __name__ == "__main__":
     app.run()

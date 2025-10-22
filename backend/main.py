@@ -385,7 +385,7 @@ def add_value(subj, prop_name, value=None):
         value = cl(instance_name())
         prop = get_relation(prop_name)
         prop[subj].append(value)
-    elif type(value) == str:
+    elif type(value) == str and not value.startswith('http'):
         if value.startswith('instance'):
             prop = get_relation(prop_name)
             prop[subj].append(value)
@@ -601,6 +601,7 @@ def export_coupled_kratos(coupled_system):
         props.pop('label', None)
     if 'coupled_system' in str(type(onto[coupled_system]).name):
         label = None
+    result = props.pop('result', None)
     for key, items in props.items():
         if type(items) == list and len(items) > 1 and key in force_dict():
             temp_dict = {}

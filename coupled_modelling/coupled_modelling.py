@@ -339,3 +339,16 @@ class CoupledSystem(Instance):
         """
         inst = super().make_copy(None, data, depth, recursive)
         return CoupledSystem(self.host, inst.name)
+    
+    def add_result(self, url):
+        """
+        Adds a URL to the results of resolving the coupled system.
+
+        Args:
+            url (str): URL to the results.
+        """
+        params = {'instance': self.name, 'data': {'result': url}}
+        res = requests.post(f'{self.host}add_values', json=params)
+        if res.status_code == 201:
+            self.get_properties()
+        return res.json()

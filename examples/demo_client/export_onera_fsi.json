@@ -69,7 +69,11 @@
             "model_part_name": "WING",
             "variable_name": "MESH_DISPLACEMENT"
           },
-          "variable_name": "REACTION"
+          "lift_force": {
+            "dimensions": 3,
+            "model_part_name": "WING",
+            "variable_name": "REACTION"
+          }
         },
         "io_settings": {
           "communication_format": "file",
@@ -93,12 +97,12 @@
       "SM": {
         "data": {
           "displacements": {
-            "dimention": 3,
+            "dimensions": 3,
             "model_part_name": "Structure.interface",
             "variable_name": "DISPLACEMENT"
           },
           "lift_force": {
-            "dimention": 3,
+            "dimensions": 3,
             "model_part_name": "Structure.interface",
             "variable_name": "POINT_LOAD"
           }
