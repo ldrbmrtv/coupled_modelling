@@ -415,9 +415,7 @@ def delete_value(subj, prop, value=None):
         subj.label = []
         return
     
-    print(prop)
     prop = onto[f'has_{prop}']
-    print(prop)
     if value:
         prop[subj].remove(value)
     else:

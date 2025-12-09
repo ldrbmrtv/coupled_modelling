@@ -82,6 +82,8 @@ class KnowledgeBase:
         Returns:
             The initialized instance.
         """
+        if type(name) == dict:
+            name = next(iter(name.keys()))
         inst = Instance(self.host, name)
         return inst
 
